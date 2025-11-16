@@ -105,7 +105,7 @@ Cineroadmap/
 ├── README.md
 ├── db/
 ├── static/
-├── ├── css/
+│   ├── css/
 │   └── img/
 ├── src/
 │   ├── Vista.java
