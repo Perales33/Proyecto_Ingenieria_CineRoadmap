@@ -65,7 +65,6 @@ class Pelicula
     private String descripcion;
     private String fotoPelicula;
 
-
     public Pelicula(String nombre, int anio, Vector<String> generos, Vector<String> directores, Vector<String> actores, String descripcion, String foto)
     {
         this.nombrePelicula = nombre;

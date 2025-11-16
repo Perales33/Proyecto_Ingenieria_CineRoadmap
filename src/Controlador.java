@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 
-
 public class Controlador 
 {
     static int idUsuario;
