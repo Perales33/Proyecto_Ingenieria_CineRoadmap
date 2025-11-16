@@ -88,28 +88,29 @@
 1. Clona el repositorio:
 
 ```bash
-git clone https://github.com/Perales33/Cineroadmap.git
-cd Cineroadmap
+git clone git@github.com:Perales33/Proyecto_Ingenieria_CineRoadmap.git
+cd Proyecto_Ingenieria_CineRoadmap
 ```
 
 2. Instala los requerimientos
 
 ```bash
-
+Java 11+ 
 ```
 
 ### 📁 Estructura del proyecto <a name="estructura_del_proyecto"></a> 
 ```bash
 Cineroadmap/
-├──
-├── 
-├── 
 ├── LICENSE
 ├── README.md
+├── db/
 ├── static/
-│   ├── 
-│   ├── 
-│   └──
+├── ├── css/
+│   └── img/
+├── src/
+│   ├── Vista.java
+│   ├── Modelo.java
+│   └── Controlador.java
 ```
 
 ### 🔮 Próximos pasos <a name="proximos_pasos"></a> 
