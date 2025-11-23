@@ -1,6 +1,8 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 
+
+
 public class Vista
 {
     static Scanner sc = new Scanner(System.in);
@@ -53,3 +55,4 @@ public class Vista
         }    
     }
 }
+

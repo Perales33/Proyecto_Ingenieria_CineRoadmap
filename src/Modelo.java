@@ -1,4 +1,9 @@
 import java.util.Vector;
+
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 class Usuario
@@ -195,4 +200,19 @@ class Calificaciones
 
     Usuario getUsuario() { return usuario; }
     void setUsuario(Usuario us) { this.usuario = us;}
+}
+
+class Eventos
+{
+    protected static void verContrasena(JPasswordField boton)
+    {
+        if (boton.getEchoChar() == 0) 
+        {
+            boton.setEchoChar('*'); // ocultar
+        } 
+        else 
+        {
+            boton.setEchoChar((char) 0); // mostrar
+        }
+    }
 }
