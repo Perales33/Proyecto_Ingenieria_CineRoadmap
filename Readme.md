@@ -70,8 +70,8 @@
 
 ## 🛠️ Tecnologías utilizadas <a name="tecnologias_utilizadas"></a> 
 
-- **Backend**: Java (desde `src`)
-- **Frontend**: Java (desde `templates` y `static`)
+- **Backend**: Java (desde `/src/main/app/Modelo` y `/src/main/app/Controlador`)
+- **Frontend**: Java (desde `/src/main/app/Vista`)
 - **Base de datos**: SQL o MySQL (con backup incluido)
 
 
@@ -128,4 +128,4 @@ Proyecto_Ingenieria_CineRoadmap/
 - Sistema de notificaciones
 
 ### 📄 Licencia <a name="licencia"></a> 
-Este proyecto está bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles.
+Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
