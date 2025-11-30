@@ -80,10 +80,10 @@
 ### 🔧 Requisitos
 ```bash
 - Java:
-  - Extensions (VS Code)
-  - Version 11+
+  -> Extensions (VS Code)
+  -> Version 11+
 - Eclipse: 
-    - Java Version
+  ->.Java Version
 ```
 
 ### 📦 Instalación
