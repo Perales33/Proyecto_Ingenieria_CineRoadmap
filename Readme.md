@@ -83,7 +83,7 @@
   -> Extensions (VS Code)
   -> Version 11+
 - Eclipse: 
-  ->.Java Version
+  -> Java Version
 ```
 
 ### 📦 Instalación
