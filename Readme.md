@@ -100,7 +100,7 @@ Java 11+
 
 ### 📁 Estructura del proyecto <a name="estructura_del_proyecto"></a> 
 ```bash
-Cineroadmap/
+Proyecto_Ingenieria_CineRoadmap/
 ├── LICENSE
 ├── README.md
 ├── src/
