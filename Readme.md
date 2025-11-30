@@ -115,6 +115,7 @@ Cineroadmap/
 │           ├── img/
 │           ├── db/
 │           └── css/
+└
 ```
 
 ### 🔮 Próximos pasos <a name="proximos_pasos"></a> 
