@@ -1,8 +1,11 @@
-package app;
+package main.app.Vista;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+
+import main.app.Controlador.*;
+import main.app.util.*;
 
 public class PanelLogin 
 {
@@ -19,6 +22,12 @@ public class PanelLogin
                     g.drawImage(fondo, 0, 0, getWidth(), getHeight(), this);
                 }
             }
+
+            public void setFondo(Image img) 
+            {
+                this.fondo = img;
+                repaint();
+            }
         };
 
         panelCentral.setLayout(new GridBagLayout());
@@ -26,7 +35,7 @@ public class PanelLogin
         // Cargar la imagen de fondo
         try 
         {
-            Image icono = new ImageIcon(PanelLogin.class.getResource("../../static/img/logoFondoPantalla.jpg")).getImage();
+            Image icono = new ImageIcon(PanelLogin.class.getResource("../../resources/img/logoFondoPantalla.jpg")).getImage();
             ((JPanel) panelCentral).getClass()
                 .getDeclaredMethod("setFondo", Image.class)
                 .invoke(panelCentral, icono); // asignamos usando reflexión o mejor con un panel custom
@@ -72,7 +81,7 @@ public class PanelLogin
         bag.gridx = 2;
         JButton botonVer = new JButton("👁");
         Estilos.estiloBotones(botonVer);
-        botonVer.addActionListener(e -> Controlador.verContrasena(campoContrasena));
+        botonVer.addActionListener(e -> ControladorBotones.verContrasena(campoContrasena));
         loginMenu.add(botonVer, bag);
         
         bag.gridwidth = 3; bag.gridy = 4; bag.gridx = 0;
@@ -80,11 +89,11 @@ public class PanelLogin
         Estilos.estiloBotones(botonInicio);
         botonInicio.addActionListener((ActionEvent e) -> 
         {
-            String mensaje = Controlador.inicioSesion(campoNombre.getText(), new String(campoContrasena.getPassword()));
+            String mensaje = ControladorLogin.inicioSesion(campoNombre.getText(), new String(campoContrasena.getPassword()));
 
             if(mensaje == null)
             {
-                JOptionPane.showMessageDialog(PanelGenerador.mainPanel, ("Bienvenido " + Controlador.getUsuarioActivo().getnombreUsuario()), "Usuario registrado", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(PanelGenerador.mainPanel, ("Bienvenido " + ControladorUsuario.getUsuarioActivo().getnombreUsuario()), "Usuario registrado", JOptionPane.INFORMATION_MESSAGE);
                 campoNombre.setText("");
                 campoContrasena.setText("");
                 PanelGenerador.mainPanel.add(PanelApp.crearPanelInicio(), "Inicio");

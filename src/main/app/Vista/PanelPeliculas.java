@@ -1,9 +1,13 @@
-package app;
+package main.app.Vista;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+
+import main.app.Modelo.*;
+import main.app.Controlador.*;
+import main.app.util.*;
 
 public class PanelPeliculas 
 {
@@ -77,7 +81,7 @@ public class PanelPeliculas
         Estilos.estilosTextArea(areaValoraciones);
         areaValoraciones.setBorder(BorderFactory.createTitledBorder("Tus valoraciones"));
 
-        areaValoraciones.setText(crearValoraciones(Controlador.getUsuarioActivo()));
+        areaValoraciones.setText(crearValoraciones(ControladorUsuario.getUsuarioActivo()));
 
 
         JScrollPane scrollValoraciones = new JScrollPane(areaValoraciones);
@@ -159,7 +163,7 @@ public class PanelPeliculas
                     JOptionPane.showMessageDialog(PanelGenerador.mainPanel, "Debes valorar la película con un número válido de 1 a 5", "Valoración mal hecha", JOptionPane.ERROR_MESSAGE);
                 }
 
-                String mensaje = Controlador.guardarCalificacion(pelicula, nota);
+                String mensaje = ControladorCalificacion.guardarCalificacion(pelicula, nota);
 
                 if(mensaje == null)
                 {
@@ -172,7 +176,7 @@ public class PanelPeliculas
                     JOptionPane.showMessageDialog(PanelGenerador.mainPanel, mensaje, "Calificación no registrada", JOptionPane.ERROR_MESSAGE);
                 }
 
-                areaValoraciones.setText(crearValoraciones(Controlador.getUsuarioActivo()));
+                areaValoraciones.setText(crearValoraciones(ControladorUsuario.getUsuarioActivo()));
             }
         });
 
@@ -195,7 +199,7 @@ public class PanelPeliculas
 
     private static JPanel crearPeliculas(Pelicula p)
     {
-        Usuario u = Controlador.getUsuarioActivo();
+        Usuario u = ControladorUsuario.getUsuarioActivo();
 
         if (u == null) { return null; }
 
@@ -206,7 +210,7 @@ public class PanelPeliculas
 
         try
         {
-            icono = new ImageIcon(PanelPeliculas.class.getResource("../../static/img" + p.getFoto()));
+            icono = new ImageIcon(PanelPeliculas.class.getResource("/main/resources/img/" + p.getFoto()));
             if(icono.getImage() == null)
             {
                 icono = new ImageIcon();
@@ -241,11 +245,11 @@ public class PanelPeliculas
 
     private static String crearValoraciones(Usuario u)
     {;
-        if (u == null || Calificaciones.getListaCalificaciones().isEmpty()) { return "Actualmente no hay calificaciones"; }
+        if (u == null || Calificacion.getListaCalificaciones().isEmpty()) { return "Actualmente no hay calificaciones"; }
 
         StringBuilder texto = new StringBuilder();
 
-        for(Calificaciones c : Calificaciones.getListaCalificaciones())
+        for(Calificacion c : Calificacion.getListaCalificaciones())
         {
             if(c.getUsuario().equals(u))
             {

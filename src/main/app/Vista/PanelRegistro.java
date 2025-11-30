@@ -1,9 +1,11 @@
-package app;
+package main.app.Vista;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import main.app.Controlador.*;
+import main.app.util.*;
 
 public class PanelRegistro 
 {
@@ -20,6 +22,12 @@ public class PanelRegistro
                     g.drawImage(fondo, 0, 0, getWidth(), getHeight(), this);
                 }
             }
+
+            public void setFondo(Image img) 
+            {
+                this.fondo = img;
+                repaint();
+            }
         };
 
         panelCentral.setLayout(new GridBagLayout());
@@ -27,7 +35,7 @@ public class PanelRegistro
         // Cargar la imagen de fondo
         try 
         {
-            Image icono = new ImageIcon(PanelRegistro.class.getResource("../../static/imglogoFondoPantalla.jpg")).getImage();
+            Image icono = new ImageIcon(PanelRegistro.class.getResource("/main/resources/img/logoFondoPantalla.jpg")).getImage();
             ((JPanel) panelCentral).getClass()
                 .getDeclaredMethod("setFondo", Image.class)
                 .invoke(panelCentral, icono); // asignamos usando reflexión o mejor con un panel custom
@@ -83,7 +91,7 @@ public class PanelRegistro
         bag.gridx = 2;
         JButton botonVer = new JButton("👁");
         Estilos.estiloBotones(botonVer);
-        botonVer.addActionListener(e -> Controlador.verContrasena(campoContrasena));
+        botonVer.addActionListener(e -> ControladorBotones.verContrasena(campoContrasena));
         RegistroMenu.add(botonVer, bag);
 
         bag.gridwidth = 3; bag.gridy = 4; bag.gridx = 0;
@@ -91,7 +99,7 @@ public class PanelRegistro
         Estilos.estiloBotones(botonRegistro);
         botonRegistro.addActionListener((ActionEvent e) -> 
         {
-            String mensaje = Controlador.registrarUsuario(campoNombre.getText(), campoEmail.getText(), new String(campoContrasena.getPassword()));
+            String mensaje = ControladorRegistro.registrarUsuario(campoNombre.getText(), campoEmail.getText(), new String(campoContrasena.getPassword()));
 
             if(mensaje == null)
             {

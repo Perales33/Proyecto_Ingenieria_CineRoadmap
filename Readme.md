@@ -103,13 +103,18 @@ Java 11+
 Cineroadmap/
 ├── LICENSE
 ├── README.md
-├── db/
-├── static/
-│   ├── img/
-│   └── css/
 ├── src/
-│   ├── app/
-│   └── Vista.java
+│   └── main/
+│       ├── app/
+│           ├── Controlador/
+│           ├── Modelo/
+│           ├── Vista/
+│           ├── util/
+│           └── Main.java 
+│       ├── resources/ 
+│           ├── img/
+│           ├── db/
+│           └── css/
 ```
 
 ### 🔮 Próximos pasos <a name="proximos_pasos"></a> 

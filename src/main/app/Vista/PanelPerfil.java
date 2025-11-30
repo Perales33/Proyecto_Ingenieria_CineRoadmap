@@ -1,8 +1,13 @@
-package app;
+package main.app.Vista;
 
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.TitledBorder;
+
+import main.app.util.*;
+import main.app.Controlador.*;
+import main.app.Modelo.*;
+
 import java.util.ArrayList;
 
 public class PanelPerfil 
@@ -43,7 +48,7 @@ public class PanelPerfil
 
         try
         {
-            icono = new ImageIcon(PanelPerfil.class.getResource("../../static/img" + Controlador.getUsuarioActivo().getFoto()));
+            icono = new ImageIcon(PanelPerfil.class.getResource("/main/resources/img/" + ControladorUsuario.getUsuarioActivo().getFoto()));
         }
         catch(Exception e)
         {
@@ -78,12 +83,12 @@ public class PanelPerfil
 
         String texto;
 
-        if(Controlador.getUsuarioActivo() == null) 
+        if(ControladorUsuario.getUsuarioActivo() == null) 
         { 
             texto = "Nombre: No hay datos del usuario"; } 
         else 
         { 
-            texto = "Nombre: " + Controlador.getUsuarioActivo().getnombreUsuario();
+            texto = "Nombre: " + ControladorUsuario.getUsuarioActivo().getnombreUsuario();
         }
         datosUsuarioBag.gridy = 0; datosUsuarioBag.gridx = 0;
         JLabel labelNombreUsuario = new JLabel();
@@ -102,11 +107,11 @@ public class PanelPerfil
                 
                 if(nuevoNombre != null && !nuevoNombre.trim().isEmpty())
                 {
-                    boolean actualizarNombre = Controlador.actualizarNombre(nuevoNombre); 
+                    boolean actualizarNombre = ControladorPerfil.actualizarNombre(nuevoNombre); 
 
                     if(actualizarNombre)
                     {
-                        Controlador.getUsuarioActivo().setnombreUsuario(nuevoNombre);
+                        ControladorUsuario.getUsuarioActivo().setnombreUsuario(nuevoNombre);
                         labelNombreUsuario.setText("Nombre: " + nuevoNombre);
                         PanelApp.actualizarTitulo();
                     }
@@ -124,12 +129,12 @@ public class PanelPerfil
         JLabel labelEmail = new JLabel();
         labelEmail.setHorizontalAlignment(SwingConstants.CENTER);
         
-        if(Controlador.getUsuarioActivo() == null) 
+        if(ControladorUsuario.getUsuarioActivo() == null) 
         { 
             texto = "Email: No hay datos del usuario"; } 
         else 
         { 
-            texto = "Email: " + Controlador.getUsuarioActivo().getEmail();
+            texto = "Email: " + ControladorUsuario.getUsuarioActivo().getEmail();
         }
         
         labelEmail.setText(texto);
@@ -145,11 +150,11 @@ public class PanelPerfil
                 String nuevoEmail = JOptionPane.showInputDialog(PanelGenerador.mainPanel, "Ingresar nuevo email:","Cambio email" ,JOptionPane.DEFAULT_OPTION);
                 if(nuevoEmail != null && !nuevoEmail.trim().isEmpty())
                 {
-                    boolean extensionValida = Controlador.actualizarEmail(nuevoEmail);
+                    boolean extensionValida = ControladorPerfil.actualizarEmail(nuevoEmail);
 
                     if(extensionValida)
                     {
-                        Controlador.getUsuarioActivo().setEmail(nuevoEmail);
+                        ControladorUsuario.getUsuarioActivo().setEmail(nuevoEmail);
                         labelEmail.setText("Email: " + nuevoEmail);
                     }
                     else
@@ -177,7 +182,7 @@ public class PanelPerfil
         panelPeliculasVistas.setBorder(BorderFactory.createTitledBorder("Películas Vistas"));
         panelPeliculasVistas.setLayout(new WrapLayout(FlowLayout.LEFT, 10, 10));
 
-        ArrayList<Pelicula> peliculasVistas = Controlador.getUsuarioActivo().getPeliculas();
+        ArrayList<Pelicula> peliculasVistas = ControladorUsuario.getUsuarioActivo().getPeliculas();
 
         if (panelPeliculasVistas == null || peliculasVistas.isEmpty()) 
         {
@@ -236,7 +241,7 @@ public class PanelPerfil
         JLabel imagenLabel;
         try
         {
-            icono = new ImageIcon(PanelPeliculas.class.getResource("../../static/img" + p.getFoto()));
+            icono = new ImageIcon(PanelPeliculas.class.getResource("/main/resources/img/" + p.getFoto()));
             Image imagen = icono.getImage().getScaledInstance(100, 150, Image.SCALE_SMOOTH);
             imagenLabel = new JLabel(new ImageIcon(imagen));
             imagenLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));

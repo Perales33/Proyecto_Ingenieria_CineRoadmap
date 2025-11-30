@@ -1,9 +1,11 @@
-package app;
+package main.app.Vista;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import main.app.Controlador.*;
+import main.app.util.*;
 
 public class PanelCambioContrasena 
 {
@@ -20,6 +22,12 @@ public class PanelCambioContrasena
                     g.drawImage(fondo, 0, 0, getWidth(), getHeight(), this);
                 }
             }
+
+            public void setFondo(Image img) 
+            {
+                this.fondo = img;
+                repaint();
+            }
         };
 
         panelCentral.setLayout(new GridBagLayout());
@@ -27,7 +35,7 @@ public class PanelCambioContrasena
         // Cargar la imagen de fondo
         try 
         {
-            Image icono = new ImageIcon(PanelCambioContrasena.class.getResource("../../static/imglogoFondoPantalla.jpg")).getImage();
+            Image icono = new ImageIcon(PanelCambioContrasena.class.getResource("/main/resources/img/logoFondoPantalla.jpg")).getImage();
             ((JPanel) panelCentral).getClass()
                 .getDeclaredMethod("setFondo", Image.class)
                 .invoke(panelCentral, icono);
@@ -73,7 +81,7 @@ public class PanelCambioContrasena
         bag.gridx = 2;
         JButton botonVer = new JButton("👁");
         Estilos.estiloBotones(botonVer);
-        botonVer.addActionListener(e -> Controlador.verContrasena(campoContrasena));
+        botonVer.addActionListener(e -> ControladorBotones.verContrasena(campoContrasena));
         cambioCMenu.add(botonVer, bag);
 
         bag.gridwidth = 1; bag.gridy = 3; bag.gridx = 0; 
@@ -89,7 +97,7 @@ public class PanelCambioContrasena
         bag.gridx = 2;
         JButton botonVerConfirmacion = new JButton("👁");
         Estilos.estiloBotones(botonVerConfirmacion);
-        botonVerConfirmacion.addActionListener(e -> Controlador.verContrasena(campoConfirmacion));
+        botonVerConfirmacion.addActionListener(e -> ControladorBotones.verContrasena(campoConfirmacion));
         cambioCMenu.add(botonVerConfirmacion, bag);
 
         bag.gridwidth = 2; bag.gridy = 4; bag.gridx = 0;
@@ -97,7 +105,7 @@ public class PanelCambioContrasena
         Estilos.estiloBotones(botonCambioContrasena);
         botonCambioContrasena.addActionListener((ActionEvent e) -> 
         {
-            String mensaje = Controlador.cambiarContrasena(campoNombre.getText(), new String(campoContrasena.getPassword()), new String(campoConfirmacion.getPassword()));
+            String mensaje = ControladorContrasena.cambiarContrasena(campoNombre.getText(), new String(campoContrasena.getPassword()), new String(campoConfirmacion.getPassword()));
 
             if(mensaje == null)
             {

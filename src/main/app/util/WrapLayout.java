@@ -1,4 +1,4 @@
-package app;
+package main.app.util;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -6,7 +6,7 @@ import java.awt.Container;
 import java.awt.Insets;
 import java.awt.Component;
 
-class WrapLayout extends FlowLayout {
+public class WrapLayout extends FlowLayout {
     public WrapLayout() { super(); }
     public WrapLayout(int align) { super(align); }
     public WrapLayout(int align, int hgap, int vgap) { super(align, hgap, vgap); }

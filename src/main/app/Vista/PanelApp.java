@@ -1,8 +1,10 @@
-package app;
+package main.app.Vista;
 
 import javax.swing.*;
 import java.awt.*;
 
+import main.app.Controlador.*;
+import main.app.util.*;
 
 public class PanelApp 
 {
@@ -34,13 +36,13 @@ public class PanelApp
     
     protected static void actualizarTitulo()
     {
-        if(Controlador.getUsuarioActivo() == null)
+        if(ControladorUsuario.getUsuarioActivo() == null)
         {
             PanelGenerador.tituloMain.setText("Bienvenido");
         }
         else
         {
-            PanelGenerador.tituloMain.setText("Bienvenido " + Controlador.getUsuarioActivo().getnombreUsuario());
+            PanelGenerador.tituloMain.setText("Bienvenido " + ControladorUsuario.getUsuarioActivo().getnombreUsuario());
         }
     }
 }

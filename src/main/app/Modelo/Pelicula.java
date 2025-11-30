@@ -1,49 +1,9 @@
-package app;
+package main.app.Modelo;
 
 import java.util.Vector;
 import java.util.ArrayList;
 
-class Usuario
-{
-    private String contrasena;
-    private String email;
-    private String nombreUsuario;
-    private String fotoUsuario;
-    private ArrayList<Pelicula> listaPeliculas = new ArrayList<>();
-    private static ArrayList<Usuario> listaUsuarios = new ArrayList<>();
-
-    public Usuario(String contrasena, String email, String nombreUsuario, String fotoUsuario)
-    {
-        this.nombreUsuario = nombreUsuario;
-        this.contrasena = contrasena;
-        this.email = email;
-        this.fotoUsuario = "logoCineRoadmap.jpg";
-    }
-
-    public Usuario(String contrasena, String email, String nombreUsuario)
-    {
-        this.nombreUsuario = nombreUsuario;
-        this.contrasena = contrasena;
-        this.email = email;
-        this.fotoUsuario = "logoCineRoadmap.jpg";
-    }
-
-    void setnombreUsuario(String usuario) { this.nombreUsuario = usuario; }
-    void setEmail(String correo) { this.email = correo; }
-    void setContrasena(String contrasena) { this.contrasena = contrasena; }
-    void setFoto(String foto) { this.fotoUsuario = foto; }
-    static void setUsuarios (Usuario usuario) { listaUsuarios.add(usuario); }
-    void setPeliculas (Pelicula pelicula) { this.listaPeliculas.add(pelicula); }
-
-    String getnombreUsuario() { return this.nombreUsuario; }
-    String getEmail() { return this.email; }
-    String getContrasena() { return this.contrasena; }
-    String getFoto() { return this.fotoUsuario; }
-    ArrayList<Pelicula> getPeliculas() { return listaPeliculas; }
-    static ArrayList<Usuario>  getUsuarios() { return listaUsuarios; }
-}
-
-class Pelicula
+public class Pelicula
 {
     private String nombrePelicula;
     private int anio;
@@ -66,14 +26,14 @@ class Pelicula
         this.fotoPelicula = foto;
     }
 
-    String getnombrePelicula() { return this.nombrePelicula; }
-    int getAnio() { return this.anio; }
-    Vector<String> getGeneros() { return this.arrayGeneros; }
-    Vector<String> getDirectores() { return this.arrayDirectores; }
-    Vector<String> getActores() { return this.arrayActores; }
+    public String getnombrePelicula() { return this.nombrePelicula; }
+    public int getAnio() { return this.anio; }
+    public Vector<String> getGeneros() { return this.arrayGeneros; }
+    public Vector<String> getDirectores() { return this.arrayDirectores; }
+    public Vector<String> getActores() { return this.arrayActores; }
 
-    String getDescripcion() { return this.descripcion; }
-    String getFoto() { return this.fotoPelicula; }
+    public String getDescripcion() { return this.descripcion; }
+    public String getFoto() { return this.fotoPelicula; }
 
     private static void cargarPeliculas(ArrayList<Pelicula> catalogo)
     {
@@ -228,7 +188,7 @@ class Pelicula
     }
     
 
-    static ArrayList<Pelicula> getCatalogo() 
+    public static ArrayList<Pelicula> getCatalogo() 
     {
         if(!peliculasCargadas)
         {
@@ -245,61 +205,3 @@ class Pelicula
         return this.nombrePelicula;
     }
 }
-
-class Retos
-{
-    private int idReto;
-    private String nombreReto;
-    private boolean estadoReto;
-
-    void setEstado(boolean estado) { this.estadoReto = estado; }
-
-    String getnombreReto() { return this.nombreReto; }
-    int getID() { return this.idReto; }
-    boolean getEstado() { return this.estadoReto; }
-}
-
-class Insignias
-{
-    private int idInsignia;
-    private String nombreInsignia;
-    private String descripcionInsignia;
-
-    String getnombreReto() { return this.nombreInsignia; }
-    int getID() { return this.idInsignia; }
-    String getDescripcion() { return this.descripcionInsignia; }
-}
-
-class Logro
-{
-    private int idLogro;
-    private String nombreLogro;
-    private String descripcionLogro;
-
-    String getnombreReto() { return this.nombreLogro; }
-    int getID() { return this.idLogro; }
-    String getDescripcion() { return this.descripcionLogro; }
-}
-
-class Calificaciones
-{
-    private int calificacion;
-    private Pelicula pelicula;
-    private Usuario usuario;
-    private static ArrayList<Calificaciones> listaCalificaciones = new ArrayList<>();
-
-    Calificaciones(int calif, Pelicula pel, Usuario us)
-    {
-        calificacion = calif;
-        pelicula = pel;
-        usuario = us;
-    }
-
-    int getCalificacion() { return calificacion; }
-    void setCalificacion(int calificacion) { this.calificacion = calificacion; }
-    Pelicula getPelicula() { return pelicula; }
-    Usuario getUsuario() { return usuario; }
-
-    static ArrayList<Calificaciones> getListaCalificaciones() { return listaCalificaciones; }
-}
-

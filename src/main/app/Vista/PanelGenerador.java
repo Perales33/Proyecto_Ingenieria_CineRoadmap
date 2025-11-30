@@ -1,9 +1,11 @@
-package app;
+package main.app.Vista;
 
 import javax.swing.*;
 import java.awt.*;
 
-class PanelGenerador extends JFrame
+import main.app.Controlador.*;
+
+public class PanelGenerador extends JFrame
 {
     // Página principal
     static CardLayout colocacion = new CardLayout();
@@ -34,7 +36,7 @@ class PanelGenerador extends JFrame
         cambioContrasenaPanel = PanelCambioContrasena.crearPanelContrasena();
         
 
-        if(Controlador.getUsuarioActivo() != null)
+        if(ControladorUsuario.getUsuarioActivo() != null)
         {
             appPanel = PanelApp.crearPanelInicio();
             perfilPanel = PanelPerfil.crearPanelPerfil();
@@ -54,7 +56,7 @@ class PanelGenerador extends JFrame
         setResizable(false);
         setLocationRelativeTo(null);
         setTitle("CineRoadmap");
-        ImageIcon logoVentana = new ImageIcon(getClass().getResource("../../static/imgLogoVentana.png"));
+        ImageIcon logoVentana = new ImageIcon(getClass().getResource("/main/resources/img/LogoVentana.png"));
         setIconImage(logoVentana.getImage());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);

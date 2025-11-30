@@ -1,13 +1,14 @@
-package app;
+package main.app.Vista;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import main.app.Controlador.*;
 
 public class PanelBanner 
 {
-    static protected JPanel crearBanner()
+    static public JPanel crearBanner()
     {
         JPanel panelBanner = new JPanel(new GridLayout(1, 5, 10, 10));
         panelBanner.setBackground(new Color(200, 0, 0));
@@ -42,8 +43,8 @@ public class PanelBanner
                     }
                     else if (pantalla.equals("Login"))
                     {
-                        JOptionPane.showMessageDialog(PanelGenerador.mainPanel, ("Cerrando Sesión " + Controlador.getUsuarioActivo().getnombreUsuario()),"CerrarSesion" ,JOptionPane.INFORMATION_MESSAGE);
-                        Controlador.setUsuarioActivo();
+                        JOptionPane.showMessageDialog(PanelGenerador.mainPanel, ("Cerrando Sesión " + ControladorUsuario.getUsuarioActivo().getnombreUsuario()),"CerrarSesion" ,JOptionPane.INFORMATION_MESSAGE);
+                        ControladorUsuario.setUsuarioActivo();
                     }
                     else if(pantalla.equals("Perfil"))
                     {
