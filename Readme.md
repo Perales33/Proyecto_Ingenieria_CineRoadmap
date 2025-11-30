@@ -106,12 +106,12 @@ Cineroadmap/
 ├── src/
 │   └── main/
 │       ├── app/
-│           ├── Controlador/
-│           ├── Modelo/
-│           ├── Vista/
-│           ├── util/
-│           └── Main.java 
-│       ├── resources/ 
+│       │   ├── Controlador/
+│       │   ├── Modelo/
+│       │   ├── Vista/
+│       │   ├── util/
+│       │   └── Main.java 
+│       └── resources/ 
 │           ├── img/
 │           ├── db/
 │           └── css/
