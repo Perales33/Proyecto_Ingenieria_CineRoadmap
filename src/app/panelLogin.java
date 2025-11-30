@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class panelLogin 
+public class PanelLogin 
 {
     static protected JPanel crearloginPanel()
     {
@@ -32,7 +32,7 @@ public class panelLogin
         // Cargar la imagen de fondo
         try 
         {
-            Image icono = new ImageIcon(panelLogin.class.getResource("../../static/img/logoFondoPantalla.jpg")).getImage();
+            Image icono = new ImageIcon(PanelLogin.class.getResource("../../static/img/logoFondoPantalla.jpg")).getImage();
             ((JPanel) panelCentral).getClass()
                 .getDeclaredMethod("setFondo", Image.class)
                 .invoke(panelCentral, icono); // asignamos usando reflexión o mejor con un panel custom
@@ -93,7 +93,7 @@ public class panelLogin
                 JOptionPane.showMessageDialog(panelGenerador.mainPanel, ("Bienvenido " + Controlador.getUsuarioActivo().getnombreUsuario()), "Usuario registrado", JOptionPane.INFORMATION_MESSAGE);
                 campoNombre.setText("");
                 campoContrasena.setText("");
-                panelGenerador.mainPanel.add(panelApp.crearPanelInicio(), "Inicio");
+                panelGenerador.mainPanel.add(PanelApp.crearPanelInicio(), "Inicio");
                 panelGenerador.colocacion.show(panelGenerador.mainPanel, "Inicio");
             }
             else

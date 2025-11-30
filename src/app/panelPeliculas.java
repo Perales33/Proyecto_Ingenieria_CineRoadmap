@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class panelPeliculas 
+public class PanelPeliculas 
 {
     protected static JPanel crearPanelPeliculas()
     {
@@ -13,7 +13,7 @@ public class panelPeliculas
 
         JPanel panelCental = new JPanel(new BorderLayout());
 
-        JPanel banner = panelBanner.crearBanner();
+        JPanel banner = PanelBanner.crearBanner();
         panelCental.add(banner, BorderLayout.NORTH);
 
         JPanel panelContenido = new JPanel(new GridBagLayout());
@@ -206,7 +206,7 @@ public class panelPeliculas
 
         try
         {
-            icono = new ImageIcon(panelPeliculas.class.getResource("../../static/img" + p.getFoto()));
+            icono = new ImageIcon(PanelPeliculas.class.getResource("../../static/img" + p.getFoto()));
             if(icono.getImage() == null)
             {
                 icono = new ImageIcon();

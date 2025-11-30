@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 
-public class panelCambioContrasena 
+public class PanelCambioContrasena 
 {
     protected static JPanel crearPanelContrasena()
     {
@@ -32,7 +32,7 @@ public class panelCambioContrasena
         // Cargar la imagen de fondo
         try 
         {
-            Image icono = new ImageIcon(panelCambioContrasena.class.getResource("../../static/imglogoFondoPantalla.jpg")).getImage();
+            Image icono = new ImageIcon(PanelCambioContrasena.class.getResource("../../static/imglogoFondoPantalla.jpg")).getImage();
             ((JPanel) panelCentral).getClass()
                 .getDeclaredMethod("setFondo", Image.class)
                 .invoke(panelCentral, icono); // asignamos usando reflexión o mejor con un panel custom
@@ -110,7 +110,7 @@ public class panelCambioContrasena
                 campoNombre.setText("");
                 campoContrasena.setText("");
                 campoConfirmacion.setText("");
-                panelGenerador.mainPanel.add(panelApp.crearPanelInicio(), "Inicio");
+                panelGenerador.mainPanel.add(PanelApp.crearPanelInicio(), "Inicio");
                 panelGenerador.colocacion.show(panelGenerador.mainPanel, "Login");
             }
             else

@@ -3,7 +3,7 @@ package app;
 import javax.swing.*;
 import java.awt.*;
 
-class panelGenerador extends JFrame
+class PanelGenerador extends JFrame
 {
     // Página principal
     static CardLayout colocacion = new CardLayout();
@@ -29,16 +29,16 @@ class panelGenerador extends JFrame
     public panelGenerador()
     {
         // Creación de los paneles
-        loginPanel = panelLogin.crearloginPanel();
-        registrarPanel = panelRegistro.crearPanelRegistro();
-        cambioContrasenaPanel = panelCambioContrasena.crearPanelContrasena();
+        loginPanel = PanelLogin.crearloginPanel();
+        registrarPanel = PanelRegistro.crearPanelRegistro();
+        cambioContrasenaPanel = PanelCambioContrasena.crearPanelContrasena();
         
 
         if(Controlador.getUsuarioActivo() != null)
         {
-            appPanel = panelApp.crearPanelInicio();
-            perfilPanel = panelPerfil.crearPanelPerfil();
-            peliculasPanel = panelPeliculas.crearPanelPeliculas();
+            appPanel = PanelApp.crearPanelInicio();
+            perfilPanel = PanelPerfil.crearPanelPerfil();
+            peliculasPanel = PanelPeliculas.crearPanelPeliculas();
 
             panelGenerador.mainPanel.add(appPanel, "Inicio");
         }

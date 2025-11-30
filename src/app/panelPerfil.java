@@ -5,13 +5,13 @@ import java.awt.*;
 import javax.swing.border.TitledBorder;
 import java.util.ArrayList;
 
-public class panelPerfil 
+public class PanelPerfil 
 {
     protected static JPanel crearPanelPerfil()
     {
         JPanel panelCental = new JPanel(new BorderLayout());
 
-        JPanel banner = panelBanner.crearBanner();
+        JPanel banner = PanelBanner.crearBanner();
         panelCental.add(banner, BorderLayout.NORTH);
 
         JPanel panelContenido = new JPanel(new GridBagLayout());
@@ -43,7 +43,7 @@ public class panelPerfil
 
         try
         {
-            icono = new ImageIcon(panelPerfil.class.getResource("../../static/img" + Controlador.getUsuarioActivo().getFoto()));
+            icono = new ImageIcon(PanelPerfil.class.getResource("../../static/img" + Controlador.getUsuarioActivo().getFoto()));
         }
         catch(Exception e)
         {
@@ -108,7 +108,7 @@ public class panelPerfil
                     {
                         Controlador.getUsuarioActivo().setnombreUsuario(nuevoNombre);
                         labelNombreUsuario.setText("Nombre: " + nuevoNombre);
-                        panelApp.actualizarTitulo();
+                        PanelApp.actualizarTitulo();
                     }
                     else
                     {
@@ -236,7 +236,7 @@ public class panelPerfil
         JLabel imagenLabel;
         try
         {
-            icono = new ImageIcon(panelPeliculas.class.getResource("../../static/img" + p.getFoto()));
+            icono = new ImageIcon(PanelPeliculas.class.getResource("../../static/img" + p.getFoto()));
             Image imagen = icono.getImage().getScaledInstance(100, 150, Image.SCALE_SMOOTH);
             imagenLabel = new JLabel(new ImageIcon(imagen));
             imagenLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));

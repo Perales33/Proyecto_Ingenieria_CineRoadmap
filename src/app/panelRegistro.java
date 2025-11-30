@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 
-public class panelRegistro 
+public class PanelRegistro 
 {
     protected static JPanel crearPanelRegistro()
     {
@@ -32,7 +32,7 @@ public class panelRegistro
         // Cargar la imagen de fondo
         try 
         {
-            Image icono = new ImageIcon(panelRegistro.class.getResource("../../static/imglogoFondoPantalla.jpg")).getImage();
+            Image icono = new ImageIcon(PanelRegistro.class.getResource("../../static/imglogoFondoPantalla.jpg")).getImage();
             ((JPanel) panelCentral).getClass()
                 .getDeclaredMethod("setFondo", Image.class)
                 .invoke(panelCentral, icono); // asignamos usando reflexión o mejor con un panel custom

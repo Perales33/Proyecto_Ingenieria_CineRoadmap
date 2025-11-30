@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 
-public class panelBanner 
+public class PanelBanner 
 {
     static protected JPanel crearBanner()
     {
@@ -47,12 +47,12 @@ public class panelBanner
                     }
                     else if(pantalla.equals("Perfil"))
                     {
-                        panelGenerador.mainPanel.add(panelPerfil.crearPanelPerfil(), "Perfil");
+                        panelGenerador.mainPanel.add(PanelPerfil.crearPanelPerfil(), "Perfil");
                         panelGenerador.colocacion.show(panelGenerador.mainPanel, "Perfil");
                     }
                     else if (pantalla.equals("Peliculas"))
                     {
-                        panelGenerador.mainPanel.add(panelPeliculas.crearPanelPeliculas(), "Peliculas");
+                        panelGenerador.mainPanel.add(PanelPeliculas.crearPanelPeliculas(), "Peliculas");
                         panelGenerador.colocacion.show(panelGenerador.mainPanel, "Peliculas");
                     }
                     
