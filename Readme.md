@@ -105,12 +105,11 @@ Cineroadmap/
 ├── README.md
 ├── db/
 ├── static/
-│   ├── css/
-│   └── img/
+│   ├── img/
+│   └── css/
 ├── src/
-│   ├── Vista.java
-│   ├── Modelo.java
-│   └── Controlador.java
+│   ├── app/
+│   └── Vista.java
 ```
 
 ### 🔮 Próximos pasos <a name="proximos_pasos"></a> 
