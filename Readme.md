@@ -79,8 +79,11 @@
 
 ### 🔧 Requisitos
 ```bash
-- Java Extensions (VS Code)
-- Eclipse: Java Version
+- Java:
+  - Extensions (VS Code)
+  - Version 11+
+- Eclipse: 
+    - Java Version
 ```
 
 ### 📦 Instalación
@@ -91,11 +94,10 @@
 git clone git@github.com:Perales33/Proyecto_Ingenieria_CineRoadmap.git
 cd Proyecto_Ingenieria_CineRoadmap
 ```
+2. Verificar la versión de Java:
 
-2. Instala los requerimientos
-
-```bash
-Java 11+ 
+```
+java -version
 ```
 
 ### 📁 Estructura del proyecto <a name="estructura_del_proyecto"></a> 
