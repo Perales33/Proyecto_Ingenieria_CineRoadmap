@@ -26,7 +26,7 @@ class PanelGenerador extends JFrame
     JPanel appPanel; // Panel del Main
 
     // Constructor de la Interfaz
-    public panelGenerador()
+    public PanelGenerador()
     {
         // Creación de los paneles
         loginPanel = PanelLogin.crearloginPanel();
@@ -40,7 +40,7 @@ class PanelGenerador extends JFrame
             perfilPanel = PanelPerfil.crearPanelPerfil();
             peliculasPanel = PanelPeliculas.crearPanelPeliculas();
 
-            panelGenerador.mainPanel.add(appPanel, "Inicio");
+            PanelGenerador.mainPanel.add(appPanel, "Inicio");
         }
         
         // Asignación al main de los paneles

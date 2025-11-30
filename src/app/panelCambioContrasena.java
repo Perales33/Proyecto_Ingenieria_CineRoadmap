@@ -30,7 +30,7 @@ public class PanelCambioContrasena
             Image icono = new ImageIcon(PanelCambioContrasena.class.getResource("../../static/imglogoFondoPantalla.jpg")).getImage();
             ((JPanel) panelCentral).getClass()
                 .getDeclaredMethod("setFondo", Image.class)
-                .invoke(panelCentral, icono); // asignamos usando reflexión o mejor con un panel custom
+                .invoke(panelCentral, icono);
         } 
         catch (Exception e) 
         {
@@ -101,17 +101,17 @@ public class PanelCambioContrasena
 
             if(mensaje == null)
             {
-                JOptionPane.showMessageDialog(panelGenerador.mainPanel, "Cambio de contraseña exitoso", "Cambio Exitoso", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(PanelGenerador.mainPanel, "Cambio de contraseña exitoso", "Cambio Exitoso", JOptionPane.INFORMATION_MESSAGE);
                 campoNombre.setText("");
                 campoContrasena.setText("");
                 campoConfirmacion.setText("");
-                panelGenerador.mainPanel.add(PanelApp.crearPanelInicio(), "Inicio");
-                panelGenerador.colocacion.show(panelGenerador.mainPanel, "Login");
+                PanelGenerador.mainPanel.add(PanelApp.crearPanelInicio(), "Inicio");
+                PanelGenerador.colocacion.show(PanelGenerador.mainPanel, "Login");
             }
             else
             {
-                JOptionPane.showMessageDialog(panelGenerador.mainPanel, mensaje, "Cambio no efectuado", JOptionPane.ERROR_MESSAGE);
-                panelGenerador.colocacion.show(panelGenerador.mainPanel, "CambioContrasena");
+                JOptionPane.showMessageDialog(PanelGenerador.mainPanel, mensaje, "Cambio no efectuado", JOptionPane.ERROR_MESSAGE);
+                PanelGenerador.colocacion.show(PanelGenerador.mainPanel, "CambioContrasena");
             }
         });
         cambioCMenu.add(botonCambioContrasena, bag);
@@ -124,7 +124,7 @@ public class PanelCambioContrasena
                 campoNombre.setText("");
                 campoContrasena.setText("");
                 campoConfirmacion.setText("");
-                panelGenerador.colocacion.show(panelGenerador.mainPanel, "Login");
+                PanelGenerador.colocacion.show(PanelGenerador.mainPanel, "Login");
             }
         );    
         cambioCMenu.add(botonInicio, bag);

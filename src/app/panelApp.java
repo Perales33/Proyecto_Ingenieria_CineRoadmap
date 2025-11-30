@@ -22,10 +22,10 @@ public class PanelApp
         bag.fill = GridBagConstraints.HORIZONTAL; 
 
         bag.gridwidth = 2; bag.gridy = 0; bag.gridx = 0;
-        panelGenerador.tituloMain = new JLabel();
+        PanelGenerador.tituloMain = new JLabel();
         actualizarTitulo();
-        Estilos.estilosTitulosLRC(panelGenerador.tituloMain);
-        panelContenido.add(panelGenerador.tituloMain, bag);
+        Estilos.estilosTitulosLRC(PanelGenerador.tituloMain);
+        panelContenido.add(PanelGenerador.tituloMain, bag);
 
         panelCental.add(panelContenido, BorderLayout.CENTER);
 
@@ -36,11 +36,11 @@ public class PanelApp
     {
         if(Controlador.getUsuarioActivo() == null)
         {
-            panelGenerador.tituloMain.setText("Bienvenido");
+            PanelGenerador.tituloMain.setText("Bienvenido");
         }
         else
         {
-            panelGenerador.tituloMain.setText("Bienvenido " + Controlador.getUsuarioActivo().getnombreUsuario());
+            PanelGenerador.tituloMain.setText("Bienvenido " + Controlador.getUsuarioActivo().getnombreUsuario());
         }
     }
 }

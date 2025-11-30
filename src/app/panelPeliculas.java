@@ -137,7 +137,7 @@ public class PanelPeliculas
 
             if(!(peliculaSeleccionada instanceof Pelicula))
             {
-                JOptionPane.showMessageDialog(panelGenerador.mainPanel, "Debes seleccionar una película", "Pelicula no seleccionada", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(PanelGenerador.mainPanel, "Debes seleccionar una película", "Pelicula no seleccionada", JOptionPane.ERROR_MESSAGE);
             }
             else
             {
@@ -146,7 +146,7 @@ public class PanelPeliculas
 
                 if(notaString.isEmpty())
                 {
-                    JOptionPane.showMessageDialog(panelGenerador.mainPanel, "Debes valorar la película de 1 a 5", "Valoración vacía", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(PanelGenerador.mainPanel, "Debes valorar la película de 1 a 5", "Valoración vacía", JOptionPane.ERROR_MESSAGE);
                 }
                 int nota = 0;
 
@@ -156,7 +156,7 @@ public class PanelPeliculas
                 } 
                 catch (Exception a) 
                 {
-                    JOptionPane.showMessageDialog(panelGenerador.mainPanel, "Debes valorar la película con un número válido de 1 a 5", "Valoración mal hecha", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(PanelGenerador.mainPanel, "Debes valorar la película con un número válido de 1 a 5", "Valoración mal hecha", JOptionPane.ERROR_MESSAGE);
                 }
 
                 String mensaje = Controlador.guardarCalificacion(pelicula, nota);
@@ -165,11 +165,11 @@ public class PanelPeliculas
                 {
                     seleccionPeliculas.setSelectedIndex(0);
                     lValoracion.setText("");
-                    JOptionPane.showMessageDialog(panelGenerador.mainPanel, "Calificiación registrada correctamente / Película marcada como vista", "Calificación guardada", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(PanelGenerador.mainPanel, "Calificiación registrada correctamente / Película marcada como vista", "Calificación guardada", JOptionPane.INFORMATION_MESSAGE);
                 }
                 else
                 {
-                    JOptionPane.showMessageDialog(panelGenerador.mainPanel, mensaje, "Calificación no registrada", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(PanelGenerador.mainPanel, mensaje, "Calificación no registrada", JOptionPane.ERROR_MESSAGE);
                 }
 
                 areaValoraciones.setText(crearValoraciones(Controlador.getUsuarioActivo()));

@@ -98,7 +98,7 @@ public class PanelPerfil
         cambioNombre.setBorder(null);
         cambioNombre.addActionListener(e -> 
             {
-                String nuevoNombre = JOptionPane.showInputDialog(panelGenerador.mainPanel, "Ingresar nuevo nombre:", "Cambio nombre", JOptionPane.DEFAULT_OPTION);
+                String nuevoNombre = JOptionPane.showInputDialog(PanelGenerador.mainPanel, "Ingresar nuevo nombre:", "Cambio nombre", JOptionPane.DEFAULT_OPTION);
                 
                 if(nuevoNombre != null && !nuevoNombre.trim().isEmpty())
                 {
@@ -112,7 +112,7 @@ public class PanelPerfil
                     }
                     else
                     {
-                        JOptionPane.showMessageDialog(panelGenerador.mainPanel, "El nuevo nombre debe tener al menos 5 dígitos", "Nombre invalido", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(PanelGenerador.mainPanel, "El nuevo nombre debe tener al menos 5 dígitos", "Nombre invalido", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }
@@ -142,7 +142,7 @@ public class PanelPerfil
         cambioEmail.setBorder(null);
         cambioEmail.addActionListener(e -> 
             {
-                String nuevoEmail = JOptionPane.showInputDialog(panelGenerador.mainPanel, "Ingresar nuevo email:","Cambio email" ,JOptionPane.DEFAULT_OPTION);
+                String nuevoEmail = JOptionPane.showInputDialog(PanelGenerador.mainPanel, "Ingresar nuevo email:","Cambio email" ,JOptionPane.DEFAULT_OPTION);
                 if(nuevoEmail != null && !nuevoEmail.trim().isEmpty())
                 {
                     boolean extensionValida = Controlador.actualizarEmail(nuevoEmail);
@@ -154,7 +154,7 @@ public class PanelPerfil
                     }
                     else
                     {
-                        JOptionPane.showMessageDialog(panelGenerador.mainPanel, "El correo ingresado no tiene una extensión válida \n" + 
+                        JOptionPane.showMessageDialog(PanelGenerador.mainPanel, "El correo ingresado no tiene una extensión válida \n" + 
                         "Extensiones permitidas: @gmail.com, @yahoo.es, @yahoo.com, @outlook.com, @hotmail.com, @live.com",
                         "Email erroneo", JOptionPane.ERROR_MESSAGE);
                     }

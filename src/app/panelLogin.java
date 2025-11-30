@@ -84,18 +84,18 @@ public class PanelLogin
 
             if(mensaje == null)
             {
-                JOptionPane.showMessageDialog(panelGenerador.mainPanel, ("Bienvenido " + Controlador.getUsuarioActivo().getnombreUsuario()), "Usuario registrado", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(PanelGenerador.mainPanel, ("Bienvenido " + Controlador.getUsuarioActivo().getnombreUsuario()), "Usuario registrado", JOptionPane.INFORMATION_MESSAGE);
                 campoNombre.setText("");
                 campoContrasena.setText("");
-                panelGenerador.mainPanel.add(PanelApp.crearPanelInicio(), "Inicio");
-                panelGenerador.colocacion.show(panelGenerador.mainPanel, "Inicio");
+                PanelGenerador.mainPanel.add(PanelApp.crearPanelInicio(), "Inicio");
+                PanelGenerador.colocacion.show(PanelGenerador.mainPanel, "Inicio");
             }
             else
             {
-                JOptionPane.showMessageDialog(panelGenerador.mainPanel, mensaje, "Usuario no registrado", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(PanelGenerador.mainPanel, mensaje, "Usuario no registrado", JOptionPane.ERROR_MESSAGE);
                 campoNombre.setText("");
                 campoContrasena.setText("");
-                panelGenerador.colocacion.show(panelGenerador.mainPanel, "Login");
+                PanelGenerador.colocacion.show(PanelGenerador.mainPanel, "Login");
             }
         });
         loginMenu.add(botonInicio, bag);
@@ -107,7 +107,7 @@ public class PanelLogin
             {
                 campoNombre.setText("");
                 campoContrasena.setText("");
-                panelGenerador.colocacion.show(panelGenerador.mainPanel, "Registro");
+                PanelGenerador.colocacion.show(PanelGenerador.mainPanel, "Registro");
             }
             );
         loginMenu.add(botonRegistro, bag);
@@ -115,7 +115,7 @@ public class PanelLogin
         bag.gridy = 6;
         JButton botonCambioContrasena = new JButton("Cambio de contraseña");
         Estilos.estiloBotones(botonCambioContrasena);
-        botonCambioContrasena.addActionListener(e -> panelGenerador.colocacion.show(panelGenerador.mainPanel, "CambioContrasena"));
+        botonCambioContrasena.addActionListener(e -> PanelGenerador.colocacion.show(PanelGenerador.mainPanel, "CambioContrasena"));
         loginMenu.add(botonCambioContrasena, bag);
 
         panelCentral.add(loginMenu);

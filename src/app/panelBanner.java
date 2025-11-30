@@ -38,25 +38,25 @@ public class PanelBanner
                 {
                     if(pantalla.equals("LogrosInsignias") || pantalla.equals("Retos"))
                     {
-                        JOptionPane.showMessageDialog(panelGenerador.mainPanel, "Sección todavía no implementada","Información" ,JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(PanelGenerador.mainPanel, "Sección todavía no implementada","Información" ,JOptionPane.INFORMATION_MESSAGE);
                     }
                     else if (pantalla.equals("Login"))
                     {
-                        JOptionPane.showMessageDialog(panelGenerador.mainPanel, ("Cerrando Sesión " + Controlador.getUsuarioActivo().getnombreUsuario()),"CerrarSesion" ,JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(PanelGenerador.mainPanel, ("Cerrando Sesión " + Controlador.getUsuarioActivo().getnombreUsuario()),"CerrarSesion" ,JOptionPane.INFORMATION_MESSAGE);
                         Controlador.setUsuarioActivo();
                     }
                     else if(pantalla.equals("Perfil"))
                     {
-                        panelGenerador.mainPanel.add(PanelPerfil.crearPanelPerfil(), "Perfil");
-                        panelGenerador.colocacion.show(panelGenerador.mainPanel, "Perfil");
+                        PanelGenerador.mainPanel.add(PanelPerfil.crearPanelPerfil(), "Perfil");
+                        PanelGenerador.colocacion.show(PanelGenerador.mainPanel, "Perfil");
                     }
                     else if (pantalla.equals("Peliculas"))
                     {
-                        panelGenerador.mainPanel.add(PanelPeliculas.crearPanelPeliculas(), "Peliculas");
-                        panelGenerador.colocacion.show(panelGenerador.mainPanel, "Peliculas");
+                        PanelGenerador.mainPanel.add(PanelPeliculas.crearPanelPeliculas(), "Peliculas");
+                        PanelGenerador.colocacion.show(PanelGenerador.mainPanel, "Peliculas");
                     }
                     
-                    panelGenerador.colocacion.show(panelGenerador.mainPanel, pantalla);
+                    PanelGenerador.colocacion.show(PanelGenerador.mainPanel, pantalla);
                 }
             });
             panelBanner.add(label);

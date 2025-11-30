@@ -100,16 +100,16 @@ public class PanelRegistro
 
             if(mensaje == null)
             {
-                JOptionPane.showMessageDialog(panelGenerador.mainPanel, "Usuario registrado correctamente", "Usuario registrado", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(PanelGenerador.mainPanel, "Usuario registrado correctamente", "Usuario registrado", JOptionPane.INFORMATION_MESSAGE);
                 campoNombre.setText("");
                 campoEmail.setText("");
                 campoContrasena.setText("");
-                panelGenerador.colocacion.show(panelGenerador.mainPanel, "Login");
+                PanelGenerador.colocacion.show(PanelGenerador.mainPanel, "Login");
             }
             else
             {
-                JOptionPane.showMessageDialog(panelGenerador.mainPanel, mensaje, "Usuario no registrado", JOptionPane.ERROR_MESSAGE);
-                panelGenerador.colocacion.show(panelGenerador.mainPanel, "Registro");
+                JOptionPane.showMessageDialog(PanelGenerador.mainPanel, mensaje, "Usuario no registrado", JOptionPane.ERROR_MESSAGE);
+                PanelGenerador.colocacion.show(PanelGenerador.mainPanel, "Registro");
             }
         });
         RegistroMenu.add(botonRegistro, bag);
@@ -122,7 +122,7 @@ public class PanelRegistro
                 campoNombre.setText("");
                 campoEmail.setText("");
                 campoContrasena.setText("");
-                panelGenerador.colocacion.show(panelGenerador.mainPanel, "Login");
+                PanelGenerador.colocacion.show(PanelGenerador.mainPanel, "Login");
             }
         );
         RegistroMenu.add(botonInicio, bag);
