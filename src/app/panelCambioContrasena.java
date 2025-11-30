@@ -20,11 +20,6 @@ public class PanelCambioContrasena
                     g.drawImage(fondo, 0, 0, getWidth(), getHeight(), this);
                 }
             }
-
-            public void setFondo(Image img) {
-                this.fondo = img;
-                repaint();
-            }
         };
 
         panelCentral.setLayout(new GridBagLayout());
