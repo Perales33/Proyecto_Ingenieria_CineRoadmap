@@ -65,6 +65,9 @@ public class PanelLogin
 
         bag.gridx = 1;
         JTextField campoNombre = new JTextField(20);
+        campoNombre.setText("Introduzca nombre o email");
+        
+        
         Estilos.estilosInputsDatos(campoNombre);
         loginMenu.add(campoNombre, bag);
         
@@ -75,6 +78,9 @@ public class PanelLogin
         
         bag.gridx = 1;
         JPasswordField campoContrasena = new JPasswordField(20);
+        campoContrasena.setText("********");
+
+        
         Estilos.estilosInputsContrasenas(campoContrasena);
         loginMenu.add(campoContrasena, bag);
 
@@ -87,48 +93,49 @@ public class PanelLogin
         bag.gridwidth = 3; bag.gridy = 4; bag.gridx = 0;
         JButton botonInicio = new JButton("Iniciar Sesión");
         Estilos.estiloBotones(botonInicio);
-        botonInicio.addActionListener((ActionEvent e) -> 
-        {
-            String mensaje = ControladorLogin.inicioSesion(campoNombre.getText(), new String(campoContrasena.getPassword()));
-
-            if(mensaje == null)
-            {
-                JOptionPane.showMessageDialog(PanelGenerador.mainPanel, ("Bienvenido " + ControladorUsuario.getUsuarioActivo().getnombreUsuario()), "Usuario registrado", JOptionPane.INFORMATION_MESSAGE);
-                campoNombre.setText("");
-                campoContrasena.setText("");
-                PanelGenerador.mainPanel.add(PanelApp.crearPanelInicio(), "Inicio");
-                PanelGenerador.colocacion.show(PanelGenerador.mainPanel, "Inicio");
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(PanelGenerador.mainPanel, mensaje, "Usuario no registrado", JOptionPane.ERROR_MESSAGE);
-                campoNombre.setText("");
-                campoContrasena.setText("");
-                PanelGenerador.colocacion.show(PanelGenerador.mainPanel, "Login");
-            }
-        });
         loginMenu.add(botonInicio, bag);
 
         bag.gridy = 5;
         JButton botonRegistro = new JButton("Registrarse");
         Estilos.estiloBotones(botonRegistro);
-        botonRegistro.addActionListener(e -> 
-            {
-                campoNombre.setText("");
-                campoContrasena.setText("");
-                PanelGenerador.colocacion.show(PanelGenerador.mainPanel, "Registro");
-            }
-            );
+        
         loginMenu.add(botonRegistro, bag);
         
         bag.gridy = 6;
         JButton botonCambioContrasena = new JButton("Cambio de contraseña");
         Estilos.estiloBotones(botonCambioContrasena);
-        botonCambioContrasena.addActionListener(e -> PanelGenerador.colocacion.show(PanelGenerador.mainPanel, "CambioContrasena"));
         loginMenu.add(botonCambioContrasena, bag);
 
-        panelCentral.add(loginMenu);
+        campoNombre.addMouseListener(new MouseAdapter() 
+        {
+            @Override
+            public void mousePressed(MouseEvent e)
+            {
+                ControladorLogin.emailUsuarioRatonPresionado(e, campoNombre, campoContrasena);
+            }
+        });
 
+        campoContrasena.addMouseListener(new MouseAdapter() 
+        {
+            @Override
+            public void mousePressed(MouseEvent e)
+            {
+                ControladorLogin.contrasenaRatonPresionado(e, campoNombre, campoContrasena);
+            }
+        });
+
+        botonInicio.addActionListener((ActionEvent e) -> 
+        {
+            String mensaje = ControladorLogin.inicioSesion(campoNombre.getText(), new String(campoContrasena.getPassword()));
+            ControladorLogin.pulsarBotonInicio(mensaje, campoNombre, campoContrasena);;
+        });
+
+    
+        botonRegistro.addActionListener(e -> ControladorLogin.pulsarBotonRegistro(campoNombre, campoContrasena));
+
+        botonCambioContrasena.addActionListener(e -> ControladorLogin.pulsarBotonRegistro(campoNombre, campoContrasena));
+
+        panelCentral.add(loginMenu);
         return panelCentral;
     }
 }

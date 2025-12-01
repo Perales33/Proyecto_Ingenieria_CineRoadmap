@@ -27,7 +27,7 @@ public class Estilos
     public static void estilosInputsDatos(JTextField textfield)
     {
         textfield.setBackground(Color.WHITE);
-        textfield.setForeground(Color.BLACK);
+        textfield.setForeground(Color.GRAY);
         textfield.setCaretColor(Color.BLACK);
         textfield.setCursor(new Cursor(Cursor.TEXT_CURSOR));
         textfield.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -36,10 +36,10 @@ public class Estilos
     public static void estilosInputsContrasenas(JPasswordField passwordField)
     {
         passwordField.setBackground(Color.WHITE);
-        passwordField.setForeground(Color.BLACK);
+        passwordField.setForeground(Color.GRAY);
         passwordField.setCaretColor(Color.BLACK);
         passwordField.setFont(new Font("Arial", Font.PLAIN, 12));
-        passwordField.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        passwordField.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
         passwordField.setEchoChar('*');
     }
 

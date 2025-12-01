@@ -8,7 +8,13 @@ import main.app.util.*;
 
 public class PanelApp 
 {
-    protected static JPanel crearPanelInicio()
+    private static JLabel tituloMain;
+    public static JLabel getTitutloMain()
+    {
+        return tituloMain;
+    }
+    
+    public static JPanel crearPanelInicio()
     {
         JPanel panelCental = new JPanel(new BorderLayout());
 
@@ -24,25 +30,13 @@ public class PanelApp
         bag.fill = GridBagConstraints.HORIZONTAL; 
 
         bag.gridwidth = 2; bag.gridy = 0; bag.gridx = 0;
-        PanelGenerador.tituloMain = new JLabel();
-        actualizarTitulo();
-        Estilos.estilosTitulosLRC(PanelGenerador.tituloMain);
-        panelContenido.add(PanelGenerador.tituloMain, bag);
+        tituloMain = new JLabel();
+        ControladorApp.actualizarTitulo(tituloMain);
+        Estilos.estilosTitulosLRC(tituloMain);
+        panelContenido.add(tituloMain, bag);
 
         panelCental.add(panelContenido, BorderLayout.CENTER);
 
         return panelCental;
-    }
-    
-    protected static void actualizarTitulo()
-    {
-        if(ControladorUsuario.getUsuarioActivo() == null)
-        {
-            PanelGenerador.tituloMain.setText("Bienvenido");
-        }
-        else
-        {
-            PanelGenerador.tituloMain.setText("Bienvenido " + ControladorUsuario.getUsuarioActivo().getnombreUsuario());
-        }
     }
 }

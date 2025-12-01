@@ -44,7 +44,7 @@ public class PanelPeliculas
 
         for(Pelicula p : catalogo)
         {
-            panelCatalogo.add(crearPeliculas(p));
+            panelCatalogo.add(ControladorPeliculas.crearPeliculas(p));
             panelCatalogo.add(Box.createRigidArea(new Dimension(0, 10)));
         }
 
@@ -81,7 +81,7 @@ public class PanelPeliculas
         Estilos.estilosTextArea(areaValoraciones);
         areaValoraciones.setBorder(BorderFactory.createTitledBorder("Tus valoraciones"));
 
-        areaValoraciones.setText(crearValoraciones(ControladorUsuario.getUsuarioActivo()));
+        areaValoraciones.setText(ControladorCalificacion.crearValoraciones(ControladorUsuario.getUsuarioActivo()));
 
 
         JScrollPane scrollValoraciones = new JScrollPane(areaValoraciones);
@@ -141,7 +141,7 @@ public class PanelPeliculas
 
             if(!(peliculaSeleccionada instanceof Pelicula))
             {
-                JOptionPane.showMessageDialog(PanelGenerador.mainPanel, "Debes seleccionar una película", "Pelicula no seleccionada", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(PanelGenerador.getMain(), "Debes seleccionar una película", "Pelicula no seleccionada", JOptionPane.ERROR_MESSAGE);
             }
             else
             {
@@ -150,7 +150,7 @@ public class PanelPeliculas
 
                 if(notaString.isEmpty())
                 {
-                    JOptionPane.showMessageDialog(PanelGenerador.mainPanel, "Debes valorar la película de 1 a 5", "Valoración vacía", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(PanelGenerador.getMain(), "Debes valorar la película de 1 a 5", "Valoración vacía", JOptionPane.ERROR_MESSAGE);
                 }
                 int nota = 0;
 
@@ -160,7 +160,7 @@ public class PanelPeliculas
                 } 
                 catch (Exception a) 
                 {
-                    JOptionPane.showMessageDialog(PanelGenerador.mainPanel, "Debes valorar la película con un número válido de 1 a 5", "Valoración mal hecha", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(PanelGenerador.getMain(), "Debes valorar la película con un número válido de 1 a 5", "Valoración mal hecha", JOptionPane.ERROR_MESSAGE);
                 }
 
                 String mensaje = ControladorCalificacion.guardarCalificacion(pelicula, nota);
@@ -169,14 +169,14 @@ public class PanelPeliculas
                 {
                     seleccionPeliculas.setSelectedIndex(0);
                     lValoracion.setText("");
-                    JOptionPane.showMessageDialog(PanelGenerador.mainPanel, "Calificiación registrada correctamente / Película marcada como vista", "Calificación guardada", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(PanelGenerador.getMain(), "Calificiación registrada correctamente / Película marcada como vista", "Calificación guardada", JOptionPane.INFORMATION_MESSAGE);
                 }
                 else
                 {
-                    JOptionPane.showMessageDialog(PanelGenerador.mainPanel, mensaje, "Calificación no registrada", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(PanelGenerador.getMain(), mensaje, "Calificación no registrada", JOptionPane.ERROR_MESSAGE);
                 }
 
-                areaValoraciones.setText(crearValoraciones(ControladorUsuario.getUsuarioActivo()));
+                areaValoraciones.setText(ControladorCalificacion.crearValoraciones(ControladorUsuario.getUsuarioActivo()));
             }
         });
 
@@ -195,73 +195,5 @@ public class PanelPeliculas
         panelCental.add(panelContenido, BorderLayout.CENTER);
 
         return panelCental;
-    }
-
-    private static JPanel crearPeliculas(Pelicula p)
-    {
-        Usuario u = ControladorUsuario.getUsuarioActivo();
-
-        if (u == null) { return null; }
-
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBorder(BorderFactory.createTitledBorder(p.getnombrePelicula()));
-
-        ImageIcon icono;
-
-        try
-        {
-            icono = new ImageIcon(PanelPeliculas.class.getResource("/main/resources/img/" + p.getFoto()));
-            if(icono.getImage() == null)
-            {
-                icono = new ImageIcon();
-            }
-        }
-        catch(Exception e)
-        {
-            icono = new ImageIcon();
-        }
-        
-        Image imagen = icono.getImage().getScaledInstance(100, 200, Image.SCALE_SMOOTH);
-        JLabel imagenLabel = new JLabel(new ImageIcon(imagen));
-        imagenLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
-        panel.add(imagenLabel, BorderLayout.WEST);
-
-        JTextArea datosPelicula = new JTextArea();
-        datosPelicula.setText
-        (
-            "\n" +
-            "Año: " + p.getAnio() + "\n\n" +
-            "Géneros: " + p.getGeneros() + "\n\n" +
-            "Directores: " + p.getDirectores() + "\n\n" +
-            "Actores: " + p.getActores() + "\n\n" +
-            "Descripción: " + p.getDescripcion() + "\n\n"
-        );
-        Estilos.estilosTextArea(datosPelicula);
-
-        panel.add(datosPelicula, BorderLayout.CENTER);
-    
-        return panel;
-    }
-
-    private static String crearValoraciones(Usuario u)
-    {;
-        if (u == null || Calificacion.getListaCalificaciones().isEmpty()) { return "Actualmente no hay calificaciones"; }
-
-        StringBuilder texto = new StringBuilder();
-
-        for(Calificacion c : Calificacion.getListaCalificaciones())
-        {
-            if(c.getUsuario().equals(u))
-            {
-                texto.append(c.getPelicula().getnombrePelicula()).append(" (Nota: ").append(c.getCalificacion()).append(" / 5)\n");
-            }
-            
-        }
-
-        if(texto.length() == 0)
-        {
-            return "Actualmente no hay calificaciones";
-        }
-        return texto.toString();
     }
 }

@@ -4,7 +4,7 @@ import main.app.Modelo.Usuario;
 
 public class ControladorUsuario 
 {
-        private static Usuario usuarioActivo;
+    private static Usuario usuarioActivo;
 
     public static Usuario getUsuarioActivo() { return usuarioActivo; }
     protected static void setUsuarioActivo(Usuario u) {usuarioActivo = u; }

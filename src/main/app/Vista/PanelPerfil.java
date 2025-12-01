@@ -6,9 +6,7 @@ import javax.swing.border.TitledBorder;
 
 import main.app.util.*;
 import main.app.Controlador.*;
-import main.app.Modelo.*;
 
-import java.util.ArrayList;
 
 public class PanelPerfil 
 {
@@ -44,31 +42,9 @@ public class PanelPerfil
         datosBag.fill = GridBagConstraints.HORIZONTAL;
         
         datosBag.gridy = 0;
-        ImageIcon icono;
-
-        try
-        {
-            icono = new ImageIcon(PanelPerfil.class.getResource("/main/resources/img/" + ControladorUsuario.getUsuarioActivo().getFoto()));
-        }
-        catch(Exception e)
-        {
-            icono = new ImageIcon();
-        }
-
-        JLabel imagenLabel;
-        Image imagen;
-
-        if(icono == null || icono.getImage() == null)
-        {
-            imagenLabel = new JLabel("No fotos");
-        }
-        else
-        {
-            imagen = icono.getImage().getScaledInstance(500, 500, Image.SCALE_SMOOTH);
-            imagenLabel = new JLabel(new ImageIcon(imagen));
-        }
-        imagenLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
-        panelDatos.add(imagenLabel, datosBag);
+        
+        ControladorPerfil.crearImagenPerfil(panelDatos, datosBag);
+        
 
         datosBag.gridy = 1;
         JPanel datosUsuario = new JPanel(new GridBagLayout());
@@ -101,27 +77,6 @@ public class PanelPerfil
         cambioNombre.setToolTipText("Cambiar nombre");
         cambioNombre.setBackground(null);
         cambioNombre.setBorder(null);
-        cambioNombre.addActionListener(e -> 
-            {
-                String nuevoNombre = JOptionPane.showInputDialog(PanelGenerador.mainPanel, "Ingresar nuevo nombre:", "Cambio nombre", JOptionPane.DEFAULT_OPTION);
-                
-                if(nuevoNombre != null && !nuevoNombre.trim().isEmpty())
-                {
-                    boolean actualizarNombre = ControladorPerfil.actualizarNombre(nuevoNombre); 
-
-                    if(actualizarNombre)
-                    {
-                        ControladorUsuario.getUsuarioActivo().setnombreUsuario(nuevoNombre);
-                        labelNombreUsuario.setText("Nombre: " + nuevoNombre);
-                        PanelApp.actualizarTitulo();
-                    }
-                    else
-                    {
-                        JOptionPane.showMessageDialog(PanelGenerador.mainPanel, "El nuevo nombre debe tener al menos 5 dígitos", "Nombre invalido", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            }
-        );
         datosUsuario.add(cambioNombre, datosUsuarioBag);
         
 
@@ -145,28 +100,6 @@ public class PanelPerfil
         cambioEmail.setToolTipText("Cambiar nombre");
         cambioEmail.setBackground(null);
         cambioEmail.setBorder(null);
-        cambioEmail.addActionListener(e -> 
-            {
-                String nuevoEmail = JOptionPane.showInputDialog(PanelGenerador.mainPanel, "Ingresar nuevo email:","Cambio email" ,JOptionPane.DEFAULT_OPTION);
-                if(nuevoEmail != null && !nuevoEmail.trim().isEmpty())
-                {
-                    boolean extensionValida = ControladorPerfil.actualizarEmail(nuevoEmail);
-
-                    if(extensionValida)
-                    {
-                        ControladorUsuario.getUsuarioActivo().setEmail(nuevoEmail);
-                        labelEmail.setText("Email: " + nuevoEmail);
-                    }
-                    else
-                    {
-                        JOptionPane.showMessageDialog(PanelGenerador.mainPanel, "El correo ingresado no tiene una extensión válida \n" + 
-                        "Extensiones permitidas: @gmail.com, @yahoo.es, @yahoo.com, @outlook.com, @hotmail.com, @live.com",
-                        "Email erroneo", JOptionPane.ERROR_MESSAGE);
-                    }
-                    
-                }
-            }
-        );
         datosUsuario.add(cambioEmail, datosUsuarioBag);
 
 
@@ -181,34 +114,10 @@ public class PanelPerfil
         JPanel panelPeliculasVistas = new JPanel();
         panelPeliculasVistas.setBorder(BorderFactory.createTitledBorder("Películas Vistas"));
         panelPeliculasVistas.setLayout(new WrapLayout(FlowLayout.LEFT, 10, 10));
-
-        ArrayList<Pelicula> peliculasVistas = ControladorUsuario.getUsuarioActivo().getPeliculas();
-
-        if (panelPeliculasVistas == null || peliculasVistas.isEmpty()) 
-        {
-            JLabel textoInicial = new JLabel("Actualmente no tienes películas vistas");
-            panelPeliculasVistas.add(textoInicial);
-        }
-
-        panelPeliculasVistas.removeAll();
-        if (peliculasVistas.isEmpty()) 
-        {
-            JLabel textoInicial = new JLabel("Actualmente no tienes películas vistas");
-            panelPeliculasVistas.add(textoInicial);
-        } 
-        else 
-        {
-            for(Pelicula p : peliculasVistas)
-            {
-                panelPeliculasVistas.add(crearPeliculasVistas(p));
-            }
-        }
-        panelPeliculasVistas.revalidate();
-        panelPeliculasVistas.repaint();
+        ControladorPerfil.crearPanelPeliculasVistas(panelPeliculasVistas);
 
         JScrollPane panelScrollPeliculas = new JScrollPane(panelPeliculasVistas);
         panelScrollPeliculas.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED); 
-
 
         JPanel panelIL = new JPanel();
         panelIL.setBorder(BorderFactory.createTitledBorder("Insignias y Logros"));
@@ -226,32 +135,22 @@ public class PanelPerfil
         panelPIL.setMinimumSize(new Dimension(600, 600));
         panelPIL.setMaximumSize(new Dimension(600, 600));
 
+        cambioNombre.addActionListener(e -> 
+            {
+                String nuevoNombre = JOptionPane.showInputDialog(PanelGenerador.getMain(), "Ingresar nuevo nombre:", "Cambio nombre", JOptionPane.DEFAULT_OPTION);
+                ControladorPerfil.cambiarNombre(nuevoNombre, labelNombreUsuario);
+            }
+        );
+
+        cambioEmail.addActionListener(e -> 
+            {
+                String nuevoEmail = JOptionPane.showInputDialog(PanelGenerador.getMain(), "Ingresar nuevo email:","Cambio email" ,JOptionPane.DEFAULT_OPTION);
+                ControladorPerfil.cambiarEmail(nuevoEmail, labelEmail);
+            }
+        );
+
         panelCental.add(panelDividido);
 
         return panelCental;
-    }
-
-    private static JPanel crearPeliculasVistas(Pelicula p)
-    {
-        JPanel panelPeliculaV = new JPanel();
-        panelPeliculaV.setLayout(new BoxLayout(panelPeliculaV, BoxLayout.Y_AXIS));
-        panelPeliculaV.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-
-        ImageIcon icono;
-        JLabel imagenLabel;
-        try
-        {
-            icono = new ImageIcon(PanelPeliculas.class.getResource("/main/resources/img/" + p.getFoto()));
-            Image imagen = icono.getImage().getScaledInstance(100, 150, Image.SCALE_SMOOTH);
-            imagenLabel = new JLabel(new ImageIcon(imagen));
-            imagenLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
-            panelPeliculaV.add(imagenLabel);
-        }
-        catch(Exception e)
-        {
-            icono = new ImageIcon();
-        }
-        
-        return panelPeliculaV;
     }
 }

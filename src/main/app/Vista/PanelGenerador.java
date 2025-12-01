@@ -8,15 +8,18 @@ import main.app.Controlador.*;
 public class PanelGenerador extends JFrame
 {
     // Página principal
-    static CardLayout colocacion = new CardLayout();
-    static JPanel  mainPanel = new JPanel(colocacion); // Panel principal
-
-    protected static JLabel tituloMain; // Título del la página principal
+    private static CardLayout colocacion = new CardLayout();
+    private static JPanel  mainPanel = new JPanel(colocacion); // Panel principal
     
     // Getter de la página principal
     public static CardLayout getColocacion()
     {
         return colocacion;
+    }
+
+    public static JPanel getMain()
+    {
+        return mainPanel;
     }
     
     // Paneles de la interfaz
@@ -42,7 +45,7 @@ public class PanelGenerador extends JFrame
             perfilPanel = PanelPerfil.crearPanelPerfil();
             peliculasPanel = PanelPeliculas.crearPanelPeliculas();
 
-            PanelGenerador.mainPanel.add(appPanel, "Inicio");
+            PanelGenerador.getMain().add(appPanel, "Inicio");
         }
         
         // Asignación al main de los paneles

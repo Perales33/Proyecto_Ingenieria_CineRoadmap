@@ -1,6 +1,12 @@
 package main.app.Controlador;
 
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import java.awt.*;
+
 import main.app.Modelo.Usuario;
+import main.app.Vista.*;
 
 public class ControladorContrasena
 {
@@ -26,7 +32,7 @@ public class ControladorContrasena
         {
             for(Usuario u : Usuario.getUsuarios())
             {
-                if(u.getnombreUsuario() != null && u.getnombreUsuario().equals(nombre))
+                if((u.getnombreUsuario() != null && u.getnombreUsuario().equals(nombre)) || u.getEmail().equals(nombre))
                 {
                     if(!u.getContrasena().trim().equals(contrasena.trim()))
                     {
@@ -43,6 +49,95 @@ public class ControladorContrasena
                 }        
             }
             return "El usuario no existe";
+        }
+    }
+
+    public static void usuarioRatonPresionado(java.awt.event.MouseEvent e, JTextField campoNombre, JPasswordField campoContrasena, JPasswordField campoConfirmacion)
+    {
+        if(campoNombre.getText().equals("Introduzca nombre o email"))
+        {
+            campoNombre.setText("");
+            campoNombre.setForeground(Color.BLACK);
+        }
+
+        if(String.valueOf(campoContrasena.getPassword()).isEmpty())
+        {
+            campoContrasena.setText("********");
+            campoContrasena.setForeground(Color.GRAY);
+        }
+
+        if(String.valueOf(campoConfirmacion.getPassword()).isEmpty())
+        {
+            campoConfirmacion.setText("********");
+            campoConfirmacion.setForeground(Color.GRAY);
+        }
+    }
+
+    public static void contrasenaRatonPresionado(java.awt.event.MouseEvent e, JTextField campoNombre, JPasswordField campoContrasena, JPasswordField campoConfirmacion)
+    {
+        if(!String.valueOf(campoContrasena.getPassword()).isEmpty())
+        {
+            campoContrasena.setText("");
+            campoContrasena.setForeground(Color.BLACK);
+        }
+
+        if(String.valueOf(campoConfirmacion.getPassword()).isEmpty())
+        {
+            campoConfirmacion.setText("********");
+            campoConfirmacion.setForeground(Color.GRAY);
+        }
+
+        if(campoNombre.getText().isEmpty())
+        {
+            campoNombre.setText("Introduzca nombre o email");
+            campoNombre.setForeground(Color.GRAY);
+        }
+    }
+
+    public static void confirmacionRatonPresionado(java.awt.event.MouseEvent e, JTextField campoNombre, JPasswordField campoContrasena, JPasswordField campoConfirmacion)
+    {
+        if(!String.valueOf(campoConfirmacion.getPassword()).isEmpty())
+        {
+            campoConfirmacion.setText("");
+            campoConfirmacion.setForeground(Color.BLACK);
+        }
+
+        if(String.valueOf(campoContrasena.getPassword()).isEmpty())
+        {
+            campoContrasena.setText("********");
+            campoContrasena.setForeground(Color.GRAY);
+        }
+
+        if(campoNombre.getText().isEmpty())
+        {
+            campoNombre.setText("Introduzca nombre o email");
+            campoNombre.setForeground(Color.GRAY);
+        }
+    }
+
+    public static void volverInicio(JTextField campoNombre, JPasswordField campoContrasena, JPasswordField campoConfirmacion)
+    {
+        campoNombre.setText("Introduzca nombre o email");
+        campoContrasena.setText("********");
+        campoConfirmacion.setText("********");
+        PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Login");
+    }
+
+    public static void ejecutarCambioContrasena(String mensaje, JTextField campoNombre, JPasswordField campoContrasena, JPasswordField campoConfirmacion)
+    {
+        if(mensaje == null)
+        {
+            JOptionPane.showMessageDialog(PanelGenerador.getMain(), "Cambio de contraseña exitoso", "Cambio Exitoso", JOptionPane.INFORMATION_MESSAGE);
+            campoNombre.setText("Introduzca nombre o email");
+            campoContrasena.setText("********");
+            campoConfirmacion.setText("********");
+            PanelGenerador.getMain().add(PanelApp.crearPanelInicio(), "Inicio");
+            PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Login");
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(PanelGenerador.getMain(), mensaje, "Cambio no efectuado", JOptionPane.ERROR_MESSAGE);
+            PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "CambioContrasena");
         }
     }
 }

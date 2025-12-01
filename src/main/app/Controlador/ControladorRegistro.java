@@ -1,6 +1,12 @@
 package main.app.Controlador;
 
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import java.awt.*;
+
 import main.app.Modelo.Usuario;
+import main.app.Vista.PanelGenerador;
 
 public class ControladorRegistro 
 {
@@ -60,6 +66,94 @@ public class ControladorRegistro
             Usuario nuevoUsuario = new Usuario(contrasena, email, nombre);
             Usuario.setUsuarios(nuevoUsuario); 
             return null;
+        }
+    }
+
+    public static void nombreRatonPresionado(java.awt.event.MouseEvent e, JTextField campoNombre, JTextField campoEmail, JPasswordField campoContrasena)
+    {
+        if(campoNombre.getText().equals("Introduzca nombre"))
+        {
+            campoNombre.setText("");
+            campoNombre.setForeground(Color.BLACK);
+        }
+
+        if(String.valueOf(campoContrasena.getPassword()).isEmpty())
+        {
+            campoContrasena.setText("********");
+            campoContrasena.setForeground(Color.GRAY);
+        }
+
+        if(campoEmail.getText().isEmpty())
+        {
+            campoEmail.setText("Introduzca email");
+            campoEmail.setForeground(Color.GRAY);
+        }
+    }
+
+    public static void emailRatonPresionado(java.awt.event.MouseEvent e, JTextField campoNombre,  JTextField campoEmail, JPasswordField campoContrasena)
+    {
+        if(campoEmail.getText().equals("Introduzca email"))
+        {
+            campoEmail.setText("");
+            campoEmail.setForeground(Color.BLACK);
+        }
+
+        if(String.valueOf(campoContrasena.getPassword()).isEmpty())
+        {
+            campoContrasena.setText("********");
+            campoContrasena.setForeground(Color.GRAY);
+        }
+
+        if(campoNombre.getText().isEmpty())
+        {
+            campoNombre.setText("Introduzca nombre");
+            campoNombre.setForeground(Color.GRAY);
+        }
+    }
+
+    public static void contrasenaRatonPresionado(java.awt.event.MouseEvent e, JTextField campoNombre, JTextField campoEmail, JPasswordField campoContrasena)
+    {
+        if(!String.valueOf(campoContrasena.getPassword()).isEmpty())
+        {
+            campoContrasena.setText("");
+            campoContrasena.setForeground(Color.BLACK);
+        }
+
+        if(campoNombre.getText().isEmpty())
+        {
+            campoNombre.setText("Introduzca nombre");
+            campoNombre.setForeground(Color.GRAY);
+        }
+
+        if(campoEmail.getText().isEmpty())
+        {
+            campoEmail.setText("Introduzca email");
+            campoEmail.setForeground(Color.GRAY);
+        }
+    }
+
+    public static void botonInicioPresionado(JTextField campoNombre, JTextField campoEmail, JPasswordField campoContrasena)
+    {
+        campoNombre.setText("Introduzca nombre");
+        campoEmail.setText("Introduzca email");
+        campoContrasena.setText("********");
+        PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Login");
+    }
+
+    public static void botonRegistroPresionado(String mensaje, JTextField campoNombre, JTextField campoEmail, JPasswordField campoContrasena)
+    {
+        if(mensaje == null)
+        {
+            JOptionPane.showMessageDialog(PanelGenerador.getMain(), "Usuario registrado correctamente", "Usuario registrado", JOptionPane.INFORMATION_MESSAGE);
+            campoNombre.setText("Introduzca nombre");
+            campoEmail.setText("Introduzca email");
+            campoContrasena.setText("********");
+            PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Login");
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(PanelGenerador.getMain(), mensaje, "Usuario no registrado", JOptionPane.ERROR_MESSAGE);
+            PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Registro");
         }
     }
 }

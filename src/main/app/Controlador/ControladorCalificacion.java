@@ -60,4 +60,26 @@ public class ControladorCalificacion
             return e.getMessage();
         }
     }
+
+    public static String crearValoraciones(Usuario u)
+    {
+        if (u == null || Calificacion.getListaCalificaciones().isEmpty()) { return "Actualmente no hay calificaciones"; }
+
+        StringBuilder texto = new StringBuilder();
+
+        for(Calificacion c : Calificacion.getListaCalificaciones())
+        {
+            if(c.getUsuario().equals(u))
+            {
+                texto.append(c.getPelicula().getnombrePelicula()).append(" (Nota: ").append(c.getCalificacion()).append(" / 5)\n");
+            }
+            
+        }
+
+        if(texto.length() == 0)
+        {
+            return "Actualmente no hay calificaciones";
+        }
+        return texto.toString();
+    }
 }

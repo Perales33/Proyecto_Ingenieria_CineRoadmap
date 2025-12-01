@@ -65,6 +65,7 @@ public class PanelCambioContrasena
 
         bag.gridx = 1;
         JTextField campoNombre = new JTextField(20);
+        campoNombre.setText("Introduzca nombre o email");
         Estilos.estilosInputsDatos(campoNombre);
         cambioCMenu.add(campoNombre, bag);
         
@@ -75,6 +76,7 @@ public class PanelCambioContrasena
 
         bag.gridx = 1;
         JPasswordField campoContrasena = new JPasswordField(20);
+        campoContrasena.setText("********");
         Estilos.estilosInputsContrasenas(campoContrasena);
         cambioCMenu.add(campoContrasena, bag);
         
@@ -91,6 +93,7 @@ public class PanelCambioContrasena
 
         bag.gridx = 1;
         JPasswordField campoConfirmacion = new JPasswordField(20);
+        campoConfirmacion.setText("********");
         Estilos.estilosInputsContrasenas(campoConfirmacion);
         cambioCMenu.add(campoConfirmacion, bag);
 
@@ -103,39 +106,47 @@ public class PanelCambioContrasena
         bag.gridwidth = 2; bag.gridy = 4; bag.gridx = 0;
         JButton botonCambioContrasena = new JButton("Cambio de Contraseña");
         Estilos.estiloBotones(botonCambioContrasena);
-        botonCambioContrasena.addActionListener((ActionEvent e) -> 
-        {
-            String mensaje = ControladorContrasena.cambiarContrasena(campoNombre.getText(), new String(campoContrasena.getPassword()), new String(campoConfirmacion.getPassword()));
-
-            if(mensaje == null)
-            {
-                JOptionPane.showMessageDialog(PanelGenerador.mainPanel, "Cambio de contraseña exitoso", "Cambio Exitoso", JOptionPane.INFORMATION_MESSAGE);
-                campoNombre.setText("");
-                campoContrasena.setText("");
-                campoConfirmacion.setText("");
-                PanelGenerador.mainPanel.add(PanelApp.crearPanelInicio(), "Inicio");
-                PanelGenerador.colocacion.show(PanelGenerador.mainPanel, "Login");
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(PanelGenerador.mainPanel, mensaje, "Cambio no efectuado", JOptionPane.ERROR_MESSAGE);
-                PanelGenerador.colocacion.show(PanelGenerador.mainPanel, "CambioContrasena");
-            }
-        });
         cambioCMenu.add(botonCambioContrasena, bag);
 
         bag.gridy = 5;
         JButton botonInicio = new JButton("Volver al Login");
         Estilos.estiloBotones(botonInicio);
-        botonInicio.addActionListener(e -> 
-            {
-                campoNombre.setText("");
-                campoContrasena.setText("");
-                campoConfirmacion.setText("");
-                PanelGenerador.colocacion.show(PanelGenerador.mainPanel, "Login");
-            }
-        );    
         cambioCMenu.add(botonInicio, bag);
+
+        campoNombre.addMouseListener(new MouseAdapter() 
+        {
+            @Override
+            public void mousePressed(MouseEvent e)
+            {
+                ControladorContrasena.usuarioRatonPresionado(e, campoNombre, campoContrasena, campoConfirmacion);
+            }
+        });
+
+        campoContrasena.addMouseListener(new MouseAdapter() 
+        {
+            @Override
+            public void mousePressed(MouseEvent e)
+            {
+                ControladorContrasena.contrasenaRatonPresionado(e, campoNombre, campoContrasena, campoConfirmacion);
+            }
+        });
+
+        campoConfirmacion.addMouseListener(new MouseAdapter() 
+        {
+            @Override
+            public void mousePressed(MouseEvent e)
+            {
+                ControladorContrasena.confirmacionRatonPresionado(e, campoNombre, campoContrasena, campoConfirmacion);
+            }
+        });
+
+        botonInicio.addActionListener(e -> ControladorContrasena.volverInicio(campoNombre, campoContrasena, campoConfirmacion));
+        botonCambioContrasena.addActionListener((ActionEvent e) -> 
+        {
+            String mensaje = ControladorContrasena.cambiarContrasena(campoNombre.getText(), new String(campoContrasena.getPassword()), new String(campoConfirmacion.getPassword()));
+            ControladorContrasena.ejecutarCambioContrasena(mensaje, campoNombre, campoContrasena, campoConfirmacion);
+
+        });
 
         panelCentral.add(cambioCMenu);
 

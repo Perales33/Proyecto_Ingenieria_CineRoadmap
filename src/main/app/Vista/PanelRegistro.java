@@ -65,6 +65,7 @@ public class PanelRegistro
 
         bag.gridx = 1;
         JTextField campoNombre = new JTextField(20);
+        campoNombre.setText("Introduzca nombre");
         Estilos.estilosInputsDatos(campoNombre);
         RegistroMenu.add(campoNombre, bag);
         
@@ -75,6 +76,7 @@ public class PanelRegistro
 
         bag.gridx = 1;
         JTextField campoEmail = new JTextField(20);
+        campoEmail.setText("Introduzca email");
         Estilos.estilosInputsDatos(campoEmail);
         RegistroMenu.add(campoEmail, bag);
         
@@ -85,6 +87,7 @@ public class PanelRegistro
 
         bag.gridx = 1;
         JPasswordField campoContrasena = new JPasswordField(20);
+        campoContrasena.setText("********");
         Estilos.estilosInputsContrasenas(campoContrasena);
         RegistroMenu.add(campoContrasena, bag);
 
@@ -97,38 +100,48 @@ public class PanelRegistro
         bag.gridwidth = 3; bag.gridy = 4; bag.gridx = 0;
         JButton botonRegistro = new JButton("Registrarse");
         Estilos.estiloBotones(botonRegistro);
-        botonRegistro.addActionListener((ActionEvent e) -> 
-        {
-            String mensaje = ControladorRegistro.registrarUsuario(campoNombre.getText(), campoEmail.getText(), new String(campoContrasena.getPassword()));
-
-            if(mensaje == null)
-            {
-                JOptionPane.showMessageDialog(PanelGenerador.mainPanel, "Usuario registrado correctamente", "Usuario registrado", JOptionPane.INFORMATION_MESSAGE);
-                campoNombre.setText("");
-                campoEmail.setText("");
-                campoContrasena.setText("");
-                PanelGenerador.colocacion.show(PanelGenerador.mainPanel, "Login");
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(PanelGenerador.mainPanel, mensaje, "Usuario no registrado", JOptionPane.ERROR_MESSAGE);
-                PanelGenerador.colocacion.show(PanelGenerador.mainPanel, "Registro");
-            }
-        });
         RegistroMenu.add(botonRegistro, bag);
 
         bag.gridy = 5;
         JButton botonInicio = new JButton("Volver al Login");
         Estilos.estiloBotones(botonInicio);
-        botonInicio.addActionListener(e -> 
-            {
-                campoNombre.setText("");
-                campoEmail.setText("");
-                campoContrasena.setText("");
-                PanelGenerador.colocacion.show(PanelGenerador.mainPanel, "Login");
-            }
-        );
         RegistroMenu.add(botonInicio, bag);
+
+        campoNombre.addMouseListener(new MouseAdapter() 
+        {
+            @Override
+            public void mousePressed(MouseEvent e)
+            {
+                ControladorRegistro.nombreRatonPresionado(e, campoNombre, campoEmail ,campoContrasena);
+            }
+        });
+
+        campoContrasena.addMouseListener(new MouseAdapter() 
+        {
+            @Override
+            public void mousePressed(MouseEvent e)
+            {
+                ControladorRegistro.contrasenaRatonPresionado(e, campoNombre, campoEmail, campoContrasena);
+            }
+        });
+
+        campoEmail.addMouseListener(new MouseAdapter() 
+        {
+            @Override
+            public void mousePressed(MouseEvent e)
+            {
+                ControladorRegistro.emailRatonPresionado(e, campoNombre, campoEmail, campoContrasena);
+            }
+        });
+
+        botonRegistro.addActionListener((ActionEvent e) -> 
+        {
+            String mensaje = ControladorRegistro.registrarUsuario(campoNombre.getText(), campoEmail.getText(), new String(campoContrasena.getPassword()));
+            ControladorRegistro.botonRegistroPresionado(mensaje, campoNombre, campoEmail, campoContrasena);
+            
+        });
+
+        botonInicio.addActionListener(e -> ControladorRegistro.botonInicioPresionado(campoNombre, campoEmail, campoContrasena));
 
         panelCentral.add(RegistroMenu);
 
