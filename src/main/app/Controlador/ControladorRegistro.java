@@ -5,7 +5,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import java.awt.*;
 
-import main.app.Modelo.Usuario;
+import main.app.Modelo.*;
 import main.app.Vista.PanelGenerador;
 
 public class ControladorRegistro 

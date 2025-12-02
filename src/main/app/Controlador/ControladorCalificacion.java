@@ -1,8 +1,6 @@
 package main.app.Controlador;
 
-import main.app.Modelo.Calificacion;
-import main.app.Modelo.Pelicula;
-import main.app.Modelo.Usuario;
+import main.app.Modelo.*;
 
 public class ControladorCalificacion 
 {

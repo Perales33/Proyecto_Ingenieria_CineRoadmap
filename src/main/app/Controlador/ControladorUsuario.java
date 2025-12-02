@@ -1,6 +1,6 @@
 package main.app.Controlador;
 
-import main.app.Modelo.Usuario;
+import main.app.Modelo.*;
 
 public class ControladorUsuario 
 {

@@ -1,15 +1,10 @@
 package main.app.Controlador;
 
 import java.awt.Color;
-import java.awt.TextField;
-import java.awt.Event.*;
-import java.awt.event.MouseEvent;
-
 import javax.swing.*;
 
 import main.app.Vista.*;
-
-import main.app.Modelo.Usuario;
+import main.app.Modelo.*;
 
 public class ControladorLogin 
 {
@@ -43,7 +38,6 @@ public class ControladorLogin
             return "El usuario no existe";
         }
     }
-
 
     public static void emailUsuarioRatonPresionado(java.awt.event.MouseEvent e, JTextField campoNombre, JPasswordField campoContrasena)
     {
