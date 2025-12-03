@@ -73,6 +73,7 @@
 - **Backend**: Java (desde `/src/main/app/Modelo` y `/src/main/app/Controlador`)
 - **Frontend**: Java (desde `/src/main/app/Vista`)
 - **Base de datos**: SQL o MySQL (con backup incluido)
+- **Diagramas**: PlantUML (con IntelliJ IDEA)
 
 
 ## ⚙️ Instalación y ejecución <a name="instalacion_y_ejecucion"></a> 
@@ -84,6 +85,9 @@
   -> Version 11+
 - Eclipse: 
   -> Java Version
+- IntelliJ IDEA
+  -> Versión Community Edition
+  -> PlantUML (Diseño de diagramas)
 ```
 
 ### 📦 Instalación
@@ -113,7 +117,8 @@ Proyecto_Ingenieria_CineRoadmap/
 │       │   ├── Vista/
 │       │   ├── util/
 │       │   └── Main.java 
-│       └── resources/ 
+│       └── resources/
+│           ├── diagramas/
 │           ├── img/
 │           ├── db/
 │           └── css/
