@@ -117,12 +117,12 @@ Proyecto_Ingenieria_CineRoadmap/
 │       │   ├── Vista/
 │       │   ├── util/
 │       │   └── Main.java 
-│       └── resources/
-│           ├── diagramas/
-│           ├── img/
-│           ├── db/
-│           └── css/
-└
+│       ├── resources/
+│       │   ├── diagramas/
+│       │   ├── img/
+│       │   ├── db/
+│       │   └── css/
+└       └
 ```
 
 ### 🔮 Próximos pasos <a name="proximos_pasos"></a> 
