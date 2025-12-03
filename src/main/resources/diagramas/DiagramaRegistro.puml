@@ -1,0 +1,24 @@
+@startuml
+title Secuencia de Registro - CineRoadmap
+
+actor Usuario
+participant "PanelGenerador" as PG
+participant "PanelRegistro" as Registro
+participant "ControladorRegistro" as CRE
+participant "PanelLogin" as Login
+
+== Registro ==
+Usuario -> Registro : ingresa nombre, email y contraseña
+Usuario -> Registro : pulsa botón "Registrarse"
+Registro -> CRE : registrarUsuario(nombre, email, contraseña)
+CRE -> CRE : valida campos (nombre, email, contraseña)
+alt Datos válidos y usuario no existente
+    CRE -> CRE : crea nuevo usuario
+    CRE -> Registro : muestra mensaje "Registro exitoso"
+    CRE -> PG : vuelve al PanelLogin
+else Datos inválidos o usuario ya existe
+    CRE -> Registro : muestra mensaje de error
+end
+== Registro Usuario ==
+Registro -> Login: vuelta al login
+@enduml

@@ -1,0 +1,48 @@
+@startuml
+title Secuencia de Perfil - CineRoadmap
+
+actor Usuario
+participant "PanelApp" as App
+participant "PanelBanner" as Banner
+participant "PanelPerfil" as Perfil
+participant "ControladorUsuario" as CU
+participant "ControladorPerfil" as CPU
+
+== Perfil Usuario ==
+Usuario -> App : accede a la pantalla principal
+App -> Banner : presiona la sección de perfil
+Banner -> Perfil : se carga toda la sección de perfil
+Perfil -> CPU : obtener datos usuario
+CPU --> Perfil: recibe datos: nombre, email, foto
+CU -> CPU: obtener listaPeliculas, listaInsignias y listaLogros
+
+alt Películas valoradas
+CPU -> Perfil: crear panel de películas vistas
+CPU --> Perfil: muestra las películas vistas
+else No hay películas valoradas
+CPU -> Perfil : muestra mensaje "No hay peliculas vistas"
+end
+
+alt Insignias y logros conseguidos
+CPU -> Perfil: crear panel de logros e insignias
+CPU --> Perfil: muestra las insignias y logros conseguidos
+else No hay películas valoradas
+CPU -> Perfil : muestra mensaje "No hay logros o insignias conseguidos"
+end
+
+Perfil -> Usuario: mostrar perfil con datos, películas, logros e insignias
+
+
+== Actualizar Datos Perfil ==
+Usuario -> Perfil: actualizar nombre o email
+
+Perfil -> CPU: presiona botón cambiarNombre / cambiarEmail
+alt Perfil actualizado
+CPU -> CU: actualizar datos
+CPU -> Perfil: confirmar cambio
+Perfil -> Usuario: mostrar cambios actualizados
+else
+CPU -> Perfil : mensaje de error
+Perfil -> Usuario : muestra mensaje de error "No se ha podido actualizar el perfil"
+end
+@enduml

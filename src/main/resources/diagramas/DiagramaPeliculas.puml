@@ -1,0 +1,24 @@
+@startuml
+title Secuencia de Peliculas - CineRoadmap
+actor Usuario
+
+participant "PanelApp" as App
+participant "PanelBanner" as Banner
+
+participant "PanelPeliculas" as Peliculas
+participant "ControladorPeliculas" as CP
+
+== Catálogo películas ==
+Usuario -> App : accede a la pantalla principal
+App -> Banner : presiona la sección de películas
+Banner -> Peliculas : se carga toda la sección de peliculas
+
+CP -> Peliculas: carga catálogo de películas
+alt Habiendo peliculas en el catálogo
+CP -> Peliculas: crear catálogo películas
+Peliculas -> Usuario: mostrar catálogo
+else Si no hay peliculas en el catálogo
+CP -> Peliculas: mensaje "No hay películas actualmente"
+Peliculas -> Usuario: mostrar mensaje
+end
+@enduml

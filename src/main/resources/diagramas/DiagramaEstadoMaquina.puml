@@ -1,0 +1,40 @@
+@startuml
+title Diagrama de Estados Máquina - CineRoadmap
+[*] --> Login
+
+Login --> Pantalla_Principal : Inicio de sesión correcto
+Login --> Registro : Crear cuenta
+Login --> CambioContrasena : Recuperar contraseña
+
+Registro --> Login : Registro exitoso
+Registro --> Registro : Error en datos
+
+CambioContrasena --> Login : Cambio exitoso
+CambioContrasena --> CambioContrasena : Error
+
+Pantalla_Principal --> Perfil : Gestionar perfil
+Pantalla_Principal --> Peliculas : Ver catálogo / valorar / marcar vistas
+Pantalla_Principal --> Retos : Consultar retos
+Pantalla_Principal --> Insignias_Logros : Ver insignias y logros
+Pantalla_Principal --> [*] : Cerrar sesión
+
+Peliculas --> Pantalla_Principal : Volver
+Peliculas --> Peliculas : Valorar película
+Peliculas --> Peliculas : Marcar película como vista
+Peliculas --> [*] : Cerrar sesión
+
+Perfil --> Pantalla_Principal : Volver
+Perfil --> Perfil : Actualizar nombre / email
+Peliculas --> Perfil : Actualizar películas vistas
+Perfil -->  [*] : Cerrar sesión
+
+Insignias_Logros --> Pantalla_Principal : Volver
+Insignias_Logros --> Perfil : Actualizar insignias y logros
+Insignias_Logros --> Insignias_Logros : Consultar insignias / logros
+Insignias_Logros -->  [*] : Cerrar sesión
+
+Retos --> Pantalla_Principal : Volver
+Retos --> Perfil : Actualizar retos
+Retos --> Retos : Consultar retos del usuario
+Retos -->  [*] : Cerrar sesión
+@enduml

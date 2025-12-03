@@ -1,0 +1,98 @@
+@startuml
+
+title Diagrama Clases - CineRoadmap
+' Clases
+class Usuario {
+    -contrasena: String
+    -email: String
+    -nombreUsuario: String
+    -fotoUsuario: String
+    -listaPeliculas: ArrayList<Pelicula>
+    -listaInsignias: ArrayList<Insignia>
+    -listaRetos: ArrayList<Reto>
+    -listaLogros: ArrayList<Logro>
+    +Usuario(contrasena, email, nombreUsuario, fotoUsuario)
+    +Usuario(contrasena, email, nombreUsuario)
+    +setNombreUsuario(String)
+    +setEmail(String)
+    +setContrasena(String)
+    +setFoto(String)
+    +setPeliculas(Pelicula)
+    +setInsignias(Insignia)
+    +setRetos(Reto)
+    +setLogros(Logro)
+    +getNombreUsuario(): String
+    +getEmail(): String
+    +getContrasena(): String
+    +getFoto(): String
+    +getPeliculas(): ArrayList<Pelicula>
+    +getInsignias(): ArrayList<Insignia>
+    +getRetos(): ArrayList<Reto>
+    +getLogros(): ArrayList<Logro>
+}
+
+class Pelicula {
+    -nombrePelicula: String
+    -anio: int
+    -arrayGeneros: ArrayList<String>
+    -arrayDirectores: ArrayList<String>
+    -arrayActores: ArrayList<String>
+    -descripcion: String
+    -fotoPelicula: String
+    +getNombrePelicula(): String
+    +getAnio(): int
+    +getGeneros(): ArrayList<String>
+    +getDirectores(): ArrayList<String>
+    +getActores(): ArrayList<String>
+}
+
+class Calificacion {
+    -calificacion: int
+    -fechaCalificacion: Date
+    -pelicula: Pelicula
+    -usuario: Usuario
+    +getCalificacion(): int
+    +setCalificacion(int)
+    +getFechaCalificacion(): Date
+    +setFechaCalificacion(Date)
+    +getPelicula(): Pelicula
+    +getUsuario(): Usuario
+}
+
+class Reto {
+    -idReto: int
+    -nombreReto: String
+    -estadoReto: boolean
+    +getNombreReto(): String
+    +getID(): int
+    +getEstado(): boolean
+    +setEstado(boolean)
+}
+
+class Logro {
+    -idLogro: int
+    -nombreLogro: String
+    -descripcionLogro: String
+    +getNombreReto(): String
+    +getID(): int
+    +getDescripcion(): String
+}
+
+class Insignia {
+    -idInsignia: int
+    -nombreInsignia: String
+    -descripcionInsignia: String
+    +getNombreReto(): String
+    +getID(): int
+    +getDescripcion(): String
+}
+
+' Relaciones
+Usuario "1" --> "0..*" Pelicula : listaPeliculas
+Usuario "1" --> "0..*" Calificacion
+Pelicula "1" --> "0..*" Calificacion
+Usuario "1" --> "0..*" Insignia : listaInsignias
+Usuario "1" --> "0..*" Reto : listaRetos
+Usuario "1" --> "0..*" Logro : listaLogros
+
+@enduml

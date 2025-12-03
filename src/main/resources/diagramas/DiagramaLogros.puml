@@ -1,0 +1,21 @@
+@startuml
+title Secuencia de Logros - CineRoadmap
+
+actor Usuario
+participant "PanelLogin/PanelAcciones" as AccionesPanel
+participant "ControladorUsuario" as UsuarioCtrl
+participant "ControladorLogros" as LogrosCtrl
+participant "PanelPerfil" as PerfilPanel
+
+== Usuario realiza acción relevante ==
+Usuario -> AccionesPanel : realiza acción (login, publicar, completar perfil)
+AccionesPanel -> LogrosCtrl : registrarEvento(usuario, tipoAccion)
+LogrosCtrl -> UsuarioCtrl : obtener historial de eventos
+LogrosCtrl -> LogrosCtrl : evaluar criterios de logros
+alt Se cumple algún logro
+    LogrosCtrl -> UsuarioCtrl : activar logro
+    LogrosCtrl -> PerfilPanel : actualizar panel de logros
+    PerfilPanel -> Usuario : mostrar notificación de logro desbloqueado
+end
+
+@enduml

@@ -1,0 +1,35 @@
+@startuml
+title Secuencia de Cambio de Contraseña - CineRoadmap
+
+actor Usuario
+participant "PanelGenerador" as PG
+participant "PanelCambioContrasena" as Cambio
+participant "ControladorContrasena" as CCC
+participant "PanelLogin" as Login
+
+== Usuario accede al formulario ==
+Usuario -> Login : Abrir aplicación
+Cambio -> Usuario : abre formulario de cambio de contraseña
+
+== Cambio de Contraseña ==
+Usuario -> Login : pulsa botón cambiar contraseña
+Login -> Cambio :  carga panel de cambio contraseña
+Usuario -> Cambio : ingresa nombre/usuario, contraseña actual y nueva contraseña
+
+Cambio -> CCC : cambiarContrasena(usuario, actual, nueva)
+CCC -> CCC : valida usuario y contraseña actual
+alt Validación correcta
+    CCC -> CCC : actualiza contraseña
+    CCC -> Cambio : mensaje éxito
+    Cambio -> Usuario : muestra mensaje "Contraseña cambiada correctamente"
+    Cambio -> Login : vuelve al Login
+else Validación incorrecta
+    CCC -> Cambio : mensaje error
+    Cambio -> Usuario : muestra mensaje "Error al cambiar contraseña"
+end
+
+== Usuario vuelve al login ==
+Usuario -> Cambio : pulsa "Volver al Login"
+Cambio -> Login : vuelve PanelLogin
+
+@enduml

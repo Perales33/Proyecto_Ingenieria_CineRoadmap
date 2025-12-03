@@ -1,0 +1,206 @@
+@startuml
+
+title Diagrama de Secuencias - CineRoadmap
+
+actor Usuario
+
+participant "PanelGenerador" as PG
+
+participant "PanelLogin" as Login
+participant "ControladorLogin" as CLO
+
+participant "PanelRegistro" as Registro
+participant "ControladorRegistro" as CRE
+
+participant "PanelCambioContrasena" as Cambio
+participant "ControladorContrasena" as CCC
+
+participant "PanelApp" as App
+participant "ControladorUsuario" as CU
+
+participant "PanelBanner" as Banner
+
+participant "PanelPeliculas" as Peliculas
+participant "ControladorCalificacion" as CC
+participant "ControladorPeliculas" as CP
+
+participant "PanelPerfil" as Perfil
+participant "ControladorPerfil" as CPU
+
+participant "PanelRetos" as Retos
+participant "ControladorRetos" as CR
+participant "PanelInsignias" as Insignias
+participant "ControladorInsignias" as CI
+
+participant "PanelLogros" as Logros
+participant "ControladorLogros" as CL
+
+== Inicio de la app ==
+Usuario -> PG: Abrir aplicación
+PG -> Login: Mostrar panel login
+
+== Login ==
+Usuario -> Login : ingresa usuario/email y contraseña
+Usuario -> Login : pulsa "Iniciar Sesión"
+Login -> CLO : inicioSesion(usuario, contraseña)
+CLO -> CLO : valida credenciales
+alt Credenciales correctas
+    CLO -> Login : mensaje éxitoso
+    Login -> Usuario : mensaje bienvenida / login exitoso
+    Login -> App :accede a la aplicación
+else Credenciales incorrectas
+    CLO -> Login : mensaje error
+    Login -> Usuario : mensaje error "Usuario o contraseña incorrecta"
+end
+
+== Registro ==
+Usuario -> Registro : ingresa nombre, email y contraseña
+Usuario -> Registro : pulsa botón "Registrarse"
+Registro -> CRE : registrarUsuario(nombre, email, contraseña)
+CRE -> CRE : valida campos (nombre, email, contraseña)
+alt Datos válidos y usuario no existente
+    CRE -> CRE : crea nuevo usuario
+    CRE -> Registro : mensaje éxito
+    CRE -> Usuario : muestra mensaje "Registro exitoso"
+    CRE -> Login : vuelve al PanelLogin
+else Datos inválidos o usuario ya existe
+    CRE -> Registro : mensaje error
+    CRE -> Usuario : muestra mensaje de error "Usuario no se ha podido registrar"
+end
+== Cambio de Contraseña ==
+Usuario -> Login : pulsa botón cambiar contraseña
+Login -> Cambio :  carga panel de cambio contraseña
+Usuario -> Cambio : ingresa nombre/usuario, contraseña actual y nueva contraseña
+
+Cambio -> CCC : cambiarContrasena(usuario, actual, nueva)
+CCC -> CCC : valida usuario y contraseña actual
+alt Validación correcta
+    CCC -> CCC : actualiza contraseña
+    CCC -> Cambio : mensaje éxito
+    Cambio -> Usuario : muestra mensaje "Contraseña cambiada correctamente"
+    Cambio -> Login : vuelve al PanelLogin
+else Validación incorrecta
+    CCC -> Cambio : mensaje error
+    Cambio -> Usuario : muestra mensaje "Error al cambiar contraseña"
+end
+
+== Catálogo películas ==
+Usuario -> App : accede a la pantalla principal
+App -> Banner : presiona la sección de películas
+Banner -> Peliculas : se carga toda la sección de peliculas
+
+CP -> Peliculas: carga catálogo de películas
+alt Habiendo peliculas en el catálogo
+CP -> Peliculas: crear catálogo películas
+Peliculas -> Usuario: mostrar catálogo
+else Si no hay peliculas en el catálogo
+CP -> Peliculas: mensaje "No hay películas actualmente"
+Peliculas -> Usuario: mostrar mensaje
+end
+
+== Valoración de películas ==
+Usuario -> App : accede a la pantalla principal
+App -> Banner : presiona la sección de peliculas
+Banner -> Peliculas : se carga toda la sección de peliculas
+Usuario -> Peliculas : selecciona película del JComboBox
+Usuario -> Peliculas : ingresa valor de 1 a 5
+Usuario -> Peliculas : pulsa "Guardar Calificación"
+
+Peliculas -> CC : guardarCalificacion(pelicula, nota)
+CC -> CU : obtiene usuario activo
+CC -> CC : valida nota (1-5) y película seleccionada
+alt Validación correcta
+    CC -> CC : guarda calificación y marca película como vista
+    CC -> Peliculas : mensaje éxito
+    Peliculas -> Usuario : muestra mensaje "Calificación registrada correctamente"
+
+    == Actualizar perfil ==
+    CC -> CPU : actualizarPeliculasVistas(usuario)
+    CPU -> Perfil : actualiza panel de películas vistas
+else Validación incorrecta
+    CP -> Peliculas : mensaje error
+    Peliculas -> Usuario : muestra mensaje error (nota inválida o película no seleccionada)
+end
+
+== Perfil Usuario ==
+Usuario -> App : accede a la pantalla principal
+App -> Banner : presiona la sección de perfil
+Banner -> Perfil : se carga toda la sección de perfil
+Perfil -> CPU : obtener datos usuario
+CPU --> Perfil: recibe datos: nombre, email, foto
+CU -> CPU: obtener listaPeliculas, listaInsignias y listaLogros
+
+alt Películas valoradas
+    CPU -> Perfil: crear panel de películas vistas
+    CPU --> Perfil: muestra las películas vistas
+else No hay películas valoradas
+    CPU -> Perfil : muestra mensaje "No hay peliculas vistas"
+end
+
+alt Insignias y logros conseguidos
+CPU -> Perfil: crear panel de logros e insignias
+CPU --> Perfil: muestra las insignias y logros conseguidos
+else No hay películas valoradas
+CPU -> Perfil : muestra mensaje "No hay logros o insignias conseguidos"
+end
+
+Perfil -> Usuario: mostrar perfil con datos, películas, logros e insignias
+
+alt
+    Usuario -> Perfil: actualizar nombre o email
+
+    Perfil -> CPU: presiona botón cambiarNombre / cambiarEmail
+    alt Perfil actualizado
+        CPU -> CU: actualizar datos
+        CPU -> Perfil: confirmar cambio
+        Perfil -> Usuario: mostrar cambios actualizados
+    else Error de actualización del perfil
+        CPU -> Perfil : mensaje de error
+        Perfil -> Usuario : muestra mensaje de error "No se ha podido actualizar el perfil"
+    end
+end
+
+== Retos ==
+Usuario -> App : accede a la pantalla principal
+App -> Banner : presiona la sección de retos
+Banner -> Insignias : se carga toda la sección de retos
+Peliculas -> CC : valora películas
+CC -> CU: se guardan en el usuario
+CU -> CC : verifica las calificaciones del usuario
+alt Va cumpliendo la condición del reto
+    CC -> CR : si cumple la condición del reto
+    CR -> Retos: actualiza el reto
+    alt Reto completo
+        CR -> Retos : pone el reto como completado
+        CR -> CU: actualiza los retos cumplidos del usuario
+        Retos -> Usuario : muestra el reto como completo
+    end
+else No se cumple el reto
+    CC -> CR : si no cumple la condición del reto
+    CR -> Retos : sin cambios
+end
+
+== Insignias ==
+Usuario -> App : accede a la pantalla principal
+App -> Banner : presiona la sección de insignias
+Banner -> Insignias : se carga toda la sección de insignias
+Usuario -> Peliculas : valora películas
+Peliculas -> Perfil: las películas se cargan en su perfil
+Perfil -> CPU : actualiza películas vistas
+CPU -> CI : cuando llega a un cierto límite de películas
+alt Insignia Cumplida
+    CI -> CU : obtiene los datos del usuario activo
+    CI -> CI : evalua la condición de obtener la insignia
+    CI -> CU : activa la insignia
+    CU -> Perfil : actualizar panel de Insignias
+    Perfil -> Usuario : muestra nueva insignia
+else No cumple criterios
+    CI -> CU : obtiene los datos del usuario activo
+    CI -> CI : evalua la condición de obtener la insignia
+    CI -> Perfil : sin cambios
+end
+
+== Logros ==
+note over CL : Logros por acciones de usuario (Se definirá más adelante: Implementación con la comunidad)
+
+@enduml

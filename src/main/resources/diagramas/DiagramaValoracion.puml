@@ -1,0 +1,38 @@
+@startuml
+title Secuencia de Valoración de Películas - CineRoadmap
+
+actor Usuario
+participant "PanelBanner" as Banner
+participant "PanelPeliculas" as Peliculas
+participant "ControladorCalificacion" as CC
+participant "PanelPerfil" as Perfil
+participant "ControladorUsuario" as CU
+participant "ControladorPerfil" as CP
+
+
+== Acceso al Panel de Películas ==
+Usuario -> Banner : presiona la sección de peliculas
+Banner -> Peliculas : se carga toda la sección de peliculas
+
+== Valoración de películas ==
+Usuario -> Peliculas : selecciona película del JComboBox
+Usuario -> Peliculas : ingresa valor de 1 a 5
+Usuario -> Peliculas : pulsa "Guardar Calificación"
+
+Peliculas -> CC : guardarCalificacion(pelicula, nota)
+CC -> CU : obtiene usuario activo
+CC -> CC : valida nota (1-5) y película seleccionada
+alt Validación correcta
+    CC -> CC : guarda calificación y marca película como vista
+    CC -> Peliculas : mensaje éxito
+    Peliculas -> Usuario : muestra mensaje "Calificación registrada correctamente"
+
+    == Actualizar perfil ==
+    CC -> CP : actualizarPeliculasVistas(usuario)
+    CP -> CP : actualiza panel de películas vistas
+else Validación incorrecta
+    CP -> Peliculas : mensaje error
+    Peliculas -> Usuario : muestra mensaje error (nota inválida o película no seleccionada)
+end
+
+@enduml

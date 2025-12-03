@@ -10,6 +10,9 @@ public class Usuario
     private String fotoUsuario;
     private ArrayList<Pelicula> listaPeliculas = new ArrayList<>();
     private static ArrayList<Usuario> listaUsuarios = new ArrayList<>();
+    private ArrayList<Reto> listaRetos = new ArrayList<>();
+    private ArrayList<Logro> listaLogros = new ArrayList<>();
+    private ArrayList<Insignia> listaInsignias = new ArrayList<>();
 
     public Usuario(String contrasena, String email, String nombreUsuario, String fotoUsuario)
     {

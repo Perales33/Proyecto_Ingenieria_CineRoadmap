@@ -1,0 +1,38 @@
+@startuml
+title Secuencia de Login - CineRoadmap
+
+@startuml
+actor Usuario
+
+participant "PanelGenerador" as PG
+participant "PanelLogin" as Login
+participant "PanelRegistro" as Registro
+participant "PanelCambioContrasena" as Cambio
+participant "PanelApp" as App
+participant "ControladorLogin" as CLO
+
+== Inicio de la app ==
+Usuario -> PG: Abrir aplicación
+PG -> Login: Mostrar panel login
+
+== Login ==
+Usuario -> Login : ingresa usuario/email y contraseña
+Usuario -> Login : pulsa "Iniciar Sesión"
+Login -> CLO : inicioSesion(usuario, contraseña)
+CLO -> CLO : valida credenciales
+alt Credenciales correctas
+    App -> App : crearPanelInicio()
+    App -> PG : devuelve panel
+    CLO -> PG : mostrar PanelApp ("Inicio")
+    CLO -> Usuario : mensaje bienvenida / login exitoso
+else Credenciales incorrectas
+    CLO -> Usuario : mensaje error "Usuario o contraseña incorrecta"
+end
+== Registro Usuario ==
+Usuario -> Login: Abrir aplicación
+Login -> Registro: Pulsa el botón para ir a la pantalla de registro
+
+== Cambio Contraseña ==
+Usuario -> Login: Abrir aplicación
+Login -> Cambio: Pulsa el botón para ir a la pantalla de cambio de contraseña
+@enduml

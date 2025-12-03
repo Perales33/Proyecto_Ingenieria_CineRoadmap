@@ -1,0 +1,38 @@
+@startuml
+title Secuencia de Retos - CineRoadmap (Diarios, Semanales, Mensuales)
+
+actor Usuario
+participant "PanelApp" as App
+
+participant "PanelBanner" as Banner
+
+participant "PanelRetos" as Retos
+participant "ControladorRetos" as CR
+
+participant "PanelPeliculas" as Peliculas
+participant "ControladorCalificacion" as CC
+
+
+participant "ControladorUsuario" as CU
+
+== Retos ==
+Usuario -> App : accede a la pantalla principal
+App -> Banner : presiona la sección de retos
+Banner -> Retos : se carga toda la sección de retos
+Peliculas -> CC : valora películas
+CC -> CU: se guardan en el usuario
+CU -> CC : verifica las calificaciones del usuario
+alt Va cumpliendo la condición del reto
+    CC -> CR : si cumple la condición del reto
+    CR -> Retos: actualiza el reto
+    alt Reto completo
+        CR -> Retos : pone el reto como completado
+        CR -> CU: actualiza los retos cumplidos del usuario
+        Retos -> Usuario : muestra el reto como completo
+    end
+else No se cumple el reto
+    CC -> CR : si no cumple la condición del reto
+    CR -> Retos : sin cambios
+end
+
+@enduml

@@ -1,0 +1,99 @@
+@startuml
+title Diagrama de Bloques - CineRoadmap
+
+package "resources" {
+    [img]
+    [db]
+    [css]
+}
+
+package "app"{
+    package "Vista" {
+        [PanelGenerador]
+        [PanelLogin]
+        [PanelRegistro]
+        [PanelCambioContrasena]
+        [PanelApp]
+        [PanelPeliculas]
+        [PanelPerfil]
+        [PanelBanner]
+        [PanelRetos]
+        [PanelInsignias]
+        [PanelLogros]
+    }
+
+    package "Controlador" {
+        [ControladorLogin]
+        [ControladorRegistro]
+        [ControladorContrasena]
+        [ControladorApp]
+        [ControladorUsuario]
+        [ControladorPeliculas]
+        [ControladorPerfil]
+        [ControladorCalificacion]
+        [ControladorRetos]
+        [ControladorInsignias]
+        [ControladorLogros]
+    }
+
+    package "Modelo" {
+        [Usuario]
+        [Pelicula]
+        [Calificacion]
+        [Insignia]
+        [Reto]
+        [Logro]
+    }
+
+    package "Util" {
+
+    }
+    [index]
+}
+
+
+' Relaciones principales]
+[resources] --> [app]
+
+[index] --> [PanelGenerador]
+
+[PanelGenerador] --> [PanelLogin]
+[PanelGenerador] --> [PanelRegistro]
+[PanelGenerador] --> [PanelCambioContrasena]
+[PanelGenerador] --> [PanelBanner]
+
+[PanelLogin] --> [PanelApp]
+[PanelLogin] --> [ControladorLogin]
+[PanelRegistro] --> [ControladorRegistro]
+[PanelCambioContrasena] --> [ControladorContrasena]
+[PanelApp] --> [ControladorApp]
+[PanelPeliculas] --> [ControladorPeliculas]
+[PanelPerfil] --> [ControladorPerfil]
+[PanelPeliculas] --> [ControladorCalificacion]
+[PanelRetos] --> [ControladorRetos]
+[PanelInsignias] --> [ControladorInsignias]
+[PanelLogros] --> [ControladorLogros]
+
+[PanelBanner] --> [PanelApp]
+[PanelBanner] --> [PanelPerfil]
+[PanelBanner] --> [PanelPeliculas]
+[PanelBanner] --> [PanelInsignias]
+[PanelBanner] --> [PanelRetos]
+[PanelBanner] --> [PanelInsignias]
+[PanelBanner] --> [PanelLogros]
+
+[ControladorLogin] --> [Usuario]
+[ControladorRegistro] --> [Usuario]
+[ControladorContrasena] --> [Usuario]
+[ControladorPeliculas] --> [Pelicula]
+[ControladorPerfil] --> [Usuario]
+[ControladorCalificacion] --> [Usuario]
+[ControladorCalificacion] --> [Calificacion]
+[ControladorCalificacion] --> [Pelicula]
+[ControladorInsignias] --> [Insignia]
+[ControladorRetos] --> [Reto]
+[ControladorLogros] --> [Logro]
+
+[Util] --> [Vista]
+
+@enduml

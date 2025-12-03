@@ -1,0 +1,80 @@
+@startuml
+title Diagrama de Actividad - CineRoadmap
+
+start
+
+:Mostrar pantalla Login;
+
+partition Login {
+    :Usuario ingresa datos;
+    if (¿Usuario registrado?) then (sí)
+        :Iniciar sesión;
+        if (Contraseña correcta?) then (sí)
+            :Cargar Panel Principal;
+        else (no)
+            :Mostrar error;
+            stop
+        endif
+    else (no)
+        :Ofrecer Registro / Cambio contraseña;
+            if(Presiona botón Cambio de contraseña o Registro)
+            partition Registro {
+                :Usuario completa formulario;
+                :Validar datos;
+                if (¿Datos correctos?) then (sí)
+                    :Registrar usuario;
+                    :Notificar éxito;
+                else (no)
+                    :Mostrar error;
+                endif
+            }
+            else
+            partition CambioContraseña {
+                :Usuario solicita cambio;
+                :Ingresar nombre/email + contraseña actual + nueva contraseña;
+                :Validar datos y credenciales;
+                if (¿Validación correcta?) then (sí)
+                    :Actualizar contraseña;
+                    :Notificar éxito;
+                else (no)
+                    :Mostrar error;
+                endif
+            }
+            endif
+            :Volver a la pantalla de Login;
+    endif
+}
+
+partition PanelPrincipal {
+    :Mostrar Banner y Panel de Inicio;
+    if (¿Navega por el sistema?)
+        fork
+            :Valorar Películas;
+            :Actualizar panel de valoraciones;
+            :Marcar películas como vistas;
+        fork again
+            :Actualizar Perfil;
+            :Mostrar películas vistas, logros e insignias;
+        fork again
+            :Actualizar Insignias;
+            if (¿Usuario cumple criterios de insignia?) then (sí)
+                :Activar insignia correspondiente;
+            endif
+        fork again
+            :Actualizar Retos;
+            if (¿Usuario cumple criterios de retos diarios/semanales/mensuales?) then (sí)
+                :Activar reto correspondiente;
+            endif
+        fork again
+            :Actualizar Logros;
+            if (¿Usuario cumple criterios de logros?) then (sí)
+                :Activar logro correspondiente;
+            endif
+        end fork
+    else
+        :Cerrar sesión;
+    endif
+}
+
+stop
+@enduml
