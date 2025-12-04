@@ -17,7 +17,6 @@ public class PanelApp
     public static JPanel crearPanelInicio()
     {
         JPanel panelCental = new JPanel(new BorderLayout());
-
         JPanel banner = PanelBanner.crearBanner();
         panelCental.add(banner, BorderLayout.NORTH);
 

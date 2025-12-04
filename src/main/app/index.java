@@ -1,11 +1,11 @@
 package main.app;
 
-import main.app.Vista.*;
+import main.app.util.PantallaCarga;
 
 public class index
 {
     public static void main(String[] args) 
     {
-        new PanelGenerador();
+        new PantallaCarga();
     }
 }

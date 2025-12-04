@@ -42,7 +42,7 @@ public class ControladorPerfil
         }
         else
         {
-            imagen = icono.getImage().getScaledInstance(500, 500, Image.SCALE_SMOOTH);
+            imagen = icono.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
             imagenLabel = new JLabel(new ImageIcon(imagen));
         }
         imagenLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
