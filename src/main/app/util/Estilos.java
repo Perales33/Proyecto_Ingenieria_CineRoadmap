@@ -32,6 +32,8 @@ public class Estilos
         textfield.setCursor(new Cursor(Cursor.TEXT_CURSOR));
         textfield.setFont(new Font("Arial", Font.PLAIN, 12));
         textfield.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        textfield.setFocusTraversalKeysEnabled(false);
+        textfield.setFocusable(false);
     }
     public static void estilosInputsContrasenas(JPasswordField passwordField)
     {
@@ -41,6 +43,8 @@ public class Estilos
         passwordField.setFont(new Font("Arial", Font.PLAIN, 12));
         passwordField.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
         passwordField.setEchoChar('*');
+        passwordField.setFocusTraversalKeysEnabled(false);
+        passwordField.setFocusable(false);
     }
 
     public static void estilosTextArea(JTextArea textArea)

@@ -66,8 +66,6 @@ public class PanelLogin
         bag.gridx = 1;
         JTextField campoNombre = new JTextField(20);
         campoNombre.setText("Introduzca nombre o email");
-        
-        
         Estilos.estilosInputsDatos(campoNombre);
         loginMenu.add(campoNombre, bag);
         
