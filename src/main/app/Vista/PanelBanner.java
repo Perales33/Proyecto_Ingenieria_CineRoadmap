@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import main.app.Controlador.*;
+import main.app.Modelo.Usuario;
 
 public class PanelBanner {
 
@@ -23,7 +24,10 @@ public class PanelBanner {
         bannerPanel.add(logoPanel);
 
         // Logo escalado manteniendo proporción
-        ImageIcon   logoIcon = new ImageIcon(PanelPerfil.class.getResource("/main/resources/img/" + ControladorUsuario.getUsuarioActivo().getFoto()));
+        Usuario usuario = ControladorUsuario.getUsuarioActivo();
+        String fotoUsuario = (usuario != null && usuario.getFoto() != null)  ? usuario.getFoto() : "logoCineRoadmap.jpg";
+
+        ImageIcon   logoIcon = new ImageIcon(PanelPerfil.class.getResource("/main/resources/img/" + fotoUsuario));
         Image logoImg = logoIcon.getImage().getScaledInstance(90, 86, Image.SCALE_SMOOTH); // tamaño original ajustado
         logoIcon = new ImageIcon(logoImg);
 

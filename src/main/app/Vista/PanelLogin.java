@@ -125,13 +125,13 @@ public class PanelLogin
         botonInicio.addActionListener((ActionEvent e) -> 
         {
             String mensaje = ControladorLogin.inicioSesion(campoNombre.getText(), new String(campoContrasena.getPassword()));
-            ControladorLogin.pulsarBotonInicio(mensaje, campoNombre, campoContrasena);;
+            ControladorLogin.pulsarBotonInicio(mensaje, campoNombre, campoContrasena);
         });
 
     
         botonRegistro.addActionListener(e -> ControladorLogin.pulsarBotonRegistro(campoNombre, campoContrasena));
 
-        botonCambioContrasena.addActionListener(e -> ControladorLogin.pulsarBotonRegistro(campoNombre, campoContrasena));
+        botonCambioContrasena.addActionListener(e -> ControladorLogin.pulsarBotonContrasena(campoNombre, campoContrasena));
 
         panelCentral.add(loginMenu);
         return panelCentral;
