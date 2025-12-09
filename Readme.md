@@ -46,16 +46,14 @@
 ## ⚙️ Instalación y ejecución <a name="instalacion_y_ejecucion"></a> 
 
 ### 🔧 Requisitos
-```bash
 - Java:
-  -> Extensions (VS Code)
-  -> Version 11+
+  - Extensions (VS Code)
+  - Version 11+
 - Eclipse: 
-  -> Java Version
+  - Java Version
 - IntelliJ IDEA
-  -> Versión Community Edition
-  -> PlantUML (Diseño de diagramas)
-```
+  - Versión Community Edition
+  - PlantUML (Diseño de diagramas)
 
 ### 📦 Instalación
 
