@@ -134,26 +134,26 @@ Proyecto_Ingenieria_CineRoadmap/
 - Sincronización entre dispositivos
 - Sistema de notificaciones
 
-### 📐 Diagramas del Proyecto <a name="diagramas"></a>
+## 📐 Diagramas del Proyecto <a name="diagramas"></a>
 
 A continuación se incluyen los principales diagramas utilizados en el desarrollo de CineRoadmap. Estos ayudan a visualizar la arquitectura, el flujo de la aplicación y la estructura de clases.
 
-📊 Diagrama de Arquitectura General
+### 📊 Diagrama de Arquitectura General
 ![Diagrama de Clases](src/main/resources/diagramas/imagenes/DiagramaBloques-Diagrama_de_Bloques___CineRoadmap.png)
 
-🧩 Diagrama de Clases (Modelo)
+### 🧩 Diagrama de Clases (Modelo)
 ![Diagrama de Clases](src/main/resources/diagramas/imagenes/DiagramaClases-Diagrama_Clases___CineRoadmap.png)
 
-🔄 Diagrama de Casos de Uso
+### 🔄 Diagrama de Casos de Uso
 
-🗂️ Diagrama de Secuencia
+### 🗂️ Diagrama de Secuencia
 ![Diagrama de Clases](src/main/resources/diagramas/imagenes/DiagramaSecuencias-Diagrama_de_Secuencias___CineRoadmap.png)
 
-🔧 Diagrama de Actividad
+### 🔧 Diagrama de Actividad
 ![Diagrama de Clases](src/main/resources/diagramas/imagenes/DiagramaActividad-Diagrama_de_Actividad___CineRoadmap.png)
 
-## 🔄 Diagrama de Máquina de Estados
+### 🔄 Diagrama de Máquina de Estados
 ![Diagrama de Máquina de Estados](src/main/resources/diagramas/imagenes/DiagramaEstadoMaquina-Diagrama_de_Estados_Máquina___CineRoadmap.png)
 
-### 📄 Licencia <a name="licencia"></a> 
+## 📄 Licencia <a name="licencia"></a> 
 Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
