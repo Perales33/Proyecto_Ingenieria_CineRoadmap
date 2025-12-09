@@ -10,7 +10,7 @@
 - [Tecnologías utilizadas](#tecnologias_utilizadas)
 - [Instalación y ejecución](#instalacion_y_ejecucion)
 - [Estructura del proyecto](#estructura_del_proyecto)
-- [Diagramas del proyecto] (#diagramas)
+- [Diagramas](#diagramas)
 - [Próximos pasos](#proximos_pasos)
 - [Licencia](#licencia)
 
