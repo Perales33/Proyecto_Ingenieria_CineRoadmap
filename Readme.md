@@ -5,13 +5,12 @@
 
 ## 📌 Tabla de Contenidos
 
-- [Características principales ](#caracteristicas_principales)
-- [Insignias y logros](#insignias_y_logros)
-- [Desafíos diarios y semanales](#desafios_diarios_y_semanales)
+- [Características principales](#caracteristicas_principales)
 - [Perfil y comunidad](#perfil_y_comunidad)
 - [Tecnologías utilizadas](#tecnologias_utilizadas)
 - [Instalación y ejecución](#instalacion_y_ejecucion)
 - [Estructura del proyecto](#estructura_del_proyecto)
+- [Diagramas del proyecto] (#diagramas)
 - [Próximos pasos](#proximos_pasos)
 - [Licencia](#licencia)
 
@@ -23,38 +22,6 @@
 - Desafíos diarios/semanales que incentivan el hábito.
 - Perfil con estadísticas, rachas y horas de visualización.
 - Comparación con amigos y comunidad.
-
-
-## 🏆 Insignias y logros <a name="insignias_y_logros"></a> 
-
-### 🎥 Colecciones
-- **Top 100 IMDb**
-- **Oscar 2024**
-- **Cinéfilo Retro**
-- **Cine Independiente**
-
-### 👥 Actores y Directores
-- **Fan de Scorsese**
-- **Fan de Christian Bale**
-
-### 🕰️ Por Décadas
-- **Cinéfilo de los 60**
-- **Rey del VHS (80s)**
-- **Nostalgia 90s**
-
-### 🧗 Retos Especiales
-- **Semana de cine**
-- **1 Day 1 Saga**
-- **365 películas al año**
-
-
-## 📅 Desafíos diarios y semanales <a name="desafios_diarios_y_semanales"></a> 
-
-- 🎯 **Recomendación diaria** automática.
-- 🧭 **Reto del día** (Ej. ver película de un país nuevo).
-- 🎥 **Reto semanal** (Ej. película nominada al Oscar).
-- 🤝 **Reto comunitario** para compartir con amigos.
-
 
 ## 👤 Perfil y comunidad <a name="#perfil_y_comunidad"></a> 
 
@@ -104,7 +71,7 @@ cd Proyecto_Ingenieria_CineRoadmap
 java -version
 ```
 
-### 📁 Estructura del proyecto <a name="estructura_del_proyecto"></a> 
+## 📁 Estructura del proyecto <a name="estructura_del_proyecto"></a> 
 ```bash
 Proyecto_Ingenieria_CineRoadmap/
 ├── LICENSE
@@ -125,7 +92,7 @@ Proyecto_Ingenieria_CineRoadmap/
 └       └
 ```
 
-### 🔮 Próximos pasos <a name="proximos_pasos"></a> 
+## 🔮 Próximos pasos <a name="proximos_pasos"></a> 
 
 - Migrar la aplicación a Java
 - Desarrollar la aplicación para móvil
@@ -134,7 +101,7 @@ Proyecto_Ingenieria_CineRoadmap/
 - Sincronización entre dispositivos
 - Sistema de notificaciones
 
-## 📐 Diagramas del Proyecto <a name="diagramas"></a>
+## 📐 Diagramas del proyecto <a name="diagramas"></a>
 
 A continuación se incluyen los principales diagramas utilizados en el desarrollo de CineRoadmap. Estos ayudan a visualizar la arquitectura, el flujo de la aplicación y la estructura de clases.
 
