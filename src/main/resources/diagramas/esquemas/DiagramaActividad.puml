@@ -49,27 +49,46 @@ partition PanelPrincipal {
     :Mostrar Banner y Panel de Inicio;
     if (¿Navega por el sistema?)
         fork
-            :Valorar Películas;
+            :Ver y Valorar Películas;
             :Actualizar panel de valoraciones;
             :Marcar películas como vistas;
         fork again
             :Actualizar Perfil;
             :Mostrar películas vistas, logros e insignias;
         fork again
-            :Actualizar Insignias;
-            if (¿Usuario cumple criterios de insignia?) then (sí)
+            :Actualizar Logro;
+            if (¿Usuario cumple criterios del logro?) then (sí)
                 :Activar insignia correspondiente;
-            endif
-        fork again
-            :Actualizar Retos;
-            if (¿Usuario cumple criterios de retos diarios/semanales/mensuales?) then (sí)
-                :Activar reto correspondiente;
             endif
         fork again
             :Actualizar Logros;
             if (¿Usuario cumple criterios de logros?) then (sí)
                 :Activar logro correspondiente;
             endif
+           fork again
+             :Comunidad;
+                fork
+                :Actualizar Reto diario;
+                if (¿Usuario cumple criterios de retos diarios?) then (sí)
+                    :Dar reto como completado;
+                endif
+                fork again
+                :Recomendacion Sistema;
+                :Ver recomendación sistema;
+                if(¿Da a la imágen de la recomendación?) then (sí)
+                    :Ir a la página de la película para ver sus detalles;
+                else (no)
+                    :Permanecer página de comunidad;
+                end if
+                fork again
+                :Recomendaciones Comunidad;
+                :Ver lista películas más valoradas;
+                if(¿Da a la imágen de la recomendación?) then (sí)
+                    :Ir a la página de la película para ver sus detalles;
+                else (no)
+                    :Permanecer página de comunidad;
+                end if
+                end fork
         end fork
     else
         :Cerrar sesión;
