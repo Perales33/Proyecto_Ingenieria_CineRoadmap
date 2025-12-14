@@ -60,12 +60,7 @@ partition PanelPrincipal {
             if (¿Usuario cumple criterios del logro?) then (sí)
                 :Activar insignia correspondiente;
             endif
-        fork again
-            :Actualizar Logros;
-            if (¿Usuario cumple criterios de logros?) then (sí)
-                :Activar logro correspondiente;
-            endif
-           fork again
+         fork again
              :Comunidad;
                 fork
                 :Actualizar Reto diario;
