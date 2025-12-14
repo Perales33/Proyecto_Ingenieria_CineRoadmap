@@ -8,7 +8,6 @@ class Usuario {
     -nombreUsuario: String
     -fotoUsuario: String
     -listaPeliculas: ArrayList<Pelicula>
-    -listaInsignias: ArrayList<Insignia>
     -listaRetos: ArrayList<Reto>
     -listaLogros: ArrayList<Logro>
     +Usuario(contrasena, email, nombreUsuario, fotoUsuario)
@@ -26,7 +25,6 @@ class Usuario {
     +getContrasena(): String
     +getFoto(): String
     +getPeliculas(): ArrayList<Pelicula>
-    +getInsignias(): ArrayList<Insignia>
     +getRetos(): ArrayList<Reto>
     +getLogros(): ArrayList<Logro>
 }
@@ -51,12 +49,14 @@ class Calificacion {
     -fechaCalificacion: Date
     -pelicula: Pelicula
     -usuario: Usuario
+    -comentario: String
     +getCalificacion(): int
     +setCalificacion(int)
     +getFechaCalificacion(): Date
     +setFechaCalificacion(Date)
     +getPelicula(): Pelicula
     +getUsuario(): Usuario
+    +getComentarioPelicula(): String
 }
 
 class Reto {
@@ -73,6 +73,7 @@ class Logro {
     -idLogro: int
     -nombreLogro: String
     -descripcionLogro: String
+    -insignia: Insignia
     +getNombreReto(): String
     +getID(): int
     +getDescripcion(): String
@@ -82,17 +83,59 @@ class Insignia {
     -idInsignia: int
     -nombreInsignia: String
     -descripcionInsignia: String
-    +getNombreReto(): String
+    +getNombreInsignia(): String
     +getID(): int
     +getDescripcion(): String
 }
+
+class Comunidad {
+    -listaUsuarios: ArrayList<Usuario>
+    +getUsuarios(): ArrayList<Usuario>
+}
+
+
+abstract class Recomendacion {
+    -idRecomendacion: int
+    -fecha: Date
+    -pelicula: Pelicula
+    -usuario: Usuario
+    +getUsuarioDestino(): Usuario
+    +getPelicula(): Pelicula
+}
+
+class RecomendacionSistema
+{
+    -criterio: String
+    +getCriterio(): String
+}
+
+enum CriterioRecomendacion {
+    GENEROS_FAVORITOS
+    RETOS_COMPLETADOS
+    HISTORIAL_USUARIO
+    MEJOR_VALORADAS_COMUNIDAD
+}
+
+class RecomendacionComunidad {
+    -umbralValoracion: int
+    -numeroMinValoraciones: int
+    +getUmbral(): int
+}
+
 
 ' Relaciones
 Usuario "1" --> "0..*" Pelicula : listaPeliculas
 Usuario "1" --> "0..*" Calificacion
 Pelicula "1" --> "0..*" Calificacion
-Usuario "1" --> "0..*" Insignia : listaInsignias
+Logro "1" --> "1" Insignia : Insignia
 Usuario "1" --> "0..*" Reto : listaRetos
 Usuario "1" --> "0..*" Logro : listaLogros
-
+Usuario "0..*" <--> "1" Comunidad
+Recomendacion <|-- RecomendacionSistema
+Recomendacion <|-- RecomendacionComunidad
+Usuario "1" <-- "0..*" Recomendacion
+Pelicula "1" <-- "0..*" Recomendacion
+RecomendacionComunidad ..> Calificacion : basado en
+Comunidad "1" --> "0..*" RecomendacionComunidad : genera
+RecomendacionSistema "1" --> "0.." CriterioRecomendacion
 @enduml

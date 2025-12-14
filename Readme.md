@@ -51,7 +51,7 @@
   - Version 11+
 - Eclipse: 
   - Java Version
-- IntelliJ IDEA
+- IntelliJ IDEA:
   - Versión Community Edition
   - PlantUML (Diseño de diagramas)
 
