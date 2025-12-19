@@ -3,61 +3,6 @@
 title Diagrama Clases - CineRoadmap
 ' Clases
 
-class index{}
-
-class PanelGenerador
-{
-    +getMain(): JPanel
-    +getColocacion(): CardLayout
-}
-
-class PanelLogin
-{
-    +crearloginPanel(): JPanel
-}
-
-class PanelRegistro
-{
-    +crearPanelRegistro(): JPanel
-}
-
-class PanelCambioContrasena
-{
-    +crearPanelContrasena(): JPanel
-}
-
-class PanelBanner
-{
-    +crearPanelBanner(): JPanel
-}
-
-class PanelApp
-{
-    +crearPanelApp(): JPanel
-}
-
-
-class PanelPeliculas
-{
-    +crearPanelPeliculas(): JPanel
-}
-
-class PanelPerfil
-{
-    +crearPanelPerfil(): JPanel
-}
-
-class PanelComunidad
-{
-    +crearPanelComunidad(): JPanel
-}
-
-class PanelInsigniaLogro
-{
-    +crearPanelInsigniaLogro(): JPanel
-}
-
-
 class Usuario {
     -contrasena: String
     -email: String
@@ -194,25 +139,4 @@ Pelicula "1" <-- "0..*" Recomendacion
 RecomendacionComunidad ..> Calificacion : basado en
 Comunidad "1" --> "0..*" RecomendacionComunidad : genera
 RecomendacionSistema "1" --> "0.." CriterioRecomendacion
-
-
-PanelGenerador "1" --> "1" PanelApp
-PanelGenerador "1" --> "1" PanelBanner
-PanelGenerador "1" --> "1" PanelLogin
-PanelGenerador "1" --> "1" PanelCambioContrasena
-PanelGenerador "1" --> "1" PanelComunidad
-PanelGenerador "1" --> "1" PanelPeliculas
-PanelGenerador "1" --> "1" PanelPerfil
-PanelGenerador "1" --> "1" PanelRegistro
-PanelGenerador "1" --> "1" PanelInsigniaLogro
-
-
-Controlador "1" --> "1" Vista : gestiona
-Controlador "1" <-- "1" Modelo : actualiza
-
-Vista "1" --> "1" Modelo : recupera datos
-Vista "1" --> "1" index : muestra
-index "1" --> "1" PanelGenerador
-
-Modelo "1" --> "1" Usuario : actualiza datos de las diferentes clases
 @enduml
