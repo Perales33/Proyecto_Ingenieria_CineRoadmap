@@ -110,6 +110,7 @@ A continuación se incluyen los principales diagramas utilizados en el desarroll
 ![Diagrama de Clases](src/main/resources/diagramas/imagenes/DiagramaClases-Diagrama_Clases___CineRoadmap.png)
 
 ### 🔄 Diagrama de Casos de Uso
+![Diagrama de Casos](src/main/resources/diagramas/imagenes/DiagramaUsos_CineRoadmap%20(1).png)
 
 ### 🗂️ Diagrama de Secuencia
 ![Diagrama de Clases](src/main/resources/diagramas/imagenes/DiagramaSecuencias-Diagrama_de_Secuencias___CineRoadmap.png)
