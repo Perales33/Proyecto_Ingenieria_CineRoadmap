@@ -185,6 +185,27 @@ public class Pelicula
         Pelicula p12 = new Pelicula("Wonka", 2023, generos12, directores12, actores12, "Historia de cómo Willy Wonka conoció el mundo de los chocolates.", "Wonka.jpg");
         catalogo.add(p12);
 
+        // --- Película 13: Pulp Fiction ---
+        Vector<String> generos13 = new Vector<>();
+        generos13.add("Crimen"); generos13.add("Drama");
+        Vector<String> directores13 = new Vector<>();
+        directores13.add("Quentin Tarantino");
+        Vector<String> actores13 = new Vector<>();
+        actores13.add("John Travolta"); actores13.add("Samuel L. Jackson");
+        Pelicula p13 = new Pelicula("Pulp Fiction", 1994, generos13, directores13, actores13,
+            "Jules y Vincent, dos asesinos a sueldo con no demasiadas luces, trabajan para el gángster Marsellus Wallace.", "pulpfiction.jpg");
+        catalogo.add(p13);
+
+        // --- Película 14: 12 Angry Men ---
+        Vector<String> generos14 = new Vector<>();
+        generos14.add("Drama");
+        Vector<String> directores14 = new Vector<>();
+        directores14.add("Sidney Lumet");
+        Vector<String> actores14 = new Vector<>();
+        actores14.add("Henry Fonda"); actores14.add("Lee J. Cobb");
+        Pelicula p14 = new Pelicula("12 Angry Men", 1957, generos14, directores14, actores14,
+            "Los doce miembros de un jurado deben juzgar a un adolescente acusado de haber matado a su padre. Todos menos uno están convencidos de la culpabilidad.", "12angrymen.jpg");
+        catalogo.add(p14);
     }
     
 

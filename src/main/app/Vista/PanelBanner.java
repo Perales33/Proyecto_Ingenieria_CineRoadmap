@@ -56,12 +56,13 @@ public class PanelBanner {
         // Labels del menú con posición exacta
         JLabel inicioLabel = new JLabel("Inicio");
         JLabel peliculasLabel = new JLabel("Películas");
-        JLabel insigniasLabel = new JLabel("Insignias y Logros");
-        JLabel retosLabel = new JLabel("Retos");
+        JLabel insigniasLabel = new JLabel("Logros");
+        JLabel retosLabel = new JLabel("Retos y Recomendaciones");
+        JLabel comunidadLabel = new JLabel("Comunidad");
         JLabel cerrarSesionLabel = new JLabel("Cerrar Sesión");
 
-        JLabel[] labels = {inicioLabel, peliculasLabel, insigniasLabel, retosLabel, cerrarSesionLabel};
-        String[] pantallas = {"Inicio", "Peliculas", "LogrosInsignias", "Retos", "Login"};
+        JLabel[] labels = {inicioLabel, peliculasLabel, insigniasLabel, retosLabel, comunidadLabel, cerrarSesionLabel};
+        String[] pantallas = {"Inicio", "Peliculas", "LogrosInsignias", "Retos", "Comunidad" ,"Login"};
 
         // Fuente y estilo
         Font menuFont = new Font("Arial", Font.BOLD, 16);
@@ -73,11 +74,13 @@ public class PanelBanner {
         }
 
         // Posiciones exactas (ajustar según diseño)
-        inicioLabel.setBounds(50, 30, 80, 30);
-        peliculasLabel.setBounds(150, 30, 100, 30);
-        insigniasLabel.setBounds(280, 30, 200, 30);
-        retosLabel.setBounds(480, 30, 80, 30);
-        cerrarSesionLabel.setBounds(925,30, 150, 30);
+        inicioLabel.setBounds(50, 30, 50, 30);           
+        peliculasLabel.setBounds(150, 30, 100, 30);       
+        insigniasLabel.setBounds(250, 30, 90, 30);       
+        retosLabel.setBounds(350, 30, 220, 30);          
+        comunidadLabel.setBounds(600, 30, 100, 30);      
+        cerrarSesionLabel.setBounds(950, 30, 150, 30); 
+
 
         // Eventos de click
         for (int i = 0; i < labels.length; i++) {
@@ -86,7 +89,7 @@ public class PanelBanner {
             label.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    if (pantalla.equals("LogrosInsignias") || pantalla.equals("Retos")) {
+                    if (pantalla.equals("LogrosInsignias") || pantalla.equals("Retos") || pantalla.equals("Comunidad")) {
                         JOptionPane.showMessageDialog(PanelGenerador.getMain(),
                                 "Sección todavía no implementada",
                                 "Información",

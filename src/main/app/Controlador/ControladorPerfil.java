@@ -86,7 +86,6 @@ public class ControladorPerfil
                     {
                         ControladorUsuario.getUsuarioActivo().setnombreUsuario(nuevoNombre);
                         labelNombreUsuario.setText("Nombre: " + nuevoNombre);
-                        ControladorApp.actualizarTitulo(PanelApp.getTitutloMain());
                     }
                     else
                     {
