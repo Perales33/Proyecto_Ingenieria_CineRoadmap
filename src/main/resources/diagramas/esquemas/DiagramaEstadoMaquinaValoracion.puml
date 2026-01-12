@@ -1,0 +1,22 @@
+@startuml
+title Máquina de Estados - Valoración de Películas
+
+[*] --> Pelicula_No_Valorada : Acceder a película
+[*] --> Pelicula_Valorada : Acceder a película
+
+Pelicula_No_Valorada --> Datos_Valoracion_Introducidos : Introducir puntuación
+
+Datos_Valoracion_Introducidos --> Valoracion_Validada : Datos correctos
+Datos_Valoracion_Introducidos --> Datos_Valoracion_Introducidos : Error en datos
+
+Valoracion_Validada --> Valoracion_Guardada : Guardar valoración
+
+Pelicula_Marcada_Vista <-- Valoracion_Validada : Marcar película como vista
+
+
+Pelicula_Valorada --> Editar_Valoracion : Modificar valoración
+Editar_Valoracion --> Valoracion_Actualizada : Confirmar cambios
+Editar_Valoracion --> Pelicula_Valorada : Cancelar
+Valoracion_Actualizada --> Valoracion_Guardada : Confirmar cambios
+Valoracion_Guardada --> [*] : Volver al catálogo
+@enduml

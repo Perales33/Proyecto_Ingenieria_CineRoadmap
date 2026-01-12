@@ -32,8 +32,8 @@ participant "ControladorRetos" as CR
 participant "PanelInsignias" as Insignias
 participant "ControladorInsignias" as CI
 
-participant "PanelLogros" as Logros
-participant "ControladorLogros" as CL
+participant "PanelComunidad" as Comunidad
+participant "ControladorComunidad" as CCO
 
 == Inicio de la app ==
 Usuario -> PG: Abrir aplicación
@@ -180,17 +180,17 @@ else No se cumple el reto
     CR -> Retos : sin cambios
 end
 
-== Insignias ==
+== Insignias y Logros ==
 Usuario -> App : accede a la pantalla principal
 App -> Banner : presiona la sección de insignias
-Banner -> Insignias : se carga toda la sección de insignias
+Banner -> Insignias : se carga toda la sección de logros e insignias
 Usuario -> Peliculas : valora películas
 Peliculas -> Perfil: las películas se cargan en su perfil
 Perfil -> CPU : actualiza películas vistas
 CPU -> CI : cuando llega a un cierto límite de películas
 alt Insignia Cumplida
     CI -> CU : obtiene los datos del usuario activo
-    CI -> CI : evalua la condición de obtener la insignia
+    CI -> CI : evalua la condición del logro
     CI -> CU : activa la insignia
     CU -> Perfil : actualizar panel de Insignias
     Perfil -> Usuario : muestra nueva insignia
@@ -200,7 +200,10 @@ else No cumple criterios
     CI -> Perfil : sin cambios
 end
 
-== Logros ==
-note over CL : Logros por acciones de usuario (Se definirá más adelante: Implementación con la comunidad)
-
+== Comunidad ==
+Usuario -> App : accede a la pantalla principal
+App -> Comunidad : presiona la sección de comunidad
+Retos -> Comunidad: Se carga el reto diario
+Peliculas -> Comunidad: Se carga la recomendación diaria
+Peliculas -> Comunidad : Se cargan las recomendaciones de peliculas de la comunidad
 @enduml

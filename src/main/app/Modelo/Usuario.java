@@ -12,7 +12,6 @@ public class Usuario
     private static ArrayList<Usuario> listaUsuarios = new ArrayList<>();
     private ArrayList<Reto> listaRetos = new ArrayList<>();
     private ArrayList<Logro> listaLogros = new ArrayList<>();
-    private ArrayList<Insignia> listaInsignias = new ArrayList<>();
 
     public Usuario(String contrasena, String email, String nombreUsuario, String fotoUsuario)
     {
@@ -36,6 +35,7 @@ public class Usuario
     public void setFoto(String foto) { this.fotoUsuario = foto; }
     public static void setUsuarios (Usuario usuario) { listaUsuarios.add(usuario); }
     public void setPeliculas (Pelicula pelicula) { this.listaPeliculas.add(pelicula); }
+    public void setLogros(Logro logro) { listaLogros.add(logro); }
 
     public String getnombreUsuario() { return this.nombreUsuario; }
     public String getEmail() { return this.email; }
@@ -43,4 +43,5 @@ public class Usuario
     public String getFoto() { return this.fotoUsuario; }
     public ArrayList<Pelicula> getPeliculas() { return listaPeliculas; }
     public static ArrayList<Usuario>  getUsuarios() { return listaUsuarios; }
+    public ArrayList<Logro> getLogros() { return listaLogros; }
 }

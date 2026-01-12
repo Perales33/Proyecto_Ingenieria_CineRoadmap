@@ -52,6 +52,7 @@ public class ControladorCalificacion
                 usuario.setPeliculas(pelicula);
             }
             return null;
+            //ControladorLogros.actualizarLogros(usuario);
         } 
         catch (Exception e) 
         {

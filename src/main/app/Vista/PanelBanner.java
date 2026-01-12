@@ -86,24 +86,33 @@ public class PanelBanner {
         for (int i = 0; i < labels.length; i++) {
             JLabel label = labels[i];
             String pantalla = pantallas[i];
-            label.addMouseListener(new MouseAdapter() {
+            label.addMouseListener(new MouseAdapter() 
+            {
                 @Override
-                public void mouseClicked(MouseEvent e) {
-                    if (pantalla.equals("LogrosInsignias") || pantalla.equals("Retos") || pantalla.equals("Comunidad")) {
+                public void mouseClicked(MouseEvent e) 
+                {
+                    if (pantalla.equals("LogrosInsignias") || pantalla.equals("Retos") || pantalla.equals("Comunidad")) 
+                    {
                         JOptionPane.showMessageDialog(PanelGenerador.getMain(),
                                 "Sección todavía no implementada",
                                 "Información",
                                 JOptionPane.INFORMATION_MESSAGE);
-                    } else if (pantalla.equals("Login")) {
+                    } 
+                    else if (pantalla.equals("Login")) 
+                    {
                         JOptionPane.showMessageDialog(PanelGenerador.getMain(),
                                 "Cerrando Sesión " + ControladorUsuario.getUsuarioActivo().getnombreUsuario(),
                                 "Cerrar Sesión",
                                 JOptionPane.INFORMATION_MESSAGE);
                         ControladorUsuario.setUsuarioActivo();
-                    } else if (pantalla.equals("Perfil")) {
+                    } 
+                    else if (pantalla.equals("Perfil")) 
+                    {
                         PanelGenerador.getMain().add(PanelPerfil.crearPanelPerfil(), "Perfil");
                         PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Perfil");
-                    } else if (pantalla.equals("Peliculas")) {
+                    } 
+                    else if (pantalla.equals("Peliculas")) 
+                    {
                         PanelGenerador.getMain().add(PanelPeliculas.crearPanelPeliculas(), "Peliculas");
                         PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Peliculas");
                     }
