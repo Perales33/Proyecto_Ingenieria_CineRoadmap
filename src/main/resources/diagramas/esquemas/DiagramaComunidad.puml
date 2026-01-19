@@ -1,0 +1,24 @@
+@startuml
+
+title Diagrama de Secuencias - Comunidad
+
+actor Usuario
+
+participant "PanelApp" as App
+participant "PanelComunidad" as Comunidad
+participant "PanelRetos" as Retos
+participant "PanelPeliculas" as Peliculas
+participant "ControladorComunidad" as CCO
+
+== Comunidad ==
+Usuario -> App : accede a la pantalla principal
+App -> Comunidad : presiona la sección de comunidad
+CCO -> Comunidad : obtiene estadísticas y rankings globales y locales
+Comunidad -> Usuario : muestra rankings y actividad de la comunidad
+
+note right
+Perfiles públicos de otros usuarios, con insignias, retos y estadísticas
+queda como requisito a futuro.
+end note
+
+@enduml

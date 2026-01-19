@@ -1,0 +1,41 @@
+@startuml
+
+title Diagrama de Secuencias - Navegación Simple del Sistema
+
+actor Usuario
+
+participant "PanelApp" as App
+participant "PanelBanner" as Banner
+participant "PanelPeliculas" as Peliculas
+participant "PanelPerfil" as Perfil
+participant "PanelInsignias" as Insignias
+participant "PanelRetos" as Retos
+participant "PanelComunidad" as Comunidad
+
+== Navegación general ==
+Usuario -> App : abre la aplicación
+App -> Banner : muestra el banner principal
+
+alt Navegar a cualquier sección
+    Usuario -> Banner : selecciona Películas
+    Banner -> Peliculas : carga sección de películas
+    Peliculas -> Usuario : muestra películas
+
+    Usuario -> Banner : selecciona Perfil
+    Banner -> Perfil : carga sección de perfil
+    Perfil -> Usuario : muestra perfil
+
+    Usuario -> Banner : selecciona Logros e Insignias
+    Banner -> Insignias : carga sección de logros e insignias
+    Insignias -> Usuario : muestra logros e insignias
+
+    Usuario -> Banner : selecciona Retos
+    Banner -> Retos : carga sección de retos
+    Retos -> Usuario : muestra retos
+
+    Usuario -> Banner : selecciona Comunidad / Recomendaciones
+    Banner -> Comunidad : carga sección de comunidad
+    Comunidad -> Usuario : muestra recomendaciones y retos de la comunidad
+end
+
+@enduml

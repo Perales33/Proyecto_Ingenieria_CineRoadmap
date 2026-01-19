@@ -36,7 +36,7 @@ public class ControladorRegistro
         }
         else
         {
-            for(Usuario u : Usuario.getUsuarios())
+            for(Usuario u : Comunidad.getUsuarios())
             {
                 if(u.getnombreUsuario().equals(nombre))
                 {
@@ -64,7 +64,7 @@ public class ControladorRegistro
             }
 
             Usuario nuevoUsuario = new Usuario(contrasena, email, nombre);
-            Usuario.setUsuarios(nuevoUsuario); 
+            Comunidad.setUsuarios(nuevoUsuario); 
             return null;
         }
     }

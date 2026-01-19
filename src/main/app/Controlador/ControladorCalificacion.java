@@ -6,7 +6,7 @@ public class ControladorCalificacion
 {
     public static String guardarCalificacion(Pelicula pelicula, int nota)
     {
-        if(Usuario.getUsuarios() == null || Usuario.getUsuarios().isEmpty())
+        if(Comunidad.getUsuarios() == null || Comunidad.getUsuarios().isEmpty())
         {
             return "No hay usuarios registrados";
         }
@@ -52,7 +52,7 @@ public class ControladorCalificacion
                 usuario.setPeliculas(pelicula);
             }
             return null;
-            //ControladorLogros.actualizarLogros(usuario);
+            // ControladorLogros.actualizarLogros(usuario);
         } 
         catch (Exception e) 
         {

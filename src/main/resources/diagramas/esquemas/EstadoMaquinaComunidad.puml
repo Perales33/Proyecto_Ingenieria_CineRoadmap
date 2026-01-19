@@ -1,0 +1,13 @@
+@startuml
+title Máquina de Estados - Comunidad
+
+[*] --> PantallaComunidad
+
+PantallaComunidad --> CargandoDatos : Obteniendo rankings y actividad
+CargandoDatos --> MostrandoDatos : Datos cargados correctamente
+CargandoDatos --> ErrorCarga : Error al cargar datos
+
+MostrandoDatos --> PantallaComunidad : Usuario navega
+ErrorCarga --> PantallaComunidad : Usuario reintenta
+
+@enduml

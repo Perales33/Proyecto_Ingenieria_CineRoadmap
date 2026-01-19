@@ -1,0 +1,29 @@
+@startuml
+title Máquina de Estados - Inicio / Login / Registro / Cambio de Contraseña
+
+[*] --> PantallaLogin
+
+PantallaLogin --> ValidandoLogin : Usuario ingresa datos y pulsa "Iniciar sesión"
+ValidandoLogin --> AccesoConcedido : Credenciales correctas
+ValidandoLogin --> ErrorLogin : Credenciales incorrectas
+
+ErrorLogin --> PantallaLogin : Usuario reintenta login
+AccesoConcedido --> PantallaApp : Login exitoso
+PantallaApp --> [*]
+
+PantallaLogin --> PantallaRegistro : Usuario pulsa "Registrarse"
+PantallaRegistro --> ValidandoRegistro : Usuario ingresa datos
+ValidandoRegistro --> RegistroExitoso : Datos válidos y usuario no existente
+ValidandoRegistro --> ErrorRegistro : Datos inválidos o usuario ya existe
+ErrorRegistro --> PantallaRegistro : Usuario reintenta registro
+RegistroExitoso --> PantallaLogin : Usuario vuelve a login
+
+PantallaLogin --> PantallaCambioContrasena : Usuario pulsa "Cambiar contraseña"
+PantallaCambioContrasena --> ValidandoCambio : Usuario ingresa datos
+ValidandoCambio --> CambioExitoso : Contraseña cambiada correctamente
+ValidandoCambio --> ErrorCambio : Error al cambiar contraseña
+ErrorCambio --> PantallaCambioContrasena : Usuario reintenta
+
+CambioExitoso --> PantallaLogin : Vuelve al login
+
+@enduml

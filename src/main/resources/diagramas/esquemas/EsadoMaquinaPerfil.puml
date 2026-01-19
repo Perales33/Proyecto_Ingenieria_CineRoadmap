@@ -1,0 +1,20 @@
+@startuml
+title Máquina de Estados - Perfil de Usuario
+
+[*] --> PantallaPerfil
+
+PantallaPerfil --> CargandoDatos : Cargando datos del usuario
+CargandoDatos --> MostrandoPerfil : Datos cargados correctamente
+CargandoDatos --> ErrorCarga : Error al cargar perfil
+
+MostrandoPerfil --> EditandoPerfil : Usuario modifica nombre/email
+EditandoPerfil --> ActualizandoPerfil : Procesando cambios
+ActualizandoPerfil --> ExitoActualizacion : Perfil actualizado correctamente
+ActualizandoPerfil --> ErrorActualizacion : Error al actualizar
+ErrorActualizacion --> EditandoPerfil : Usuario reintenta
+ErrorActualizacion --> [*] : No se ha modificado el dato
+ExitoActualizacion --> [*] : Actualización de dato correcta
+
+ExitoActualizacion --> MostrandoPerfil : Vuelve a vista de perfil
+ErrorCarga --> [*] : No se ha encontrado el usuario
+@enduml

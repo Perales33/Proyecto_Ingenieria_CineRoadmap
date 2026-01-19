@@ -10,7 +10,7 @@ public class ControladorLogin
 {
     public static String inicioSesion(String nombreEmail, String contrasena)
     {
-        if(Usuario.getUsuarios().isEmpty())
+        if(Comunidad.getUsuarios().isEmpty())
         {
             return "No hay usuarios registrados";
         }
@@ -20,7 +20,7 @@ public class ControladorLogin
         }
         else
         {
-            for(Usuario u : Usuario.getUsuarios())
+            for(Usuario u : Comunidad.getUsuarios())
             {
                 if(u.getnombreUsuario().equalsIgnoreCase(nombreEmail) || u.getEmail().equals(nombreEmail))
                 {

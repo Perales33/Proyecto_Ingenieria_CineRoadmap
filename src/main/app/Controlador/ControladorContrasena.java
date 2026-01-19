@@ -5,6 +5,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import java.awt.*;
 
+import main.app.Modelo.Comunidad;
 import main.app.Modelo.Usuario;
 import main.app.Vista.*;
 
@@ -12,7 +13,7 @@ public class ControladorContrasena
 {
     public static String cambiarContrasena(String nombre,String contrasena, String nuevaContrasena)
     {
-        if(Usuario.getUsuarios().isEmpty() || Usuario.getUsuarios() == null)
+        if(Comunidad.getUsuarios().isEmpty() || Comunidad.getUsuarios() == null)
         {
             return "No hay usuarios registrados";
         }
@@ -30,7 +31,7 @@ public class ControladorContrasena
         }
         else
         {
-            for(Usuario u : Usuario.getUsuarios())
+            for(Usuario u : Comunidad.getUsuarios())
             {
                 if((u.getnombreUsuario() != null && u.getnombreUsuario().equals(nombre)) || u.getEmail().equals(nombre))
                 {

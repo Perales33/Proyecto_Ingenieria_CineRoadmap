@@ -1,27 +1,29 @@
 @startuml
-title Secuencia de Insignias - CineRoadmap
+
+title Diagrama de Secuencias - Insignias y Logros
 
 actor Usuario
+
 participant "PanelApp" as App
 participant "PanelBanner" as Banner
 participant "PanelPeliculas" as Peliculas
 participant "PanelPerfil" as Perfil
-participant "ControlPerfil" as CPU
-participant "PanelInsignias" as Insignias
-participant "ControladorInsignias" as CI
 participant "ControladorUsuario" as CU
+participant "ControladorPerfil" as CPU
+participant "ControladorCalificacion" as CC
+participant "ControladorInsignias" as CI
 
-== Insignias ==
+== Insignias y Logros ==
 Usuario -> App : accede a la pantalla principal
 App -> Banner : presiona la sección de insignias
-Banner -> Insignias : se carga toda la sección de insignias
+Banner -> Insignias : se carga toda la sección de logros e insignias
 Usuario -> Peliculas : valora películas
 Peliculas -> Perfil: las películas se cargan en su perfil
 Perfil -> CPU : actualiza películas vistas
 CPU -> CI : cuando llega a un cierto límite de películas
 alt Insignia Cumplida
     CI -> CU : obtiene los datos del usuario activo
-    CI -> CI : evalua la condición de obtener la insignia
+    CI -> CI : evalua la condición del logro
     CI -> CU : activa la insignia
     CU -> Perfil : actualizar panel de Insignias
     Perfil -> Usuario : muestra nueva insignia

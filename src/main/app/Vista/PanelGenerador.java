@@ -29,6 +29,7 @@ public class PanelGenerador extends JFrame
     JPanel peliculasPanel; // Subpanel de películas 
     JPanel perfilPanel; // Subpanel de perfil
     JPanel appPanel; // Panel del Main
+    JPanel comunidadPanel; // Panel de la comunidad
 
     // Constructor de la Interfaz
     public PanelGenerador()
@@ -44,6 +45,7 @@ public class PanelGenerador extends JFrame
             appPanel = PanelApp.crearPanelInicio();
             perfilPanel = PanelPerfil.crearPanelPerfil();
             peliculasPanel = PanelPeliculas.crearPanelPeliculas();
+            comunidadPanel = PanelComunidad.crearPanelComunidad();
 
             PanelGenerador.getMain().add(appPanel, "Inicio");
         }

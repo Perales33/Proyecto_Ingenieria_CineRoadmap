@@ -1,0 +1,20 @@
+@startuml
+title Máquina de Estados - Panel de Retos
+
+[*] --> PantallaRetos
+
+PantallaRetos --> CargandoRetos : Usuario entra al panel de retos
+CargandoRetos --> MostrandoRetos : Retos activos cargados correctamente
+CargandoRetos --> ErrorCarga : Error al obtener retos
+
+MostrandoRetos --> CompletandoReto : Usuario completa un reto
+CompletandoReto --> RetoCompletado : Reto marcado como completado
+CompletandoReto --> RetoIncompleto : Usuario no cumple condiciones
+RetoCompletado --> MostrandoRetos : Usuario ve retos actualizados
+RetoIncompleto --> MostrandoRetos : Usuario sigue navegando
+
+ErrorCarga --> PantallaRetos : Usuario reintenta cargar panel
+
+RetoCompletado --> [*]
+
+@enduml

@@ -1,0 +1,26 @@
+@startuml
+
+title Diagrama de Secuencias - Recomendaciones de Películas
+
+actor Usuario
+
+participant "PanelApp" as App
+participant "PanelRecomendaciones" as Recomendaciones
+participant "PanelPeliculas" as Peliculas
+participant "ControladorUsuario" as CU
+participant "ControladorCalificaciones" as CP
+
+== Acceso a recomendaciones ==
+Usuario -> App : accede a la pantalla principal
+App -> Recomendaciones : presiona sección de retos y recomendaciones
+
+== Recomendaciones de la comunidad ==
+CP -> Recomendaciones : obtiene películas más votadas y mejor valoradas globalmente
+Recomendaciones -> Usuario : muestra recomendaciones basadas en la comunidad
+
+== Recomendaciones del sistema ==
+CU -> CP : obtiene historial de películas y valoraciones del usuario
+CP -> CU : analiza preferencias y genera recomendaciones personalizadas
+CU -> Usuario : muestra recomendaciones personalizadas según el usuario
+
+@enduml

@@ -9,7 +9,8 @@ import main.app.Modelo.Usuario;
 
 public class PanelBanner {
 
-    public static JPanel crearBanner() {
+    public static JPanel crearBanner() 
+    {
         // Panel contenedor del banner
         JPanel bannerPanel = new JPanel(null); // layout absoluto para logo + menú
         bannerPanel.setPreferredSize(new Dimension(1200, 86));
@@ -37,9 +38,11 @@ public class PanelBanner {
         logoPanel.add(logoLabel);
 
         // Evento clic sobre logo → abrir perfil
-        logoLabel.addMouseListener(new MouseAdapter() {
+        logoLabel.addMouseListener(new MouseAdapter() 
+        {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mouseClicked(MouseEvent e) 
+            {
                 PanelGenerador.getMain().add(PanelPerfil.crearPanelPerfil(), "Perfil");
                 PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Perfil");
             }
@@ -66,7 +69,8 @@ public class PanelBanner {
 
         // Fuente y estilo
         Font menuFont = new Font("Arial", Font.BOLD, 16);
-        for (JLabel label : labels) {
+        for (JLabel label : labels) 
+        {
             label.setFont(menuFont);
             label.setForeground(Color.WHITE);
             label.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -91,7 +95,7 @@ public class PanelBanner {
                 @Override
                 public void mouseClicked(MouseEvent e) 
                 {
-                    if (pantalla.equals("LogrosInsignias") || pantalla.equals("Retos") || pantalla.equals("Comunidad")) 
+                    if (pantalla.equals("LogrosInsignias") || pantalla.equals("Retos")) 
                     {
                         JOptionPane.showMessageDialog(PanelGenerador.getMain(),
                                 "Sección todavía no implementada",
@@ -115,6 +119,11 @@ public class PanelBanner {
                     {
                         PanelGenerador.getMain().add(PanelPeliculas.crearPanelPeliculas(), "Peliculas");
                         PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Peliculas");
+                    }
+                    else if (pantalla.equals("Comunidad"))
+                    {
+                        PanelGenerador.getMain().add(PanelComunidad.crearPanelComunidad(), "Comunidad");
+                        PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Comunidad");
                     }
 
                     PanelGenerador.getColocacion().show(PanelGenerador.getMain(), pantalla);

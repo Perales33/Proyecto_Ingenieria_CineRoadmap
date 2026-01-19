@@ -79,19 +79,19 @@ public class ControladorPerfil
     public static void cambiarNombre(String nuevoNombre, JLabel labelNombreUsuario)
     {
         if(nuevoNombre != null && !nuevoNombre.trim().isEmpty())
-                {
-                    boolean actualizarNombre = ControladorPerfil.actualizarNombre(nuevoNombre); 
+        {
+            boolean actualizarNombre = ControladorPerfil.actualizarNombre(nuevoNombre); 
 
-                    if(actualizarNombre)
-                    {
-                        ControladorUsuario.getUsuarioActivo().setnombreUsuario(nuevoNombre);
-                        labelNombreUsuario.setText("Nombre: " + nuevoNombre);
-                    }
-                    else
-                    {
-                        JOptionPane.showMessageDialog(PanelGenerador.getMain(), "El nuevo nombre debe tener al menos 5 dígitos", "Nombre invalido", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
+            if(actualizarNombre)
+            {
+                ControladorUsuario.getUsuarioActivo().setnombreUsuario(nuevoNombre);
+                labelNombreUsuario.setText("Nombre: " + nuevoNombre);
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(PanelGenerador.getMain(), "El nuevo nombre debe tener al menos 5 dígitos", "Nombre invalido", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
     public static void cambiarEmail(String nuevoEmail,JLabel labelEmail)

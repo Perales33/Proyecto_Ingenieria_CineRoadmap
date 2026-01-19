@@ -1,0 +1,19 @@
+@startuml
+title Máquina de Estados - Insignias y Logros
+
+[*] --> PantallaInsignias
+
+PantallaInsignias --> CargandoInsignias : Obteniendo logros e insignias
+CargandoInsignias --> MostrandoInsignias : Logros e insignias mostrados
+CargandoInsignias --> ErrorCarga : Error al cargar insignias
+
+MostrandoInsignias --> ActualizandoInsignias : Usuario alcanza criterios
+ActualizandoInsignias --> ExitoActualizacion : Insignia activada
+ActualizandoInsignias --> SinCambio : No cumple criterios
+ErrorCarga --> PantallaInsignias : Usuario reintenta
+
+ExitoActualizacion --> [*] : Usuario puede mostrar la insignia
+SinCambio --> [*] : Se tiene que cumplir la condición del logro
+
+
+@enduml
