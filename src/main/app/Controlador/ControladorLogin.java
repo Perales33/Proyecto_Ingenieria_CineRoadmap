@@ -1,12 +1,13 @@
 package main.app.Controlador;
 
 import java.awt.Color;
+import java.awt.Component;
 import javax.swing.*;
 
 import main.app.Vista.*;
 import main.app.Modelo.*;
 
-public class ControladorLogin 
+public class ControladorLogin
 {
     public static String inicioSesion(String nombreEmail, String contrasena)
     {
@@ -32,9 +33,9 @@ public class ControladorLogin
                     {
                         ControladorUsuario.setUsuarioActivo(u);
                         return null;
-                    }        
-                } 
-            } 
+                    }
+                }
+            }
             return "El usuario no existe";
         }
     }
@@ -52,7 +53,6 @@ public class ControladorLogin
             campoContrasena.setText("********");
             campoContrasena.setForeground(Color.GRAY);
         }
-        
     }
 
     public static void contrasenaRatonPresionado(java.awt.event.MouseEvent e, JTextField campoNombre, JPasswordField campoContrasena)
@@ -70,21 +70,66 @@ public class ControladorLogin
         }
     }
 
+    // --- Evita duplicar tarjetas en el CardLayout ---
+    private static boolean existeTarjeta(String nombreTarjeta)
+    {
+        for (Component c : PanelGenerador.getMain().getComponents())
+        {
+            // Caso normal: name seteado
+            if (nombreTarjeta.equals(c.getName())) return true;
+        }
+        return false;
+    }
+
+    private static void addTarjetaSiNoExiste(String nombreTarjeta, JPanel panel)
+    {
+        if (!existeTarjeta(nombreTarjeta))
+        {
+            panel.setName(nombreTarjeta);
+            PanelGenerador.getMain().add(panel, nombreTarjeta);
+        }
+    }
+
     public static void pulsarBotonInicio(String mensaje, JTextField campoNombre, JPasswordField campoContrasena)
     {
         if(mensaje == null)
         {
-            JOptionPane.showMessageDialog(PanelGenerador.getMain(), ("Bienvenido " + ControladorUsuario.getUsuarioActivo().getnombreUsuario()), "Usuario registrado", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(
+                    PanelGenerador.getMain(),
+                    "Bienvenido " + ControladorUsuario.getUsuarioActivo().getnombreUsuario(),
+                    "Inicio de sesión",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+
+            // Reset campos
             campoNombre.setText("Introduzca nombre o email");
-            campoContrasena.setText("");
-            PanelGenerador.getMain().add(PanelApp.crearPanelInicio(), "Inicio");
+            campoContrasena.setText("********");
+
+            // ✅ Registrar TODAS las pantallas tras login (una sola vez)
+            addTarjetaSiNoExiste("Inicio", PanelApp.crearPanelInicio());
+            addTarjetaSiNoExiste("Peliculas", PanelPeliculas.crearPanelPeliculas());
+            addTarjetaSiNoExiste("Comunidad", PanelComunidad.crearPanelComunidad());
+            addTarjetaSiNoExiste("Perfil", PanelPerfil.crearPanelPerfil());
+            addTarjetaSiNoExiste("Retos", PanelRetosRecomendaciones.crearPanel());
+
+            // ✅ NUEVO: Mis Retos
+            addTarjetaSiNoExiste("MisRetos", PanelMisRetos.crearPanel());
+
+            // Mostrar Inicio
             PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Inicio");
         }
         else
         {
-            JOptionPane.showMessageDialog(PanelGenerador.getMain(), mensaje, "Usuario no registrado", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(
+                    PanelGenerador.getMain(),
+                    mensaje,
+                    "Usuario no registrado",
+                    JOptionPane.ERROR_MESSAGE
+            );
+
             campoNombre.setText("Introduzca nombre o email");
             campoContrasena.setText("********");
+
             PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Login");
         }
     }

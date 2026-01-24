@@ -10,7 +10,7 @@ import main.app.Controlador.*;
 
 public class PanelPerfil 
 {
-    protected static JPanel crearPanelPerfil()
+    public static JPanel crearPanelPerfil()
     {
         JPanel panelCental = new JPanel(new BorderLayout());
 
