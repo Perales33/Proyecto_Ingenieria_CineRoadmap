@@ -1,442 +1,406 @@
-package main.app.Modelo;
+package main.app.Vista;
 
-import java.time.LocalDateTime;
-import java.util.*;
+import main.app.Modelo.Logro;
+import main.app.Modelo.Insignia;
+
+import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ==========================================================
- * ARCHIVO CONJUNTO: LOGROS + INSIGNIAS
+ * PANEL DE LOGROS (Swing) - CineRoadMap
  * ==========================================================
- * Objetivo:
- * - Tener en un solo archivo todo lo necesario para gestionar logros.
- * - Se usa en un proyecto conjunto (repo) sin necesitar mil clases sueltas.
+ * - Tabla con: Insignia | Logro | Descripción | Progreso | Estado
+ * - Progreso: barra + actual/objetivo
+ * - Insignia: ImageIcon (gris si bloqueada)
  *
- * Regla Java:
- * - Solo 1 clase puede ser public en este archivo.
- * - Como Logro es public, el archivo debe llamarse Logro.java
+ * Uso:
+ *   PanelLogros p = new PanelLogros();
+ *   p.setLogros(CatalogoLogros.getLogros());  // o tu lista real
+ *   ...
+ *   // cuando el modelo cambie (evaluar peli/género):
+ *   p.refresh();
  */
+public class PanelLogros extends JPanel {
 
+    private final JTable table;
+    private final LogrosTableModel tableModel;
 
-/* ==========================================================
-   1) CLASE BASE LOGRO
-   ==========================================================
-   Qué representa:
-   - Un objetivo que el usuario puede completar (ej: evaluar pelis).
-   - Tiene nombre, descripción, estado (completo o no) y una insignia asociada.
+    private final JLabel detailTitle = new JLabel("Detalle del logro");
+    private final JLabel detailText = new JLabel("Selecciona un logro...");
+    private final JLabel bigIcon = new JLabel();
 
-   Qué aporta además:
-   - Progreso (actual / objetivo) para poder mostrar % en UI.
-   - Método completar() que desbloquea la insignia.
-   - Método procesarEvento() que las subclases sobrescriben.
-   ========================================================== */
-public class Logro {
+    public PanelLogros() {
+        setLayout(new BorderLayout(12, 12));
+        setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
 
-    // Auto-id simple para que cada logro tenga un identificador único
-    private static int AUTO_ID = 1;
+        JLabel title = new JLabel("Logros e Insignias");
+        title.setFont(title.getFont().deriveFont(Font.BOLD, 18f));
 
-    // Datos básicos del logro
-    private final int id;
-    private String nombreLogro;
-    private String descripcionLogro;
-    private boolean completo;
-    private Insignia insignia;
+        JPanel top = new JPanel(new BorderLayout());
+        top.add(title, BorderLayout.WEST);
+        add(top, BorderLayout.NORTH);
 
-    // Progreso genérico (sirve para logros cuantitativos)
-    protected int progresoActual;
-    protected int progresoObjetivo;
+        // Tabla
+        tableModel = new LogrosTableModel();
+        table = new JTable(tableModel);
+        table.setRowHeight(54);
+        table.setFillsViewportHeight(true);
 
-    // Timestamps útiles (creación y finalización)
-    private LocalDateTime fechaCreacion;
-    private LocalDateTime fechaCompletado;
+        // Renderers
+        table.getColumnModel().getColumn(0).setCellRenderer(new InsigniaCellRenderer());
+        table.getColumnModel().getColumn(3).setCellRenderer(new ProgresoCellRenderer());
+        table.getColumnModel().getColumn(4).setCellRenderer(new EstadoCellRenderer());
 
-    public Logro(String nombre, String descripcion, Insignia insignia) {
-        // Validación mínima (evita logros rotos)
-        if (nombre == null || nombre.trim().isEmpty())
-            throw new IllegalArgumentException("Nombre vacío");
-        if (descripcion == null || descripcion.trim().isEmpty())
-            throw new IllegalArgumentException("Descripción vacía");
-        if (insignia == null)
-            throw new IllegalArgumentException("Insignia nula");
+        // Tamaños de columnas (aprox)
+        table.getColumnModel().getColumn(0).setMaxWidth(80);
+        table.getColumnModel().getColumn(3).setPreferredWidth(240);
+        table.getColumnModel().getColumn(4).setMaxWidth(140);
 
-        // Inicialización de campos
-        this.id = AUTO_ID++;
-        this.nombreLogro = nombre;
-        this.descripcionLogro = descripcion;
-        this.insignia = insignia;
-        this.completo = false;
+        add(new JScrollPane(table), BorderLayout.CENTER);
 
-        // Progreso base
-        this.progresoActual = 0;
-        this.progresoObjetivo = 0;
+        // Panel detalle derecha
+        add(buildDetailPanel(), BorderLayout.EAST);
 
-        // Fecha creación
-        this.fechaCreacion = LocalDateTime.now();
+        // Selección -> detalle
+        table.getSelectionModel().addListSelectionListener(e -> {
+            if (e.getValueIsAdjusting()) return;
+            int r = table.getSelectedRow();
+            if (r < 0) renderDetail(null);
+            else renderDetail(tableModel.getAt(r));
+        });
     }
 
-    /**
-     * Marca el logro como completado y desbloquea la insignia asociada.
-     * Este es el núcleo del sistema.
-     */
-    public void completar() {
-        if (!completo) {
-            completo = true;
-            fechaCompletado = LocalDateTime.now();
-            insignia.desbloquear();
+    private JComponent buildDetailPanel() {
+        JPanel right = new JPanel(new BorderLayout(10, 10));
+        right.setPreferredSize(new Dimension(340, 420));
+
+        detailTitle.setFont(detailTitle.getFont().deriveFont(Font.BOLD, 14f));
+
+        bigIcon.setHorizontalAlignment(SwingConstants.CENTER);
+        bigIcon.setPreferredSize(new Dimension(140, 140));
+
+        detailText.setVerticalAlignment(SwingConstants.TOP);
+        detailText.setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));
+
+        JPanel header = new JPanel();
+        header.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
+        header.add(detailTitle);
+        header.add(Box.createVerticalStrut(8));
+        header.add(bigIcon);
+
+        right.add(header, BorderLayout.NORTH);
+        right.add(new JScrollPane(detailText), BorderLayout.CENTER);
+
+        return right;
+    }
+
+    // ---------------- API para integrarlo en la app ----------------
+
+    public void setLogros(List<Logro> logros) {
+        tableModel.setLogros(logros);
+        if (tableModel.getRowCount() > 0) {
+            table.getSelectionModel().setSelectionInterval(0, 0);
+        } else {
+            renderDetail(null);
         }
     }
 
-    /**
-     * Resetear logro (por si hay botón reset / reinicio de perfil).
-     */
-    public void resetear() {
-        completo = false;
-        progresoActual = 0;
-        fechaCompletado = null;
-        insignia.bloquear();
-    }
-
-    /**
-     * Entrada “genérica” por eventos:
-     * - En Logro base no hace nada.
-     * - Las subclases (Cantidad, Género, Película) sí lo implementan.
-     */
-    public boolean procesarEvento(EventoLogro evento) {
-        return false;
-    }
-
-    // ---------- Getters básicos ----------
-    public int getId() { return id; }
-    public String getNombreLogro() { return nombreLogro; }
-    public String getDescripcion() { return descripcionLogro; }
-    public boolean getCompleto() { return completo; }
-    public Insignia getInsignia() { return insignia; }
-    public int getProgresoActual() { return progresoActual; }
-    public int getProgresoObjetivo() { return progresoObjetivo; }
-
-    /**
-     * Porcentaje para mostrar progreso en UI (barra de progreso).
-     */
-    public double getPorcentaje() {
-        if (progresoObjetivo == 0) return 0;
-        return (progresoActual * 100.0) / progresoObjetivo;
-    }
-}
-
-
-/* ==========================================================
-   2) INSIGNIA
-   ==========================================================
-   Qué representa:
-   - La recompensa visual asociada a un logro.
-   - Se desbloquea cuando se completa el logro.
-
-   Incluye:
-   - Ruta de imagen
-   - Rareza (extra para gamificación)
-   - Estado desbloqueada sí/no
-   - Fecha de desbloqueo (opcional)
-   ========================================================== */
-class Insignia {
-
-    enum Rareza { COMUN, RARA, EPICA, LEGENDARIA }
-
-    private String rutaImagen;
-    private boolean desbloqueada;
-    private Rareza rareza;
-    private LocalDateTime fechaDesbloqueo;
-
-    public Insignia(String rutaImagen) {
-        this(rutaImagen, Rareza.COMUN);
-    }
-
-    public Insignia(String rutaImagen, Rareza rareza) {
-        this.rutaImagen = rutaImagen;
-        this.rareza = rareza;
-        this.desbloqueada = false;
-    }
-
-    public void desbloquear() {
-        desbloqueada = true;
-        fechaDesbloqueo = LocalDateTime.now();
-    }
-
-    public void bloquear() {
-        desbloqueada = false;
-        fechaDesbloqueo = null;
-    }
-
-    public boolean isDesbloqueada() { return desbloqueada; }
-    public String getRutaImagen() { return rutaImagen; }
-    public Rareza getRareza() { return rareza; }
-}
-
-
-/* ==========================================================
-   3) EVENTOS
-   ==========================================================
-   Qué son:
-   - “Acciones del usuario” transformadas en eventos.
-   - El Gestor recibe eventos y los pasa a los logros para actualizar progreso.
-
-   Tipos:
-   - PELICULA_EVALUADA
-   - GENERO_EVALUADO
-   - LOGIN_DIARIO (por si hay logros de racha)
-   ========================================================== */
-enum TipoEventoLogro {
-    PELICULA_EVALUADA,
-    GENERO_EVALUADO,
-    LOGIN_DIARIO
-}
-
-/**
- * EventoLogro:
- * - tipo: qué ha ocurrido
- * - datos: información extra (ej: nombrePelicula, genero)
- */
-class EventoLogro {
-    private TipoEventoLogro tipo;
-    private Map<String, Object> datos = new HashMap<>();
-
-    public EventoLogro(TipoEventoLogro tipo) {
-        this.tipo = tipo;
-    }
-
-    public EventoLogro(TipoEventoLogro tipo, Map<String, Object> datos) {
-        this.tipo = tipo;
-        if (datos != null) this.datos.putAll(datos);
-    }
-
-    public TipoEventoLogro getTipo() { return tipo; }
-
-    // Helper para leer strings de los datos (pelicula, genero, etc.)
-    public String getString(String key) {
-        Object v = datos.get(key);
-        return (v instanceof String) ? (String) v : null;
-    }
-}
-
-
-/* ==========================================================
-   4) TIPOS DE LOGRO (SUBCLASES)
-   ==========================================================
-   - Cada subclase implementa procesarEvento(evento)
-   - Si se cumple condición -> completar()
-   ========================================================== */
-
-/**
- * LogroCantidad:
- * - Se completa cuando ocurre el evento PELICULA_EVALUADA X veces.
- */
-class LogroCantidad extends Logro {
-
-    private int objetivo;
-
-    public LogroCantidad(String nombre, String descripcion, int objetivo, Insignia insignia) {
-        super(nombre, descripcion, insignia);
-        this.objetivo = objetivo;
-        this.progresoObjetivo = objetivo;
-    }
-
-    @Override
-    public boolean procesarEvento(EventoLogro evento) {
-        if (getCompleto()) return false;
-
-        if (evento.getTipo() == TipoEventoLogro.PELICULA_EVALUADA) {
-            progresoActual++;
-            if (progresoActual >= objetivo) completar();
-            return true;
+    public void refresh() {
+        tableModel.fireTableDataChanged();
+        int r = table.getSelectedRow();
+        if (r >= 0 && r < tableModel.getRowCount()) {
+            renderDetail(tableModel.getAt(r));
         }
-        return false;
-    }
-}
-
-/**
- * LogroGenero:
- * - Se completa cuando ocurre GENERO_EVALUADO con un género concreto X veces.
- * - El género se lee del evento: evento.getString("genero")
- */
-class LogroGenero extends Logro {
-
-    private String genero;
-    private int objetivo;
-
-    public LogroGenero(String nombre, String descripcion, String genero, int objetivo, Insignia insignia) {
-        super(nombre, descripcion, insignia);
-        this.genero = genero;
-        this.objetivo = objetivo;
-        this.progresoObjetivo = objetivo;
     }
 
-    @Override
-    public boolean procesarEvento(EventoLogro evento) {
-        if (getCompleto()) return false;
+    // ---------------- Detalle ----------------
 
-        if (evento.getTipo() == TipoEventoLogro.GENERO_EVALUADO) {
-            String g = evento.getString("genero");
-            if (g != null && g.equalsIgnoreCase(genero)) {
-                progresoActual++;
-                if (progresoActual >= objetivo) completar();
-                return true;
+    private void renderDetail(Logro l) {
+        if (l == null) {
+            bigIcon.setIcon(null);
+            detailText.setText("Selecciona un logro...");
+            return;
+        }
+
+        String nombre = safe(callString(l, "getNombreLogro"), l.getnombreReto());
+        String desc = safe(l.getDescripcion(), "—");
+        boolean done = l.getCompleto();
+
+        Progreso p = Progreso.from(l);
+        String progTxt = (p.objetivo > 0)
+                ? (p.actual + "/" + p.objetivo + " (" + p.percent() + "%)")
+                : (done ? "Completado" : "Sin progreso");
+
+        Icon iconBig = buildIcon(l.getInsignia(), done, 96);
+        bigIcon.setIcon(iconBig);
+
+        String html =
+                "<html style='width: 300px; font-family: sans-serif;'>" +
+                        "<b>" + esc(nombre) + "</b><br/><br/>" +
+                        "<b>Descripción:</b> " + esc(desc) + "<br/><br/>" +
+                        "<b>Estado:</b> " + (done ? "✅ Completado" : "Pendiente") + "<br/>" +
+                        "<b>Progreso:</b> " + esc(progTxt) + "<br/>" +
+                        "</html>";
+
+        detailText.setText(html);
+    }
+
+    private static String esc(String s) {
+        if (s == null) return "";
+        return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
+    }
+
+    private static String safe(String a, String b) {
+        if (a != null && !a.trim().isEmpty()) return a;
+        return (b == null) ? "" : b;
+    }
+
+    private static String callString(Object obj, String method) {
+        try {
+            Method m = obj.getClass().getMethod(method);
+            Object out = m.invoke(obj);
+            return (out instanceof String) ? (String) out : null;
+        } catch (Exception ignored) {
+            return null;
+        }
+    }
+
+    // ============================
+    // Table Model
+    // ============================
+
+    private static class LogrosTableModel extends AbstractTableModel {
+
+        private final String[] cols = {"Insignia", "Logro", "Descripción", "Progreso", "Estado"};
+        private List<Logro> logros = new ArrayList<>();
+
+        public void setLogros(List<Logro> list) {
+            logros = (list == null) ? new ArrayList<>() : new ArrayList<>(list);
+            fireTableDataChanged();
+        }
+
+        public Logro getAt(int row) {
+            return logros.get(row);
+        }
+
+        @Override public int getRowCount() { return logros.size(); }
+        @Override public int getColumnCount() { return cols.length; }
+        @Override public String getColumnName(int col) { return cols[col]; }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            Logro l = logros.get(rowIndex);
+            switch (columnIndex) {
+                case 0: return l.getInsignia();
+                case 1: return l.getnombreReto();      // tu getter real
+                case 2: return l.getDescripcion();     // tu getter real
+                case 3: return Progreso.from(l);       // progreso adaptable
+                case 4: return l.getCompleto();        // tu getter real
+                default: return "";
             }
         }
-        return false;
-    }
-}
 
-/**
- * LogroPelicula:
- * - Se completa cuando el evento PELICULA_EVALUADA coincide con una película concreta.
- * - Se lee del evento: evento.getString("pelicula")
- */
-class LogroPelicula extends Logro {
-
-    private String pelicula;
-
-    public LogroPelicula(String nombre, String descripcion, String pelicula, Insignia insignia) {
-        super(nombre, descripcion, insignia);
-        this.pelicula = pelicula;
-        this.progresoObjetivo = 1;
-    }
-
-    @Override
-    public boolean procesarEvento(EventoLogro evento) {
-        if (getCompleto()) return false;
-
-        if (evento.getTipo() == TipoEventoLogro.PELICULA_EVALUADA) {
-            String p = evento.getString("pelicula");
-            if (p != null && p.equalsIgnoreCase(pelicula)) {
-                progresoActual = 1;
-                completar();
-                return true;
+        @Override
+        public Class<?> getColumnClass(int columnIndex) {
+            switch (columnIndex) {
+                case 0: return Insignia.class;
+                case 3: return Progreso.class;
+                case 4: return Boolean.class;
+                default: return String.class;
             }
         }
-        return false;
-    }
-}
 
-
-/* ==========================================================
-   5) GESTOR DE LOGROS
-   ==========================================================
-   Qué hace:
-   - Tiene una lista de logros
-   - Recibe un evento y se lo manda a todos los logros
-   - Devuelve completados para mostrar en UI
-
-   Nota:
-   - Este gestor es simple (suficiente para práctica y proyecto conjunto).
-   ========================================================== */
-class GestorLogros {
-
-    private List<Logro> logros = new ArrayList<>();
-
-    public GestorLogros(List<Logro> logros) {
-        if (logros != null) this.logros.addAll(logros);
-    }
-
-    public void emitirEvento(EventoLogro evento) {
-        for (Logro l : logros) {
-            l.procesarEvento(evento);
+        @Override
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return false;
         }
     }
 
-    public List<Logro> getCompletados() {
-        List<Logro> out = new ArrayList<>();
-        for (Logro l : logros) if (l.getCompleto()) out.add(l);
-        return out;
-    }
-}
+    // ============================
+    // Renderers
+    // ============================
 
+    private static class InsigniaCellRenderer extends DefaultTableCellRenderer {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                                                       boolean isSelected, boolean hasFocus,
+                                                       int row, int column) {
 
-/* ==========================================================
-   6) CATÁLOGO DE LOGROS
-   ==========================================================
-   Qué hace:
-   - Crea todos los logros “predefinidos” del juego/app.
-   - Se carga una sola vez (flag cargado).
-   ========================================================== */
-class CatalogoLogros {
+            JLabel lbl = (JLabel) super.getTableCellRendererComponent(table, "", isSelected, hasFocus, row, column);
+            lbl.setHorizontalAlignment(SwingConstants.CENTER);
 
-    private static ArrayList<Logro> logros = new ArrayList<>();
-    private static boolean cargado = false;
+            Insignia ins = (value instanceof Insignia) ? (Insignia) value : null;
+            boolean done = (Boolean) table.getModel().getValueAt(row, 4);
 
-    public static ArrayList<Logro> getLogros() {
-        if (!cargado) cargar();
-        return logros;
-    }
-
-    private static void cargar() {
-
-        // Logro 1: Cantidad 1 película
-        logros.add(new LogroCantidad(
-                "Primeros pasos",
-                "Evalúa 1 película",
-                1,
-                new Insignia("/img/primer.jpg", Insignia.Rareza.COMUN)));
-
-        // Logro 2: Cantidad 10 películas
-        logros.add(new LogroCantidad(
-                "Cinéfilo experto",
-                "Evalúa 10 películas",
-                10,
-                new Insignia("/img/cinefilo.jpg", Insignia.Rareza.RARA)));
-
-        // Logro 3: Género (Ciencia Ficción) 3 veces
-        logros.add(new LogroGenero(
-                "Amante de la Ciencia Ficción",
-                "Evalúa 3 pelis de ciencia ficción",
-                "Ciencia Ficción",
-                3,
-                new Insignia("/img/scifi.jpg", Insignia.Rareza.COMUN)));
-
-        // Logro 4: Película concreta
-        logros.add(new LogroPelicula(
-                "Clásico de acción",
-                "Evalúa 12 Angry Men",
-                "12 Angry Men",
-                new Insignia("/img/clasic.jpg", Insignia.Rareza.EPICA)));
-
-        cargado = true;
-    }
-}
-
-
-/* ==========================================================
-   7) DEMO / PRUEBA RÁPIDA
-   ==========================================================
-   Para comprobar que:
-   - Compila
-   - Se desbloquean logros
-   - Se pueden emitir eventos
-
-   Si en el repo no quieren main, se borra esta clase.
-   ========================================================== */
-class DemoLogros {
-    public static void main(String[] args) {
-
-        // Se crea el gestor usando el catálogo
-        GestorLogros gestor = new GestorLogros(CatalogoLogros.getLogros());
-
-        // Evento 1: evaluar película genérica (suma para logros por cantidad)
-        gestor.emitirEvento(new EventoLogro(TipoEventoLogro.PELICULA_EVALUADA));
-
-        // Evento 2: evaluar una peli concreta (para LogroPelicula)
-        Map<String, Object> data = new HashMap<>();
-        data.put("pelicula", "12 Angry Men");
-        gestor.emitirEvento(new EventoLogro(TipoEventoLogro.PELICULA_EVALUADA, data));
-
-        // Evento 3: evaluar género (para LogroGenero)
-        Map<String, Object> data2 = new HashMap<>();
-        data2.put("genero", "Ciencia Ficción");
-        gestor.emitirEvento(new EventoLogro(TipoEventoLogro.GENERO_EVALUADO, data2));
-        gestor.emitirEvento(new EventoLogro(TipoEventoLogro.GENERO_EVALUADO, data2));
-        gestor.emitirEvento(new EventoLogro(TipoEventoLogro.GENERO_EVALUADO, data2));
-
-        // Mostrar cuántos completados hay
-        System.out.println("Completados: " + gestor.getCompletados().size());
-        for (Logro l : gestor.getCompletados()) {
-            System.out.println(" - " + l.getNombreLogro() + " | Insignia: " + l.getInsignia().getRutaImagen());
+            lbl.setIcon(buildIcon(ins, done, 40));
+            return lbl;
         }
+    }
+
+    private static class ProgresoCellRenderer implements TableCellRenderer {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                                                       boolean isSelected, boolean hasFocus,
+                                                       int row, int column) {
+
+            Progreso p = (value instanceof Progreso) ? (Progreso) value : new Progreso(0, 0);
+
+            JPanel panel = new JPanel(new BorderLayout(8, 0));
+            panel.setOpaque(true);
+
+            JProgressBar bar = new JProgressBar();
+            int max = Math.max(1, p.objetivo);
+            bar.setMinimum(0);
+            bar.setMaximum(max);
+            bar.setValue(Math.min(p.actual, max));
+            bar.setStringPainted(false);
+
+            JLabel txt = new JLabel(p.text());
+            txt.setFont(txt.getFont().deriveFont(12f));
+
+            if (isSelected) {
+                panel.setBackground(table.getSelectionBackground());
+                txt.setForeground(table.getSelectionForeground());
+            } else {
+                panel.setBackground(Color.WHITE);
+                txt.setForeground(Color.DARK_GRAY);
+            }
+
+            panel.add(bar, BorderLayout.CENTER);
+            panel.add(txt, BorderLayout.EAST);
+            return panel;
+        }
+    }
+
+    private static class EstadoCellRenderer extends DefaultTableCellRenderer {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                                                       boolean isSelected, boolean hasFocus,
+                                                       int row, int column) {
+
+            boolean done = (value instanceof Boolean) && (Boolean) value;
+
+            JLabel lbl = (JLabel) super.getTableCellRendererComponent(
+                    table, done ? "Completado" : "Pendiente", isSelected, hasFocus, row, column);
+
+            lbl.setHorizontalAlignment(SwingConstants.CENTER);
+            lbl.setFont(lbl.getFont().deriveFont(Font.BOLD, 12f));
+            return lbl;
+        }
+    }
+
+    // ============================
+    // Progreso adaptable (sin romper compilación)
+    // ============================
+
+    private static class Progreso {
+        final int actual;
+        final int objetivo;
+
+        Progreso(int actual, int objetivo) {
+            this.actual = Math.max(0, actual);
+            this.objetivo = Math.max(0, objetivo);
+        }
+
+        static Progreso from(Logro l) {
+            // Intentos típicos (según cómo lo hayáis implementado en el repo):
+            Integer a = callInt(l, "getProgresoActual");
+            Integer o = callInt(l, "getProgresoObjetivo");
+            if (a != null && o != null) return new Progreso(a, o);
+
+            Integer a2 = callInt(l, "getActual");
+            Integer o2 = callInt(l, "getObjetivo");
+            if (a2 != null && o2 != null) return new Progreso(a2, o2);
+
+            Integer a3 = callInt(l, "getProgreso");
+            Integer o3 = callInt(l, "getObjetivo");
+            if (a3 != null && o3 != null) return new Progreso(a3, o3);
+
+            // Si no hay progreso en el modelo: 0 o 1 si está completado
+            return new Progreso(l.getCompleto() ? 1 : 0, l.getCompleto() ? 1 : 0);
+        }
+
+        static Integer callInt(Object obj, String method) {
+            try {
+                Method m = obj.getClass().getMethod(method);
+                Object out = m.invoke(obj);
+                return (out instanceof Integer) ? (Integer) out : null;
+            } catch (Exception ignored) {
+                return null;
+            }
+        }
+
+        int percent() {
+            if (objetivo <= 0) return 0;
+            double p = (actual * 100.0) / objetivo;
+            p = Math.max(0, Math.min(100, p));
+            return (int) Math.round(p);
+        }
+
+        String text() {
+            if (objetivo <= 0) return "—";
+            return actual + "/" + objetivo;
+        }
+    }
+
+    // ============================
+    // Icono de Insignia (gris si bloqueada)
+    // ============================
+
+    private static Icon buildIcon(Insignia ins, boolean done, int sizePx) {
+        if (ins == null) return null;
+
+        ImageIcon base;
+        try {
+            base = ins.getInsignia();
+        } catch (Exception e) {
+            return null;
+        }
+        if (base == null || base.getImage() == null) return null;
+
+        boolean unlocked = false;
+        try {
+            unlocked = ins.getBloqueo();
+        } catch (Exception ignored) {}
+
+        Image img = base.getImage();
+
+        // Si está bloqueada y no completado -> gris
+        if (!unlocked && !done) {
+            img = toGray(img);
+        }
+
+        Image scaled = img.getScaledInstance(sizePx, sizePx, Image.SCALE_SMOOTH);
+        return new ImageIcon(scaled);
+    }
+
+    private static Image toGray(Image img) {
+        int w = img.getWidth(null);
+        int h = img.getHeight(null);
+        if (w <= 0 || h <= 0) return img;
+
+        BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = bi.createGraphics();
+        g.drawImage(img, 0, 0, null);
+        g.dispose();
+
+        for (int y = 0; y < h; y++) {
+            for (int x = 0; x < w; x++) {
+                int rgba = bi.getRGB(x, y);
+                Color c = new Color(rgba, true);
+                int gray = (c.getRed() + c.getGreen() + c.getBlue()) / 3;
+                Color cg = new Color(gray, gray, gray, c.getAlpha());
+                bi.setRGB(x, y, cg.getRGB());
+            }
+        }
+        return bi;
     }
 }
