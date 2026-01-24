@@ -95,20 +95,18 @@ public class PanelBanner {
                 @Override
                 public void mouseClicked(MouseEvent e) 
                 {
-                    if (pantalla.equals("Retos")) 
-                    {
-                        JOptionPane.showMessageDialog(PanelGenerador.getMain(),
-                                "Sección todavía no implementada",
-                                "Información",
-                                JOptionPane.INFORMATION_MESSAGE);
-                    } 
-                    else if (pantalla.equals("Login")) 
+                    if (pantalla.equals("Login")) 
                     {
                         JOptionPane.showMessageDialog(PanelGenerador.getMain(),
                                 "Cerrando Sesión " + ControladorUsuario.getUsuarioActivo().getnombreUsuario(),
                                 "Cerrar Sesión",
                                 JOptionPane.INFORMATION_MESSAGE);
                         ControladorUsuario.setUsuarioActivo();
+                    } 
+                    else if (pantalla.equals("Retos")) 
+                    {
+                        PanelGenerador.getMain().add(PanelRetosRecomendaciones.crearPanel(), "Retos");
+                        PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Retos");
                     } 
                     else if (pantalla.equals("Perfil")) 
                     {
@@ -127,7 +125,7 @@ public class PanelBanner {
                     }
                     else if (pantalla.equals("LogrosInsignias"))
                     {
-                        PanelGenerador.getMain().add(PanelComunidad.crearPanelComunidad(), "LogrosInsignias");
+                        PanelGenerador.getMain().add(PanelLogros.crearPanelLogros(), "LogrosInsignias");
                         PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "LogrosInsignias");
                     }
 

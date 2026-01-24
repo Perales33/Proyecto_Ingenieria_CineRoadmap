@@ -55,6 +55,8 @@ public class PanelGenerador extends JFrame
             perfilPanel = PanelPerfil.crearPanelPerfil();
             peliculasPanel = PanelPeliculas.crearPanelPeliculas();
             comunidadPanel = PanelComunidad.crearPanelComunidad();
+            retosPanel = PanelRetosRecomendaciones.crearPanel();
+            logrosPanel = PanelLogros.crearPanelLogros();
 
             PanelGenerador.getMain().add(appPanel, "Inicio");
         }

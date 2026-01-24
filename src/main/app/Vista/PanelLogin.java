@@ -34,22 +34,14 @@ public class PanelLogin
         };
 
         // Cargar la imagen de fondo (sin reflexión)
-        try
+        try 
         {
-            Image icono = new ImageIcon(
-                PanelLogin.class.getResource("/main/app/resources/img/logoFondoPantalla.jpg")
-            ).getImage();
-
-            // Llamada directa al método del panel anónimo (sin reflection)
-            ((JPanel) panelCentral).setOpaque(false); // opcional
-            ((JPanel) panelCentral).getClass(); // no hace nada, se puede borrar
-
-            // Como estamos dentro de la clase anónima, podemos castear a Object y llamar por interfaz:
-            // Truco: creamos una variable final con tipo del panel anónimo no es posible;
-            // así que lo resolvemos con una clase interna local (ver alternativa abajo).
-            // => Para mantenerlo simple: usamos una clase explícita abajo.
-        }
-        catch (Exception e)
+            Image icono = new ImageIcon(PanelLogin.class.getResource("/main/resources/img/logoFondoPantalla.jpg")).getImage();
+            ((JPanel) panelCentral).getClass()
+                .getDeclaredMethod("setFondo", Image.class)
+                .invoke(panelCentral, icono); // asignamos usando reflexión o mejor con un panel custom
+        } 
+        catch (Exception e) 
         {
             panelCentral.setBackground(Color.DARK_GRAY);
         }

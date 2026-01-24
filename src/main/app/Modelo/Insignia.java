@@ -2,31 +2,26 @@ package main.app.Modelo;
 
 import javax.swing.*;
 
+import main.app.Vista.PanelLogros;
+
 public class Insignia {
+    private String nombre;
+    private ImageIcon imagen;
 
-    private ImageIcon insignia;
-    private boolean desbloqueada;
-
-    public Insignia(ImageIcon insignia, boolean desbloqueada) {
-        this.insignia = insignia;
-        this.desbloqueada = desbloqueada;
+    public Insignia(String nombre, ImageIcon imagen){
+        this.nombre = nombre;
+        this.imagen = imagen;
     }
 
-    // GETTERS
-    public ImageIcon getInsignia() {
-        return insignia;
-    }
+    public String getNombre() { return nombre; }
+    public ImageIcon getImagen() { return imagen; }
 
-    public boolean isDesbloqueada() {
-        return desbloqueada;
-    }
-
-    // SETTERS
-    public void setInsignia(ImageIcon insignia) {
-        this.insignia = insignia;
-    }
-
-    public void setDesbloqueada(boolean desbloqueada) {
-        this.desbloqueada = desbloqueada;
+    // Catálogo de insignias
+    public static Insignia[] getCatalogo() {
+        return new Insignia[]{
+            new Insignia("Cinéfilo Inicial", new ImageIcon(PanelLogros.class.getResource("/main/resources/img/insignia.jpg"))),
+            new Insignia("Cinéfilo Intermedio", new ImageIcon(PanelLogros.class.getResource("/main/resources/img/insignia.jpg"))),
+            new Insignia("Desafiante", new ImageIcon(PanelLogros.class.getResource("/main/resources/img/insignia.jpg")))
+        };
     }
 }
