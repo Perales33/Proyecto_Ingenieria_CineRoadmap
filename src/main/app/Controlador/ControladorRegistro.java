@@ -12,61 +12,57 @@ public class ControladorRegistro
 {
     public static String registrarUsuario(String nombre, String email, String contrasena)
     {
-        String extensiones[] = 
-        {
+        String[] extensiones = {
             "@gmail.com", "@yahoo.es", "@yahoo.com",
             "@outlook.com", "@hotmail.com", "@live.com"
         };
 
-        if(nombre.trim().isEmpty() || email.trim().isEmpty() || contrasena.trim().isEmpty())
-        {
+        String nom = nombre == null ? "" : nombre.trim();
+        String mail = email == null ? "" : email.trim();
+        String pass = contrasena == null ? "" : contrasena.trim();
+
+        if(nom.isEmpty() || mail.isEmpty() || pass.isEmpty())
             return "Debes rellenar todos los campos para el registro";
-        }
-        else if (nombre.length() < 5)
-        {
+
+        if (nom.length() < 5)
             return "No se puede crear un usuario con un nombre de menos de 5 letras";
-        }
-        else if (contrasena.length() < 6)
-        {
-            return "La longitud de la contraseña debe ser de al menos 6 dígitos";
-        }
-        else if(!contrasena.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*]).+$"))
-        {
+
+        if (pass.equals("********"))
+            return "Debes introducir una contraseña real (no el texto de ejemplo)";
+
+        if (pass.length() < 6)
+            return "La longitud de la contraseña debe ser de al menos 6 caracteres";
+
+        // Al menos: minúscula, mayúscula, número y símbolo (cualquier no alfanumérico)
+        if(!pass.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).+$"))
             return "La contraseña debe incluir al menos: una mayúscula, una minúscula, un número y un símbolo";
-        }
-        else
+
+        // Comprobación de duplicados
+        for(Usuario u : Comunidad.getUsuarios())
         {
-            for(Usuario u : Comunidad.getUsuarios())
-            {
-                if(u.getnombreUsuario().equals(nombre))
-                {
-                    return "Ya existe un usuario con ese nombre";
-                }
-                else if(u.getEmail().equalsIgnoreCase(email))
-                {
-                    return "Ya se ha registrado un usuario con ese correo";
-                }
-            }
+            if(u.getnombreUsuario().equals(nom))
+                return "Ya existe un usuario con ese nombre";
 
-            boolean extensionValida = false;
-            for(String ext : extensiones)
-            {
-                if(email.toLowerCase().endsWith(ext))
-                {
-                    extensionValida = true;
-                    break;
-                }
-            }
-
-            if(!extensionValida)
-            {
-                return "No se ha includo una extensión de correo válida";
-            }
-
-            Usuario nuevoUsuario = new Usuario(contrasena, email, nombre);
-            Comunidad.setUsuarios(nuevoUsuario); 
-            return null;
+            if(u.getEmail().equalsIgnoreCase(mail))
+                return "Ya se ha registrado un usuario con ese correo";
         }
+
+        boolean extensionValida = false;
+        for(String ext : extensiones)
+        {
+            if(mail.toLowerCase().endsWith(ext))
+            {
+                extensionValida = true;
+                break;
+            }
+        }
+
+        if(!extensionValida)
+            return "No se ha incluido una extensión de correo válida";
+
+        Usuario nuevoUsuario = new Usuario(pass, mail, nom);
+        Comunidad.setUsuarios(nuevoUsuario);
+        return null;
     }
 
     public static void nombreRatonPresionado(java.awt.event.MouseEvent e, JTextField campoNombre, JTextField campoEmail, JPasswordField campoContrasena)
