@@ -404,3 +404,28 @@ public class PanelLogros extends JPanel {
         return bi;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+PanelLogros panelLogros = new PanelLogros();
+panelLogros.setLogros(CatalogoLogros.getLogros()); // o vuestra lista real
+
+// meterlo en un contenedor Swing:
+tuPanelContenedor.add(panelLogros);
