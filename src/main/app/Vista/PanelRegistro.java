@@ -138,7 +138,6 @@ public class PanelRegistro
         {
             String mensaje = ControladorRegistro.registrarUsuario(campoNombre.getText(), campoEmail.getText(), new String(campoContrasena.getPassword()));
             ControladorRegistro.botonRegistroPresionado(mensaje, campoNombre, campoEmail, campoContrasena);
-            
         });
 
         botonInicio.addActionListener(e -> ControladorRegistro.botonInicioPresionado(campoNombre, campoEmail, campoContrasena));

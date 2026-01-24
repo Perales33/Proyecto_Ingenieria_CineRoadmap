@@ -1,6 +1,8 @@
 package main.app.Vista;
 
 import javax.swing.*;
+
+import main.app.Controlador.ControladorApp;
 import main.app.Modelo.Pelicula;
 import main.app.util.Estilos;
 
@@ -61,6 +63,7 @@ public class PanelApp
         joinButton.setBackground(new Color(255, 87, 34));
         joinButton.setForeground(Color.WHITE);
         joinButton.setFocusPainted(false);
+        joinButton.addActionListener(e -> ControladorApp.botonComunidadPresionado());
         overlay.add(joinButton);
 
         panelContenido.add(hero);
