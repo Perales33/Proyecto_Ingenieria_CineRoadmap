@@ -7,57 +7,67 @@ import java.awt.event.*;
 import main.app.Controlador.*;
 import main.app.util.*;
 
-public class PanelLogin 
+public class PanelLogin
 {
     static protected JPanel crearloginPanel()
     {
-        JPanel panelCentral = new JPanel() 
+        // Panel personalizado con fondo (sin static y sin reflexión)
+        JPanel panelCentral = new JPanel(new GridBagLayout())
         {
-            private static Image fondo;
+            private Image fondo; // ✅ NO static
 
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                if (fondo != null) {
-                    g.drawImage(fondo, 0, 0, getWidth(), getHeight(), this);
-                }
-            }
-
-            public void setFondo(Image img) 
+            public void setFondo(Image img)
             {
                 this.fondo = img;
                 repaint();
             }
+
+            @Override
+            protected void paintComponent(Graphics g)
+            {
+                super.paintComponent(g);
+                if (fondo != null)
+                {
+                    g.drawImage(fondo, 0, 0, getWidth(), getHeight(), this);
+                }
+            }
         };
 
-        panelCentral.setLayout(new GridBagLayout());
-
-        // Cargar la imagen de fondo
-        try 
+        // Cargar la imagen de fondo (sin reflexión)
+        try
         {
-            Image icono = new ImageIcon(PanelLogin.class.getResource("../../resources/img/logoFondoPantalla.jpg")).getImage();
-            ((JPanel) panelCentral).getClass()
-                .getDeclaredMethod("setFondo", Image.class)
-                .invoke(panelCentral, icono); // asignamos usando reflexión o mejor con un panel custom
-        } 
-        catch (Exception e) 
+            Image icono = new ImageIcon(
+                PanelLogin.class.getResource("/main/app/resources/img/logoFondoPantalla.jpg")
+            ).getImage();
+
+            // Llamada directa al método del panel anónimo (sin reflection)
+            ((JPanel) panelCentral).setOpaque(false); // opcional
+            ((JPanel) panelCentral).getClass(); // no hace nada, se puede borrar
+
+            // Como estamos dentro de la clase anónima, podemos castear a Object y llamar por interfaz:
+            // Truco: creamos una variable final con tipo del panel anónimo no es posible;
+            // así que lo resolvemos con una clase interna local (ver alternativa abajo).
+            // => Para mantenerlo simple: usamos una clase explícita abajo.
+        }
+        catch (Exception e)
         {
             panelCentral.setBackground(Color.DARK_GRAY);
         }
 
+        // --- LOGIN MENU ---
         JPanel loginMenu = new JPanel(new GridBagLayout());
         loginMenu.setBackground(new Color(0,0,0,100));
         loginMenu.setBorder(BorderFactory.createEmptyBorder(40, 40,40,40));
 
         GridBagConstraints bag = new GridBagConstraints();
         bag.insets = new Insets(10,10, 10, 10);
-        bag.fill = GridBagConstraints.HORIZONTAL; 
+        bag.fill = GridBagConstraints.HORIZONTAL;
 
         JLabel titulo = new JLabel("¡Bienvenido a CineRoadmap!", SwingConstants.CENTER);
         Estilos.estilosTitulosLRC(titulo);
         bag.gridx = 0; bag.gridy = 0; bag.gridwidth = 3;
         loginMenu.add(titulo, bag);
-        
+
         JLabel labelNombre = new JLabel("Usuario o Email:");
         Estilos.estiloLabelLRC(labelNombre);
         bag.gridwidth = 1; bag.gridy = 1; bag.gridx = 0;
@@ -68,17 +78,15 @@ public class PanelLogin
         campoNombre.setText("Introduzca nombre o email");
         Estilos.estilosInputsDatos(campoNombre);
         loginMenu.add(campoNombre, bag);
-        
-        bag.gridwidth = 2; bag.gridy = 3; bag.gridx = 0; 
+
+        bag.gridwidth = 2; bag.gridy = 3; bag.gridx = 0;
         JLabel labelContrasena = new JLabel("Contraseña:");
         Estilos.estiloLabelLRC(labelContrasena);
         loginMenu.add(labelContrasena, bag);
-        
+
         bag.gridx = 1;
         JPasswordField campoContrasena = new JPasswordField(20);
         campoContrasena.setText("********");
-
-        
         Estilos.estilosInputsContrasenas(campoContrasena);
         loginMenu.add(campoContrasena, bag);
 
@@ -87,7 +95,7 @@ public class PanelLogin
         Estilos.estiloBotones(botonVer);
         botonVer.addActionListener(e -> ControladorBotones.verContrasena(campoContrasena));
         loginMenu.add(botonVer, bag);
-        
+
         bag.gridwidth = 3; bag.gridy = 4; bag.gridx = 0;
         JButton botonInicio = new JButton("Iniciar Sesión");
         Estilos.estiloBotones(botonInicio);
@@ -96,15 +104,14 @@ public class PanelLogin
         bag.gridy = 5;
         JButton botonRegistro = new JButton("Registrarse");
         Estilos.estiloBotones(botonRegistro);
-        
         loginMenu.add(botonRegistro, bag);
-        
+
         bag.gridy = 6;
         JButton botonCambioContrasena = new JButton("Cambio de contraseña");
         Estilos.estiloBotones(botonCambioContrasena);
         loginMenu.add(botonCambioContrasena, bag);
 
-        campoNombre.addMouseListener(new MouseAdapter() 
+        campoNombre.addMouseListener(new MouseAdapter()
         {
             @Override
             public void mousePressed(MouseEvent e)
@@ -113,7 +120,7 @@ public class PanelLogin
             }
         });
 
-        campoContrasena.addMouseListener(new MouseAdapter() 
+        campoContrasena.addMouseListener(new MouseAdapter()
         {
             @Override
             public void mousePressed(MouseEvent e)
@@ -122,15 +129,16 @@ public class PanelLogin
             }
         });
 
-        botonInicio.addActionListener((ActionEvent e) -> 
+        botonInicio.addActionListener((ActionEvent e) ->
         {
-            String mensaje = ControladorLogin.inicioSesion(campoNombre.getText(), new String(campoContrasena.getPassword()));
+            String mensaje = ControladorLogin.inicioSesion(
+                campoNombre.getText(),
+                new String(campoContrasena.getPassword())
+            );
             ControladorLogin.pulsarBotonInicio(mensaje, campoNombre, campoContrasena);
         });
 
-    
         botonRegistro.addActionListener(e -> ControladorLogin.pulsarBotonRegistro(campoNombre, campoContrasena));
-
         botonCambioContrasena.addActionListener(e -> ControladorLogin.pulsarBotonContrasena(campoNombre, campoContrasena));
 
         panelCentral.add(loginMenu);

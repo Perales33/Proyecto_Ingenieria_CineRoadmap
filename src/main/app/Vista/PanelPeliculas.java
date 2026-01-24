@@ -11,7 +11,7 @@ import main.app.util.*;
 
 public class PanelPeliculas 
 {
-    protected static JPanel crearPanelPeliculas()
+    public static JPanel crearPanelPeliculas()
     {
         ArrayList<Pelicula> catalogo = Pelicula.getCatalogo();
 
