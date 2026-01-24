@@ -1,6 +1,5 @@
 package main.app.Vista;
 
-import main.app.Modelo.Logro;
 import main.app.Modelo.Insignia;
 
 import javax.swing.*;

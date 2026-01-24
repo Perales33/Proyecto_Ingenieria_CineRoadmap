@@ -1,19 +1,32 @@
 package main.app.Modelo;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 
-public class Insignia
-{
-    private ImageIcon imagen;
+public class Insignia {
+
+    private ImageIcon insignia;
     private boolean desbloqueada;
 
-    public Insignia(String rutaImagen)
-    {
-        this.imagen = new ImageIcon(rutaImagen);
-        this.desbloqueada = false;
+    public Insignia(ImageIcon insignia, boolean desbloqueada) {
+        this.insignia = insignia;
+        this.desbloqueada = desbloqueada;
     }
 
-    public void desbloquear() { desbloqueada = true; }
-    public boolean getBloqueo() { return desbloqueada; }
-    public ImageIcon getInsignia() { return imagen; }
+    // GETTERS
+    public ImageIcon getInsignia() {
+        return insignia;
+    }
+
+    public boolean isDesbloqueada() {
+        return desbloqueada;
+    }
+
+    // SETTERS
+    public void setInsignia(ImageIcon insignia) {
+        this.insignia = insignia;
+    }
+
+    public void setDesbloqueada(boolean desbloqueada) {
+        this.desbloqueada = desbloqueada;
+    }
 }

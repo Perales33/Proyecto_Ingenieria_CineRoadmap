@@ -95,7 +95,7 @@ public class PanelBanner {
                 @Override
                 public void mouseClicked(MouseEvent e) 
                 {
-                    if (pantalla.equals("LogrosInsignias") || pantalla.equals("Retos")) 
+                    if (pantalla.equals("Retos")) 
                     {
                         JOptionPane.showMessageDialog(PanelGenerador.getMain(),
                                 "Sección todavía no implementada",
@@ -124,6 +124,11 @@ public class PanelBanner {
                     {
                         PanelGenerador.getMain().add(PanelComunidad.crearPanelComunidad(), "Comunidad");
                         PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Comunidad");
+                    }
+                    else if (pantalla.equals("LogrosInsignias"))
+                    {
+                        PanelGenerador.getMain().add(PanelComunidad.crearPanelComunidad(), "LogrosInsignias");
+                        PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "LogrosInsignias");
                     }
 
                     PanelGenerador.getColocacion().show(PanelGenerador.getMain(), pantalla);
