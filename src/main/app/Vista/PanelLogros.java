@@ -3,7 +3,7 @@ package main.app.Vista;
 import main.app.Modelo.Logro;
 import main.app.Modelo.Usuario;
 import main.app.Controlador.ControladorUsuario;
-import main.app.Modelo.Insignia;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class PanelLogros {
-
-    public static JPanel crearPanelLogros() {
+    
+    public static JPanel crearPanelLogros(Usuario usuario) {
 
         Usuario u = ControladorUsuario.getUsuarioActivo();
         ArrayList<Logro> logros = u.getLogros();
