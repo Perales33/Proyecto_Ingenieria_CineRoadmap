@@ -5,7 +5,6 @@ import javax.swing.*;
 import main.app.Modelo.Pelicula;
 
 import java.awt.*;
-import java.util.Vector;
 
     /**
      * Tarjeta visual para mostrar una recomendación de película.

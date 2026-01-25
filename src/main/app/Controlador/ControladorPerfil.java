@@ -4,12 +4,10 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.border.TitledBorder;
 
 import main.app.Modelo.Logro;
 import main.app.Modelo.Pelicula;
 import main.app.Modelo.Usuario;
-import main.app.Vista.PanelLogros;
 import main.app.Vista.PanelPeliculas;
 import main.app.Vista.PanelGenerador;
 import main.app.Vista.PanelPerfil;
