@@ -18,6 +18,10 @@ public class Usuario
         this.contrasena = contrasena;
         this.email = email;
         fotoUsuario = foto;
+
+        for(Logro l : Logro.getCatalogo()){
+            listaLogros.add(new Logro(l));
+        }
     }
 
     public Usuario(String contrasena, String email, String nombreUsuario)
@@ -26,6 +30,10 @@ public class Usuario
         this.contrasena = contrasena;
         this.email = email;
         fotoUsuario = "logoCineRoadmap.jpg";
+
+        for(Logro l : Logro.getCatalogo()){
+            listaLogros.add(new Logro(l));
+        }
     }
 
     public void setnombreUsuario(String usuario) { this.nombreUsuario = usuario; }

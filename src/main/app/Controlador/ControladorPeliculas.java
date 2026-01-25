@@ -8,6 +8,7 @@ import javax.swing.JTextArea;
 import java.awt.BorderLayout;
 import java.awt.Image;
 
+import main.app.Modelo.Logro;
 import main.app.Modelo.Pelicula;
 import main.app.Modelo.Usuario;
 import main.app.Vista.PanelPeliculas;

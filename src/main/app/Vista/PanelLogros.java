@@ -1,6 +1,8 @@
 package main.app.Vista;
 
 import main.app.Modelo.Logro;
+import main.app.Modelo.Usuario;
+import main.app.Controlador.ControladorUsuario;
 import main.app.Modelo.Insignia;
 
 import javax.swing.*;
@@ -12,7 +14,9 @@ public class PanelLogros {
 
     public static JPanel crearPanelLogros() {
 
-        ArrayList<Logro> logros = new ArrayList<>(Logro.getCatalogo());
+        Usuario u = ControladorUsuario.getUsuarioActivo();
+        ArrayList<Logro> logros = u.getLogros();
+
         Collections.shuffle(logros);
 
         // Panel principal
@@ -132,7 +136,8 @@ public class PanelLogros {
         nombreLabel.setForeground(Color.WHITE);
         nombreLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JLabel estadoLabel = new JLabel(logro.isCompleto() ? "Completado ✅" : "Pendiente");
+        JLabel estadoLabel = new JLabel(
+        logro.isCompleto() ? "Completado ✅" : "Progreso: " + logro.getActual() + "/" + logro.getObjetivo());
         estadoLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         estadoLabel.setForeground(logro.isCompleto() ? Color.GREEN : Color.LIGHT_GRAY);
         estadoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);

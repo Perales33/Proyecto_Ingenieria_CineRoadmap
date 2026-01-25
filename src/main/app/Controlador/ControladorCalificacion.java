@@ -51,6 +51,9 @@ public class ControladorCalificacion
             {
                 usuario.setPeliculas(pelicula);
             }
+
+            ControladorLogros.actualizarLogros(usuario);
+            
             return null;
             // ControladorLogros.actualizarLogros(usuario);
         } 
