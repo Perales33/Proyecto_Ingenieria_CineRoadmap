@@ -2,6 +2,8 @@
 
 **CineRoadmap** es una plataforma web gamificada que permite a los amantes del cine registrar las películas que han visto, desbloquear insignias y completar desafíos cinematográficos. Inspirada en los logros de videojuegos, promueve el descubrimiento fílmico y el espíritu comunitario entre cinéfilos.
 
+![Diagrama de Clases](src/main/resources/diagramas/imagenes/Pantalla_inicio.png)
+
 
 ## 📌 Tabla de Contenidos
 
