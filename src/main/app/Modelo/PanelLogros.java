@@ -1,6 +1,7 @@
 package main.app.Vista;
 
 import main.app.Modelo.Insignia;
+import main.app.Modelo.Logro;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
