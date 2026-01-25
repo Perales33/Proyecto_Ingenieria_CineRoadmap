@@ -1,14 +1,17 @@
 package main.app.Vista;   // Ajuste el package si la mueve a vista/retos
 
 import javax.swing.*;
+
+import main.app.Modelo.Pelicula;
+
 import java.awt.*;
+import java.util.Vector;
 
-/**
- * Tarjeta visual para mostrar una recomendación de película.
- */
+    /**
+     * Tarjeta visual para mostrar una recomendación de película.
+     */
 public class TarjetaRecomendacion {
-
-    public static JPanel crear(String titulo, String genero, String textoBoton) {
+    public static JPanel crear(Pelicula p, String textoBoton) {
 
         JPanel card = new JPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
@@ -19,52 +22,45 @@ public class TarjetaRecomendacion {
         ));
         card.setPreferredSize(new Dimension(200, 330));
 
-        // --- Poster (placeholder) ---
-        JLabel poster = new JLabel("POSTER");
-        poster.setPreferredSize(new Dimension(160, 220));
-        poster.setMaximumSize(new Dimension(160, 220));
+        // --- Poster real ---
+        JLabel poster;
+        try {
+            ImageIcon icono = new ImageIcon(
+                PanelPeliculas.class.getResource("/main/resources/img/" + p.getFoto())
+            );
+
+            Image img = icono.getImage().getScaledInstance(160, 230, Image.SCALE_SMOOTH);
+            poster = new JLabel(new ImageIcon(img));
+        } catch (Exception e) {
+            poster = new JLabel("Sin imagen");
+        }
+
         poster.setAlignmentX(Component.CENTER_ALIGNMENT);
-        poster.setHorizontalAlignment(SwingConstants.CENTER);
-        poster.setOpaque(true);
-        poster.setBackground(new Color(35, 35, 35));
-        poster.setForeground(new Color(170, 170, 170));
-        poster.setBorder(BorderFactory.createLineBorder(new Color(70, 70, 70)));
 
         // --- Título ---
-        JLabel lblTitulo = new JLabel(titulo);
+        JLabel lblTitulo = new JLabel(p.getnombrePelicula());
         lblTitulo.setForeground(Color.WHITE);
         lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 14));
         lblTitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
         lblTitulo.setBorder(BorderFactory.createEmptyBorder(10, 0, 4, 0));
 
-        // --- Género ---
-        JLabel lblGenero = new JLabel(genero);
-        lblGenero.setForeground(new Color(200, 200, 200));
-        lblGenero.setFont(new Font("SansSerif", Font.PLAIN, 12));
-        lblGenero.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // --- Año ---
+        JLabel lblAnio = new JLabel(String.valueOf(p.getAnio()));
+        lblAnio.setForeground(new Color(200, 200, 200));
+        lblAnio.setFont(new Font("SansSerif", Font.PLAIN, 12));
+        lblAnio.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // --- Botón acción ---
+        // --- Botón ---
         JButton btn = new JButton(textoBoton);
         btn.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btn.setFocusPainted(false);
-        btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-        // Si tiene su sistema de estilos, aplíquelo aquí:
-        // Estilos.estiloBotones(btn);
-
-        btn.addActionListener(e ->
-                JOptionPane.showMessageDialog(card,
-                        "Película añadida a tu lista (demo)",
-                        "Recomendación",
-                        JOptionPane.INFORMATION_MESSAGE)
-        );
 
         card.add(poster);
         card.add(lblTitulo);
-        card.add(lblGenero);
+        card.add(lblAnio);
         card.add(Box.createVerticalStrut(10));
         card.add(btn);
 
         return card;
     }
+
 }

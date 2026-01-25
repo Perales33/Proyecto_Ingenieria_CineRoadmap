@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 
 import main.app.Modelo.Calificacion;
+import main.app.Modelo.Logro;
 import main.app.Modelo.Pelicula;
 import main.app.Vista.PanelPeliculas;
 import main.app.Vista.PanelPerfilComunidad;
@@ -96,12 +97,58 @@ public class ControladorPerfilComunidad
         // Espacio flexible
         panelPelicula.add(Box.createVerticalGlue());
 
-        // Valoración
-        JLabel valoracionLabel = new JLabel("★ " + calif.getCalificacion() + "/5");
+
+        JLabel valoracionLabel = new JLabel("Valoración: " + calif.getCalificacion() + "/5", JLabel.CENTER);
         valoracionLabel.setFont(new Font("Arial", Font.BOLD, 12));
         valoracionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelPelicula.add(valoracionLabel);
 
+
+
         return panelPelicula;
     }
+
+    // -------------------- Logros e insignias --------------------
+    public static void crearPanelLogros(JPanel panelLogros, Usuario usuario) {
+        panelLogros.removeAll();
+
+        // GridLayout con máximo 4 columnas, filas dinámicas
+        panelLogros.setLayout(new GridLayout(0, 4, 10, 10)); // 0 filas, 4 columnas, hgap=10, vgap=10
+
+        if (usuario != null) {
+            ArrayList<Logro> logros = usuario.getLogros();
+
+            if (logros.isEmpty()) {
+                panelLogros.add(new JLabel("Este usuario no tiene logros desbloqueados"));
+            } else {
+                for (Logro logro : logros) {
+                    if (logro.isCompleto()) { // Solo logros desbloqueados
+                        JPanel card = new JPanel();
+                        card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
+                        card.setOpaque(false);
+                        card.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+                        // Imagen del logro
+                        JLabel iconLabel;
+                        if (logro.getInsignia() != null && logro.getInsignia().getImagen() != null) {
+                            Image img = logro.getInsignia().getImagen().getImage();
+                            img = img.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                            iconLabel = new JLabel(new ImageIcon(img));
+                        } else {
+                            iconLabel = new JLabel("Sin imagen");
+                            iconLabel.setPreferredSize(new Dimension(100, 100));
+                        }
+                        iconLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+                        card.add(iconLabel);
+
+                        panelLogros.add(card);
+                    }
+                }
+            }
+        }
+
+        panelLogros.revalidate();
+        panelLogros.repaint();
+    }
+
 }

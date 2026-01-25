@@ -8,4 +8,9 @@ public class ControladorApp
     {
         PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Comunidad");
     }
+
+    public static void botonLogroPresionado()
+    {
+        PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "LogrosInsignias");
+    }
 }

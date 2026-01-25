@@ -104,14 +104,8 @@ public class PanelComunidad {
         // =========================
         // FOOTER
         // =========================
-        JPanel footer = new JPanel();
-        footer.setBounds(0, 750, 1200, 30);
-        footer.setBackground(Color.DARK_GRAY);
-
-        JLabel footerText = new JLabel("© CineRoadmap");
-        footerText.setForeground(Color.WHITE);
-        footer.add(footerText);
-
+        JPanel footer = PanelFooter.crearFooter("© CineRoadmap", 1200, 30);
+        footer.setBounds(0, 770, 1200, 30); // sigue siendo null layout, posición manual
         panelContenido.add(footer);
 
         panelContenido.setPreferredSize(new Dimension(1200, 800)); // Ajustar altura total

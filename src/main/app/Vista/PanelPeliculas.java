@@ -194,6 +194,13 @@ public class PanelPeliculas
 
         panelCental.add(panelContenido, BorderLayout.CENTER);
 
+        // =========================
+        // FOOTER
+        // =========================
+        JPanel footer = PanelFooter.crearFooter("© CineRoadmap", 1200, 30);
+        footer.setBounds(0, 770, 1200, 30); // sigue siendo null layout, posición manual
+        panelCental.add(footer, BorderLayout.SOUTH);
+
         return panelCental;
     }
 }

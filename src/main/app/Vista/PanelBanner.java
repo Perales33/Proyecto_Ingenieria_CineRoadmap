@@ -103,15 +103,15 @@ public class PanelBanner {
                                 JOptionPane.INFORMATION_MESSAGE);
                         ControladorUsuario.setUsuarioActivo();
                     } 
+                    else if (pantalla.equals("Inicio"))
+                    {
+                        PanelGenerador.getMain().add(PanelApp.crearPanelInicio(), "Inicio");
+                        PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Inicio");
+                    }
                     else if (pantalla.equals("Retos")) 
                     {
                         PanelGenerador.getMain().add(PanelRetosRecomendaciones.crearPanel(), "Retos");
                         PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Retos");
-                    } 
-                    else if (pantalla.equals("Perfil")) 
-                    {
-                        PanelGenerador.getMain().add(PanelPerfil.crearPanelPerfil(), "Perfil");
-                        PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Perfil");
                     } 
                     else if (pantalla.equals("Peliculas")) 
                     {

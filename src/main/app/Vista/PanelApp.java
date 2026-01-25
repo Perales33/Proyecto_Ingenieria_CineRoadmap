@@ -71,7 +71,10 @@ public class PanelApp
         // =========================
         // SECCIÓN PELÍCULAS ALEATORIAS
         // =========================
-        ArrayList<Pelicula> catalogo = Pelicula.getCatalogo();
+        ArrayList<Pelicula> catalogoOriginal = Pelicula.getCatalogo();
+
+        // COPIA
+        ArrayList<Pelicula> catalogo = new ArrayList<>(catalogoOriginal);
         Collections.shuffle(catalogo);
 
         JLabel tituloPeliculas = new JLabel("Califica películas");
@@ -163,11 +166,7 @@ public class PanelApp
         verInsigniasButton.setAlignmentX(Component.LEFT_ALIGNMENT);
         Estilos.estiloBotones(verInsigniasButton);
 
-        verInsigniasButton.addActionListener(e -> 
-        {
-            JOptionPane.showMessageDialog(PanelGenerador.getMain(), "Sección todavía no implementada", "Información", JOptionPane.INFORMATION_MESSAGE);
-        });
-
+        verInsigniasButton.addActionListener(e -> ControladorApp.botonLogroPresionado());
 
         logrosPanel.add(verInsigniasButton);
 
@@ -178,12 +177,8 @@ public class PanelApp
         // =========================
         // FOOTER
         // =========================
-        JPanel footer = new JPanel();
-        footer.setBounds(0, 870, 1200, 30);
-        footer.setBackground(Color.DARK_GRAY);
-        JLabel footerText = new JLabel("© CineRoadmap");
-        footerText.setForeground(Color.WHITE);
-        footer.add(footerText);
+        JPanel footer = PanelFooter.crearFooter("© CineRoadmap", 1200, 30);
+        footer.setBounds(0, 870, 1200, 30); // sigue siendo null layout, posición manual
         panelContenido.add(footer);
 
         panelContenido.setPreferredSize(new Dimension(1200, 900));

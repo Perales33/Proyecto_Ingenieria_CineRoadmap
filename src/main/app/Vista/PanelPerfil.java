@@ -4,9 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.TitledBorder;
 
-import main.app.util.*;
 import main.app.Controlador.*;
-
 
 public class PanelPerfil 
 {
@@ -14,143 +12,118 @@ public class PanelPerfil
     {
         JPanel panelCental = new JPanel(new BorderLayout());
 
+        // ------------------ BANNER ------------------
         JPanel banner = PanelBanner.crearBanner();
         panelCental.add(banner, BorderLayout.NORTH);
 
-        JPanel panelContenido = new JPanel(new GridBagLayout());
-        panelContenido.setBackground(new Color(200, 200, 200));
-        panelContenido.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-
-        GridBagConstraints bag = new GridBagConstraints();
-        bag.insets = new Insets(10,10, 10, 10);
-        bag.fill = GridBagConstraints.HORIZONTAL;
-
+        // ------------------ PANEL DIVIDIDO HORIZONTAL ------------------
         JSplitPane panelDividido = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         panelDividido.setResizeWeight(0.5);
 
+        // ------------------ PANEL DATOS ------------------
         JPanel panelDatos = new JPanel(new GridBagLayout());
-        TitledBorder border = BorderFactory.createTitledBorder("Datos de Usuario");
-        border.setTitleColor(Color.WHITE);
-        panelDatos.setBorder(border);
         panelDatos.setBackground(Color.BLACK);
-
-        panelDatos.setMinimumSize(new Dimension(600, 600));  // ajusta según tu preferencia
+        panelDatos.setBorder(BorderFactory.createTitledBorder("Datos de Usuario"));
+        panelDatos.setMinimumSize(new Dimension(600, 600));
         panelDatos.setMaximumSize(new Dimension(600, 600));
 
         GridBagConstraints datosBag = new GridBagConstraints();
-        datosBag.insets = new Insets(10,10, 10, 10);
+        datosBag.insets = new Insets(10, 10, 10, 10);
         datosBag.fill = GridBagConstraints.HORIZONTAL;
-        
         datosBag.gridy = 0;
-        
-        ControladorPerfil.crearImagenPerfil(panelDatos, datosBag);
-        
 
+        // Imagen de perfil
+        ControladorPerfil.crearImagenPerfil(panelDatos, datosBag);
+
+        // Datos del usuario
         datosBag.gridy = 1;
         JPanel datosUsuario = new JPanel(new GridBagLayout());
         datosUsuario.setBackground(Color.WHITE);
         datosUsuario.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        GridBagConstraints datosUsuarioBag = new GridBagConstraints();
-        datosUsuarioBag.insets = new Insets(5, 5, 5, 5);
-        datosUsuarioBag.fill = GridBagConstraints.HORIZONTAL;
-        datosUsuarioBag.anchor = GridBagConstraints.CENTER;
         panelDatos.add(datosUsuario, datosBag);
 
-        String texto;
+        GridBagConstraints datosUsuarioBag = new GridBagConstraints();
+        datosUsuarioBag.insets = new Insets(5,5,5,5);
+        datosUsuarioBag.fill = GridBagConstraints.HORIZONTAL;
 
-        if(ControladorUsuario.getUsuarioActivo() == null) 
-        { 
-            texto = "Nombre: No hay datos del usuario"; } 
-        else 
-        { 
-            texto = "Nombre: " + ControladorUsuario.getUsuarioActivo().getnombreUsuario();
-        }
-        datosUsuarioBag.gridy = 0; datosUsuarioBag.gridx = 0;
-        JLabel labelNombreUsuario = new JLabel();
-        labelNombreUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-        labelNombreUsuario.setText(texto);
+        // Nombre
+        datosUsuarioBag.gridx = 0; datosUsuarioBag.gridy = 0;
+        JLabel labelNombreUsuario = new JLabel("Nombre: " + ControladorUsuario.getUsuarioActivo().getnombreUsuario());
         datosUsuario.add(labelNombreUsuario, datosUsuarioBag);
 
         datosUsuarioBag.gridx = 1;
         JButton cambioNombre = new JButton("✏️");
-        cambioNombre.setToolTipText("Cambiar nombre");
-        cambioNombre.setBackground(null);
-        cambioNombre.setBorder(null);
+        cambioNombre.setBackground(null); cambioNombre.setBorder(null);
         datosUsuario.add(cambioNombre, datosUsuarioBag);
-        
 
-        datosUsuarioBag.gridy = 1; datosUsuarioBag.gridx = 0;
-        JLabel labelEmail = new JLabel();
-        labelEmail.setHorizontalAlignment(SwingConstants.CENTER);
-        
-        if(ControladorUsuario.getUsuarioActivo() == null) 
-        { 
-            texto = "Email: No hay datos del usuario"; } 
-        else 
-        { 
-            texto = "Email: " + ControladorUsuario.getUsuarioActivo().getEmail();
-        }
-        
-        labelEmail.setText(texto);
+        // Email
+        datosUsuarioBag.gridx = 0; datosUsuarioBag.gridy = 1;
+        JLabel labelEmail = new JLabel("Email: " + ControladorUsuario.getUsuarioActivo().getEmail());
         datosUsuario.add(labelEmail, datosUsuarioBag);
 
         datosUsuarioBag.gridx = 1;
         JButton cambioEmail = new JButton("✏️");
-        cambioEmail.setToolTipText("Cambiar nombre");
-        cambioEmail.setBackground(null);
-        cambioEmail.setBorder(null);
+        cambioEmail.setBackground(null); cambioEmail.setBorder(null);
         datosUsuario.add(cambioEmail, datosUsuarioBag);
 
-
+        // ------------------ PANEL PELÍCULAS Y LOGROS (DIVIDIDO VERTICAL) ------------------
         JSplitPane panelPIL = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         panelPIL.setResizeWeight(0.5);
 
-        panelDividido.setEnabled(false);
-        panelDividido.setDividerSize(10);
-        panelDividido.setLeftComponent(panelDatos);
-        panelDividido.setRightComponent(panelPIL);
-
+        // ------------------ PANEL PELÍCULAS ------------------
         JPanel panelPeliculasVistas = new JPanel();
+        panelPeliculasVistas.setLayout(new GridLayout(0, 4, 10, 10)); // 4 columnas, filas dinámicas
         panelPeliculasVistas.setBorder(BorderFactory.createTitledBorder("Películas Vistas"));
-        panelPeliculasVistas.setLayout(new WrapLayout(FlowLayout.LEFT, 10, 10));
+
+        // Cargar las películas (solo imágenes)
         ControladorPerfil.crearPanelPeliculasVistas(panelPeliculasVistas);
 
-        JScrollPane panelScrollPeliculas = new JScrollPane(panelPeliculasVistas);
-        panelScrollPeliculas.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED); 
+        JScrollPane scrollPeliculas = new JScrollPane(panelPeliculasVistas);
+        scrollPeliculas.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPeliculas.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPeliculas.getViewport().setOpaque(false);
+        scrollPeliculas.setOpaque(false);
 
-        JPanel panelIL = new JPanel();
-        panelIL.setBorder(BorderFactory.createTitledBorder("Insignias y Logros"));
-        
-        panelScrollPeliculas.setMinimumSize(new Dimension(600, 300));
-        panelScrollPeliculas.setMaximumSize(new Dimension(600, 300));
+        // ------------------ PANEL LOGROS ------------------
+        JPanel panelLogros = new JPanel();
+        panelLogros.setLayout(new GridLayout(0, 4, 10, 10)); // 4 columnas, filas dinámicas
+        panelLogros.setBorder(BorderFactory.createTitledBorder("Insignias y Logros"));
 
-        panelIL.setMinimumSize(new Dimension(600, 300));
-        panelIL.setMaximumSize(new Dimension(600, 300));
+        // Cargar logros (solo imágenes)
+        ControladorPerfil.crearPanelLogros(panelLogros);
 
+        JScrollPane scrollLogros = new JScrollPane(panelLogros);
+        scrollLogros.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollLogros.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollLogros.getViewport().setOpaque(false);
+        scrollLogros.setOpaque(false);
+
+        // Dividir verticalmente entre películas y logros
+        panelPIL.setLeftComponent(scrollPeliculas);
+        panelPIL.setRightComponent(scrollLogros);
         panelPIL.setEnabled(false);
-        panelPIL.setLeftComponent(panelScrollPeliculas);
-        panelPIL.setRightComponent(panelIL);
-    
+        panelPIL.setDividerSize(10);
         panelPIL.setMinimumSize(new Dimension(600, 600));
         panelPIL.setMaximumSize(new Dimension(600, 600));
 
-        cambioNombre.addActionListener(e -> 
-            {
-                String nuevoNombre = JOptionPane.showInputDialog(PanelGenerador.getMain(), "Ingresar nuevo nombre:", "Cambio nombre", JOptionPane.DEFAULT_OPTION);
-                ControladorPerfil.cambiarNombre(nuevoNombre, labelNombreUsuario);
-            }
-        );
+        // ------------------ PANEL DIVIDIDO HORIZONTAL ------------------
+        panelDividido.setLeftComponent(panelDatos);
+        panelDividido.setRightComponent(panelPIL);
+        panelDividido.setEnabled(false);
+        panelDividido.setDividerSize(10);
 
-        cambioEmail.addActionListener(e -> 
-            {
-                String nuevoEmail = JOptionPane.showInputDialog(PanelGenerador.getMain(), "Ingresar nuevo email:","Cambio email" ,JOptionPane.DEFAULT_OPTION);
-                ControladorPerfil.cambiarEmail(nuevoEmail, labelEmail);
-            }
-        );
+        // ------------------ ACCIONES ------------------
+        cambioNombre.addActionListener(e -> {
+            String nuevoNombre = JOptionPane.showInputDialog(PanelGenerador.getMain(), "Ingresar nuevo nombre:");
+            ControladorPerfil.cambiarNombre(nuevoNombre, labelNombreUsuario);
+        });
+
+        cambioEmail.addActionListener(e -> {
+            String nuevoEmail = JOptionPane.showInputDialog(PanelGenerador.getMain(), "Ingresar nuevo email:");
+            ControladorPerfil.cambiarEmail(nuevoEmail, labelEmail);
+        });
 
         panelCental.add(panelDividido);
-
         return panelCental;
     }
 }

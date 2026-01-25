@@ -4,20 +4,16 @@ import main.app.Modelo.Logro;
 import main.app.Modelo.Usuario;
 import main.app.Controlador.ControladorUsuario;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class PanelLogros {
-    
-    public static JPanel crearPanelLogros(Usuario usuario) {
+
+    public static JPanel crearPanelLogros() {
 
         Usuario u = ControladorUsuario.getUsuarioActivo();
         ArrayList<Logro> logros = u.getLogros();
-
-        Collections.shuffle(logros);
 
         // Panel principal
         JPanel panelCentral = new JPanel(new BorderLayout());
@@ -43,7 +39,7 @@ public class PanelLogros {
 
         JLabel heroImg = new JLabel();
         heroImg.setBounds(0, 0, 1200, 200);
-        ImageIcon icon = new ImageIcon(PanelLogros.class.getResource("/main/resources/img/logoFondoPantalla.jpg"));
+        ImageIcon icon = new ImageIcon(PanelLogros.class.getResource("/main/resources/img/logros.jpg"));
         Image img = icon.getImage().getScaledInstance(1200, 200, Image.SCALE_SMOOTH);
         heroImg.setIcon(new ImageIcon(img));
         hero.add(heroImg, JLayeredPane.DEFAULT_LAYER);
@@ -53,13 +49,13 @@ public class PanelLogros {
         overlay.setOpaque(false);
         hero.add(overlay, JLayeredPane.PALETTE_LAYER);
 
-        JLabel heroTitle = new JLabel("Explora tus logros e insignias");
+        JLabel heroTitle = new JLabel("Explora logros e insignias");
         heroTitle.setFont(new Font("Arial", Font.BOLD, 32));
         heroTitle.setForeground(Color.WHITE);
         heroTitle.setBounds(20, 30, 1160, 50);
         overlay.add(heroTitle);
 
-        JLabel heroText = new JLabel("<html>Completa retos, desbloquea insignias y demuestra tus logros<br>" +
+        JLabel heroText = new JLabel("<html>Completa logros, desbloquea insignias y demuestra tus gustos<br>" +
                 "en CineRoadmap. Cada logro es un paso hacia la maestría cinematográfica.</html>");
         heroText.setFont(new Font("Arial", Font.PLAIN, 16));
         heroText.setForeground(Color.WHITE);
@@ -71,38 +67,65 @@ public class PanelLogros {
         // =========================
         // TÍTULO SECCIÓN LOGROS
         // =========================
-        JLabel tituloLogros = new JLabel("Mis Logros");
+        JLabel tituloLogros = new JLabel("Logros Disponibles");
         tituloLogros.setFont(new Font("Arial", Font.BOLD, 24));
         tituloLogros.setForeground(Color.WHITE);
         tituloLogros.setBounds(20, 220, 400, 30);
         panelContenido.add(tituloLogros);
 
         // =========================
-        // PANEL DE CARDS DE LOGROS
+        // PANEL DE CARDS DE LOGROS (grid 4 columnas)
         // =========================
-        JPanel logrosPanel = new JPanel();
-        logrosPanel.setBounds(20, 260, 1160, 440);
-        logrosPanel.setOpaque(false);
-        logrosPanel.setLayout(new GridLayout(2, 3, 40, 20));
+        int columnas = 4;
+        int hGap = 20; // espacio horizontal entre tarjetas
+        int vGap = 20; // espacio vertical entre tarjetas
 
-        int maxLogros = Math.min(6, logros.size());
-        for(int i = 0; i < maxLogros; i++){
-            logrosPanel.add(crearCardLogro(logros.get(i)));
+        JPanel logrosPanel = new JPanel();
+        logrosPanel.setOpaque(false);
+
+        // GridLayout con 0 filas y 4 columnas (filas dinámicas)
+        logrosPanel.setLayout(new GridLayout(0, columnas, hGap, vGap));
+
+        // Agregar los logros
+        for (Logro logro : logros) {
+            logrosPanel.add(crearCardLogro(logro));
         }
 
-        panelContenido.add(logrosPanel);
+        // Crear JScrollPane para permitir scroll vertical
+        JScrollPane scrollLogros = new JScrollPane(logrosPanel);
+        scrollLogros.setBounds(20, 260, 1100, 440);
+
+        // Quitar bordes
+        scrollLogros.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 20));
+
+        // Deshabilitar barra horizontal
+        scrollLogros.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+        // Mantener scroll vertical funcional pero invisible
+        scrollLogros.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER); // barra invisible
+        scrollLogros.getVerticalScrollBar().setUnitIncrement(16); // velocidad del scroll
+        scrollLogros.setOpaque(false);
+        scrollLogros.getViewport().setOpaque(false);
+
+        // Opcional: hacer scroll con la rueda del ratón
+        scrollLogros.getViewport().addMouseWheelListener(e -> {
+            JScrollBar bar = scrollLogros.getVerticalScrollBar();
+            int increment = e.getWheelRotation() * bar.getUnitIncrement();
+            bar.setValue(bar.getValue() + increment);
+        });
+
+
+        // Agregar al panel principal
+        panelContenido.add(scrollLogros);
+
 
         // =========================
         // FOOTER
         // =========================
-        JPanel footer = new JPanel();
-        footer.setBounds(0, 750, 1200, 30);
-        footer.setBackground(Color.DARK_GRAY);
-
-        JLabel footerText = new JLabel("© CineRoadmap");
-        footerText.setForeground(Color.WHITE);
-        footer.add(footerText);
+        JPanel footer = PanelFooter.crearFooter("© CineRoadmap", 1200, 30);
+        footer.setBounds(0, 770, 1200, 30); // sigue siendo null layout, posición manual
         panelContenido.add(footer);
+
 
         panelContenido.setPreferredSize(new Dimension(1200, 800));
 
@@ -120,39 +143,44 @@ public class PanelLogros {
     }
 
     // ---------------- CARD LOGRO ----------------
-    private static JPanel crearCardLogro(Logro logro){
+    private static JPanel crearCardLogro(Logro logro) {
         JPanel card = new JPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
         card.setOpaque(false);
         card.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        card.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
+        // Imagen de la insignia
         ImageIcon icon = logro.getInsignia() != null ? logro.getInsignia().getImagen() : null;
-        Image img = (icon != null) ? icon.getImage().getScaledInstance(130, 130, Image.SCALE_SMOOTH) : null;
-        JLabel imgLabel = new JLabel((img != null) ? new ImageIcon(img) : new JLabel().getIcon());
+        JLabel imgLabel;
+        if (icon != null) {
+            Image img = icon.getImage();
+            int width = img.getWidth(null);
+            int height = img.getHeight(null);
+            int maxDim = 150;
+            if (width > maxDim || height > maxDim) {
+                float ratio = Math.min((float) maxDim / width, (float) maxDim / height);
+                width = Math.round(width * ratio);
+                height = Math.round(height * ratio);
+                img = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            }
+            imgLabel = new JLabel(new ImageIcon(img));
+        } else {
+            imgLabel = new JLabel();
+            imgLabel.setPreferredSize(new Dimension(150, 150));
+        }
         imgLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        JLabel nombreLabel = new JLabel(logro.getNombreReto());
-        nombreLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        nombreLabel.setForeground(Color.WHITE);
-        nombreLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        JLabel estadoLabel = new JLabel(
-        logro.isCompleto() ? "Completado ✅" : "Progreso: " + logro.getActual() + "/" + logro.getObjetivo());
-        estadoLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        estadoLabel.setForeground(logro.isCompleto() ? Color.GREEN : Color.LIGHT_GRAY);
-        estadoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+        
         card.add(imgLabel);
         card.add(Box.createVerticalStrut(10));
-        card.add(nombreLabel);
-        card.add(estadoLabel);
 
-        card.addMouseListener(new java.awt.event.MouseAdapter(){
+        // Al hacer click, mostrar progreso y detalles
+        card.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
-            public void mouseClicked(java.awt.event.MouseEvent e){
-                String msg = "<html><b>"+logro.getNombreReto()+"</b><br><br>"+
-                        logro.getDescripcion()+"<br><br>"+
-                        "Progreso: "+logro.getActual()+"/"+logro.getObjetivo()+"</html>";
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                String msg = "<html><b>" + logro.getNombreReto() + "</b><br><br>" +
+                        logro.getDescripcion() + "<br><br>" +
+                        "Progreso: " + logro.getActual() + "/" + logro.getObjetivo() + "</html>";
                 JOptionPane.showMessageDialog(card, msg, "Detalle del logro", JOptionPane.INFORMATION_MESSAGE);
             }
         });

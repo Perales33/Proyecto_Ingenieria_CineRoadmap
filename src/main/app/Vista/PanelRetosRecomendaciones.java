@@ -2,9 +2,12 @@ package main.app.Vista;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import main.app.Controlador.ControladorRetos;
+import main.app.Modelo.Pelicula;
 import main.app.Modelo.Reto;
 
 public class PanelRetosRecomendaciones {
@@ -77,6 +80,13 @@ public class PanelRetosRecomendaciones {
         // ✅ CONTENIDO
         contenedorFinal.add(scroll, BorderLayout.CENTER);
 
+        // =========================
+        // FOOTER
+        // =========================
+        JPanel footer = PanelFooter.crearFooter("© CineRoadmap", 1200, 30);
+        footer.setBounds(0, 770, 1200, 30); // sigue siendo null layout, posición manual
+        contenido.add(footer, BorderLayout.SOUTH);
+
         return contenedorFinal;
     }
 
@@ -132,13 +142,35 @@ public class PanelRetosRecomendaciones {
         grid.setBackground(Color.BLACK);
         grid.setBorder(BorderFactory.createEmptyBorder(10, 40, 10, 40));
 
-        grid.add(TarjetaRecomendacion.crear("Inception", "Ciencia ficción", "Añadir a lista"));
-        grid.add(TarjetaRecomendacion.crear("Whiplash", "Drama", "Añadir a lista"));
-        grid.add(TarjetaRecomendacion.crear("Parasite", "Thriller", "Añadir a lista"));
-        grid.add(TarjetaRecomendacion.crear("The Dark Knight", "Acción", "Añadir a lista"));
+        try {
+            ArrayList<Pelicula> catalogoOriginal = Pelicula.getCatalogo();
+
+            // COPIA
+            ArrayList<Pelicula> catalogo = new ArrayList<>(catalogoOriginal);
+
+            if (catalogo == null || catalogo.isEmpty()) {
+                grid.add(crearCardVacia("Sin recomendaciones", "No hay películas en el catálogo."));
+                return grid;
+            }
+
+            // Barajar para que sean "aleatorias"
+            Collections.shuffle(catalogo);
+
+            // Máximo 4
+            int limite = Math.min(4, catalogo.size());
+
+            for (int i = 0; i < limite; i++) {
+                Pelicula p = catalogo.get(i);
+                grid.add(TarjetaRecomendacion.crear(p, "Añadir a lista"));
+            }
+
+        } catch (Exception e) {
+            grid.add(crearCardVacia("Error", e.getMessage()));
+        }
 
         return grid;
     }
+
 
     private static JPanel crearCardVacia(String titulo, String descripcion) {
         JPanel card = new JPanel();
