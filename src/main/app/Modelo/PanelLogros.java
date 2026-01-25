@@ -238,7 +238,8 @@ public class PanelLogros extends JPanel {
             lbl.setHorizontalAlignment(SwingConstants.CENTER);
 
             Insignia ins = (value instanceof Insignia) ? (Insignia) value : null;
-            boolean done = (Boolean) table.getModel().getValueAt(row, 4);
+           Object v = table.getModel().getValueAt(row, 4);
+            boolean done = (v instanceof Boolean) && (Boolean) v;
 
             lbl.setIcon(buildIcon(ins, done, 40));
             return lbl;
