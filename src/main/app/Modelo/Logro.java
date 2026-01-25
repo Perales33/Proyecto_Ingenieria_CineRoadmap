@@ -12,7 +12,9 @@ public class Logro {
         this.descripcion = descripcion;
         this.insignia = ins;
         this.reto = reto;
-        this.progreso = new ProgresoLogrosInsignias(0, reto.getProgresoObjetivo());
+
+        int obj = (reto != null) ? reto.getProgresoObjetivo() : 0;
+        this.progreso = new ProgresoLogrosInsignias(0, obj);
     }
 
     public void syncConReto() {
@@ -31,5 +33,7 @@ public class Logro {
 
     public Insignia getInsignia() { return insignia; }
     public String getDescripcion() { return descripcion; }
+
     public String getnombreReto() { return nombreLogro; }
+    public String getNombreLogro() { return nombreLogro; }
 }
