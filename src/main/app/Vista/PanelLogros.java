@@ -2,6 +2,7 @@ package main.app.Vista;
 
 import main.app.Modelo.Logro;
 import main.app.Modelo.Insignia;
+import main.app.Modelo.Usuario;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,10 +11,11 @@ import java.util.Collections;
 
 public class PanelLogros {
 
-    public static JPanel crearPanelLogros() {
+   
+    public static JPanel crearPanelLogros(Usuario usuario) {
 
-        ArrayList<Logro> logros = new ArrayList<>(Logro.getCatalogo());
-        Collections.shuffle(logros);
+    ArrayList<Logro> logros = new ArrayList<>(usuario.getLogros());
+    Collections.shuffle(logros);
 
         // Panel principal
         JPanel panelCentral = new JPanel(new BorderLayout());
