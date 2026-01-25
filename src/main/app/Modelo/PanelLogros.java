@@ -368,7 +368,7 @@ public class PanelLogros extends JPanel {
 
         boolean unlocked = false;
         try {
-            unlocked = ins.getBloqueo();
+            unlocked = ins.isDesbloqueada();
         } catch (Exception ignored) {}
 
         Image img = base.getImage();
