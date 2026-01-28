@@ -22,7 +22,7 @@ public class TarjetaReto {
         JLabel tipo = new JLabel(reto.getTipo().toString());
         tipo.setOpaque(true);
         tipo.setForeground(Color.WHITE);
-        tipo.setBackground(new Color(170, 0, 0)); // rojo
+        tipo.setBackground(new Color(170, 0, 0));
         tipo.setBorder(BorderFactory.createEmptyBorder(4, 10, 4, 10));
 
         JLabel titulo = new JLabel(reto.getNombreReto());
@@ -33,9 +33,11 @@ public class TarjetaReto {
         JLabel desc = new JLabel("<html><body style='width:240px'>" + reto.getDescripcion() + "</body></html>");
         desc.setForeground(new Color(220, 220, 220));
 
-        JButton aceptar = new JButton("Aceptar reto");
+        // ✅ Botón dinámico según estado del reto
+        JButton accion = new JButton();
+        configurarBotonSegunEstado(accion, reto);
 
-        aceptar.addActionListener(e -> {
+        accion.addActionListener(e -> {
 
             if (ControladorUsuario.getUsuarioActivo() == null) {
                 JOptionPane.showMessageDialog(card,
@@ -46,6 +48,15 @@ public class TarjetaReto {
                 return;
             }
 
+            // Si no está disponible, no hacemos nada
+            if (reto.getEstado() != Reto.Estado.DISPONIBLE) {
+                JOptionPane.showMessageDialog(card,
+                        "Este reto ya no está disponible para aceptar.",
+                        "Información",
+                        JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
             boolean ok = ControladorRetos.aceptarReto(ControladorUsuario.getUsuarioActivo(), reto);
 
             if (!ok) {
@@ -53,24 +64,79 @@ public class TarjetaReto {
                         "No se ha podido aceptar el reto (ya lo tienes aceptado o no está vigente).",
                         "Información",
                         JOptionPane.INFORMATION_MESSAGE);
+                // ✅ refresco igualmente por si venía cruzado y el estado ya cambió
+                refrescarPantallaRetos();
                 return;
             }
 
             JOptionPane.showMessageDialog(card,
-                    "Reto aceptado. Puedes verlo en “Mis Retos”.",
+                    "Reto aceptado. Ya aparece como aceptado en Retos y en “Mis Retos”.",
                     "Reto aceptado",
                     JOptionPane.INFORMATION_MESSAGE);
 
-            // Ir a Mis Retos
-            PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "MisRetos");
+            // ✅ Refrescar pantalla de Retos para que el botón pase a “Ya aceptado”
+            refrescarPantallaRetos();
         });
 
         card.add(tipo);
         card.add(titulo);
         card.add(desc);
         card.add(Box.createVerticalStrut(10));
-        card.add(aceptar);
+        card.add(accion);
 
         return card;
+    }
+
+    private static void configurarBotonSegunEstado(JButton b, Reto reto) {
+
+        // Estado por defecto
+        b.setEnabled(true);
+
+        if (reto.getEstado() == Reto.Estado.DISPONIBLE) {
+            b.setText("Aceptar reto");
+            b.setEnabled(true);
+            return;
+        }
+
+        if (reto.getEstado() == Reto.Estado.ACEPTADO) {
+            b.setText("Ya aceptado (ver en Mis Retos)");
+            b.setEnabled(true); // lo dejamos habilitado para ir a Mis Retos
+            b.addActionListener(e -> PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "MisRetos"));
+            return;
+        }
+
+        if (reto.getEstado() == Reto.Estado.COMPLETADO) {
+            b.setText("Completado ✓");
+            b.setEnabled(false);
+            return;
+        }
+
+        if (reto.getEstado() == Reto.Estado.EXPIRADO) {
+            b.setText("Expirado");
+            b.setEnabled(false);
+        }
+    }
+
+    private static void refrescarPantallaRetos() {
+
+        // Quitamos la tarjeta anterior "Retos" si existe y la recreamos
+        JPanel main = PanelGenerador.getMain();
+
+        Component[] comps = main.getComponents();
+        for (Component c : comps) {
+            if ("Retos".equals(c.getName())) {
+                main.remove(c);
+                break;
+            }
+        }
+
+        JPanel nuevo = PanelRetosRecomendaciones.crearPanel();
+        nuevo.setName("Retos");
+        main.add(nuevo, "Retos");
+
+        main.revalidate();
+        main.repaint();
+
+        PanelGenerador.getColocacion().show(main, "Retos");
     }
 }

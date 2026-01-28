@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 import main.app.Controlador.ControladorRetos;
+import main.app.Controlador.ControladorUsuario;
 import main.app.Modelo.Pelicula;
 import main.app.Modelo.Reto;
 
@@ -61,31 +62,34 @@ public class PanelRetosRecomendaciones {
         contenido.add(crearTituloSeccion("Recomendaciones para ti"));
         contenido.add(wrapAncho(crearGridRecomendaciones()));
 
-        contenido.add(Box.createVerticalStrut(40));
+        contenido.add(Box.createVerticalStrut(30));
+
+        // ✅ FOOTER (en el flujo del BoxLayout)
+        try {
+            JPanel footer = PanelFooter.crearFooter("© CineRoadmap", 1200, 30);
+            footer.setMaximumSize(new Dimension(1200, 30));
+            contenido.add(footer);
+        } catch (Exception ignore) {
+            // si no existe PanelFooter aún, no rompe el panel
+        }
 
         // Scroll del contenido
         JScrollPane scroll = new JScrollPane(contenido);
         scroll.setBorder(null);
         scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scroll.getViewport().setBackground(Color.BLACK);
+        scroll.getVerticalScrollBar().setUnitIncrement(16);
 
         // ✅ Contenedor final con header + contenido
         JPanel contenedorFinal = new JPanel(new BorderLayout());
         contenedorFinal.setBackground(Color.BLACK);
 
-        // ✅ HEADER / NAVEGACIÓN (lo que le faltaba)
+        // ✅ HEADER / NAVEGACIÓN
         JPanel banner = PanelBanner.crearBanner();
         contenedorFinal.add(banner, BorderLayout.NORTH);
 
         // ✅ CONTENIDO
         contenedorFinal.add(scroll, BorderLayout.CENTER);
-
-        // =========================
-        // FOOTER
-        // =========================
-        JPanel footer = PanelFooter.crearFooter("© CineRoadmap", 1200, 30);
-        footer.setBounds(0, 770, 1200, 30); // sigue siendo null layout, posición manual
-        contenido.add(footer, BorderLayout.SOUTH);
 
         return contenedorFinal;
     }
@@ -119,7 +123,8 @@ public class PanelRetosRecomendaciones {
         grid.setBorder(BorderFactory.createEmptyBorder(10, 40, 10, 40));
 
         try {
-            List<Reto> retos = ControladorRetos.obtenerRetosDemo();
+            // ✅ IMPORTANTE: lista cruzada con los retos aceptados del usuario
+            List<Reto> retos = ControladorRetos.obtenerRetosParaUsuario(ControladorUsuario.getUsuarioActivo());
 
             if (retos == null || retos.isEmpty()) {
                 grid.add(crearCardVacia("No hay retos disponibles", "Todavía no se han cargado retos para este usuario."));
@@ -144,8 +149,6 @@ public class PanelRetosRecomendaciones {
 
         try {
             ArrayList<Pelicula> catalogoOriginal = Pelicula.getCatalogo();
-
-            // COPIA
             ArrayList<Pelicula> catalogo = new ArrayList<>(catalogoOriginal);
 
             if (catalogo == null || catalogo.isEmpty()) {
@@ -153,12 +156,9 @@ public class PanelRetosRecomendaciones {
                 return grid;
             }
 
-            // Barajar para que sean "aleatorias"
             Collections.shuffle(catalogo);
 
-            // Máximo 4
             int limite = Math.min(4, catalogo.size());
-
             for (int i = 0; i < limite; i++) {
                 Pelicula p = catalogo.get(i);
                 grid.add(TarjetaRecomendacion.crear(p, "Añadir a lista"));
@@ -170,7 +170,6 @@ public class PanelRetosRecomendaciones {
 
         return grid;
     }
-
 
     private static JPanel crearCardVacia(String titulo, String descripcion) {
         JPanel card = new JPanel();

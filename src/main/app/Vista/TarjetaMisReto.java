@@ -6,6 +6,7 @@ import java.awt.*;
 import main.app.Controlador.ControladorRetos;
 import main.app.Controlador.ControladorUsuario;
 import main.app.Modelo.Reto;
+import main.app.Modelo.Usuario;
 
 public class TarjetaMisReto {
 
@@ -19,16 +20,21 @@ public class TarjetaMisReto {
                 BorderFactory.createEmptyBorder(15, 15, 15, 15)
         ));
 
-        // Badge estado
-        JLabel badge = new JLabel(reto.getEstado().toString());
+        // =========================
+        // BADGE ESTADO
+        // =========================
+        JLabel badge = new JLabel(textoEstado(reto.getEstado()));
         badge.setOpaque(true);
         badge.setForeground(Color.WHITE);
         badge.setBorder(BorderFactory.createEmptyBorder(4, 10, 4, 10));
 
         if (reto.getEstado() == Reto.Estado.COMPLETADO) badge.setBackground(new Color(20, 140, 20));
         else if (reto.getEstado() == Reto.Estado.EXPIRADO) badge.setBackground(new Color(90, 90, 90));
-        else badge.setBackground(new Color(170, 0, 0)); // ACEPTADO
+        else badge.setBackground(new Color(170, 0, 0)); // ACEPTADO -> EN PROGRESO
 
+        // =========================
+        // TITULO / DESCRIPCION
+        // =========================
         JLabel titulo = new JLabel(reto.getNombreReto());
         titulo.setForeground(Color.WHITE);
         titulo.setFont(new Font("SansSerif", Font.BOLD, 16));
@@ -37,43 +43,101 @@ public class TarjetaMisReto {
         JLabel desc = new JLabel("<html><body style='width:240px'>" + reto.getDescripcion() + "</body></html>");
         desc.setForeground(new Color(220, 220, 220));
 
-        JLabel progreso = new JLabel("Progreso: " + reto.getProgresoActual() + " / " + reto.getProgresoObjetivo());
-        progreso.setForeground(Color.WHITE);
-        progreso.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
+        // =========================
+        // PROGRESO: TEXTO + BARRA
+        // =========================
+        int actual = Math.max(0, reto.getProgresoActual());
+        int objetivo = Math.max(1, reto.getProgresoObjetivo()); // evitar /0
 
+        JLabel progresoTxt = new JLabel("Progreso: " + actual + " / " + objetivo);
+        progresoTxt.setForeground(Color.WHITE);
+        progresoTxt.setBorder(BorderFactory.createEmptyBorder(10, 0, 6, 0));
+
+        JProgressBar barra = new JProgressBar(0, objetivo);
+        barra.setValue(Math.min(actual, objetivo));
+        barra.setStringPainted(true);
+        barra.setString(actual + " / " + objetivo);
+        barra.setPreferredSize(new Dimension(260, 16));
+        barra.setMaximumSize(new Dimension(260, 16));
+
+        // =========================
+        // ACCIONES
+        // =========================
         JPanel acciones = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
         acciones.setOpaque(false);
 
         JButton sumar = new JButton("+1 avance");
         JButton completar = new JButton("Completar");
 
-        // Si ya está completado/expirado, deshabilitamos
         boolean activo = (reto.getEstado() == Reto.Estado.ACEPTADO);
         sumar.setEnabled(activo);
         completar.setEnabled(activo);
 
         sumar.addActionListener(e -> {
-            ControladorRetos.sumarProgreso(ControladorUsuario.getUsuarioActivo(), reto.getIdReto(), 1);
-            PanelGenerador.getMain().add(PanelMisRetos.crearPanel(), "MisRetos");
+            Usuario u = ControladorUsuario.getUsuarioActivo();
+            if (u == null) return;
+
+            ControladorRetos.sumarProgreso(u, reto.getIdReto(), 1);
+
+            // ✅ refresco correcto (sin duplicar cards)
+            refrescarPantalla("MisRetos", PanelMisRetos.crearPanel());
             PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "MisRetos");
         });
 
         completar.addActionListener(e -> {
-            ControladorRetos.completar(ControladorUsuario.getUsuarioActivo(), reto.getIdReto());
-            PanelGenerador.getMain().add(PanelMisRetos.crearPanel(), "MisRetos");
+            Usuario u = ControladorUsuario.getUsuarioActivo();
+            if (u == null) return;
+
+            ControladorRetos.completar(u, reto.getIdReto());
+
+            // ✅ refresco correcto (sin duplicar cards)
+            refrescarPantalla("MisRetos", PanelMisRetos.crearPanel());
             PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "MisRetos");
         });
 
         acciones.add(sumar);
         acciones.add(completar);
 
+        // =========================
+        // MONTAJE
+        // =========================
         card.add(badge);
         card.add(titulo);
         card.add(desc);
-        card.add(progreso);
-        card.add(Box.createVerticalStrut(10));
+        card.add(progresoTxt);
+        card.add(barra);
+        card.add(Box.createVerticalStrut(12));
         card.add(acciones);
 
         return card;
+    }
+
+    private static String textoEstado(Reto.Estado estado) {
+        if (estado == null) return "DESCONOCIDO";
+        switch (estado) {
+            case ACEPTADO: return "EN PROGRESO";
+            case COMPLETADO: return "COMPLETADO";
+            case EXPIRADO: return "EXPIRADO";
+            case DISPONIBLE: return "DISPONIBLE";
+            default: return estado.toString();
+        }
+    }
+
+    private static void refrescarPantalla(String nombre, JPanel nuevoPanel) {
+        JPanel main = PanelGenerador.getMain();
+
+        Component[] comps = main.getComponents();
+        for (Component c : comps) {
+            if (nombre.equals(c.getName())) {
+                main.remove(c);
+                break;
+            }
+        }
+
+        nuevoPanel.setName(nombre);
+        main.add(nuevoPanel, nombre);
+
+        main.revalidate();
+        main.repaint();
     }
 }

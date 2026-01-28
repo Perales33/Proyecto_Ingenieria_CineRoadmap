@@ -9,10 +9,9 @@ import main.app.Modelo.Usuario;
 
 public class PanelBanner {
 
-    public static JPanel crearBanner() 
+    public static JPanel crearBanner()
     {
-        // Panel contenedor del banner
-        JPanel bannerPanel = new JPanel(null); // layout absoluto para logo + menú
+        JPanel bannerPanel = new JPanel(null);
         bannerPanel.setPreferredSize(new Dimension(1200, 86));
 
         // ----------------------
@@ -24,26 +23,24 @@ public class PanelBanner {
         logoPanel.setLayout(null);
         bannerPanel.add(logoPanel);
 
-        // Logo escalado manteniendo proporción
         Usuario usuario = ControladorUsuario.getUsuarioActivo();
-        String fotoUsuario = (usuario != null && usuario.getFoto() != null)  ? usuario.getFoto() : "logoCineRoadmap.jpg";
+        String fotoUsuario = (usuario != null && usuario.getFoto() != null) ? usuario.getFoto() : "logoCineRoadmap.jpg";
 
-        ImageIcon   logoIcon = new ImageIcon(PanelPerfil.class.getResource("/main/resources/img/" + fotoUsuario));
-        Image logoImg = logoIcon.getImage().getScaledInstance(90, 86, Image.SCALE_SMOOTH); // tamaño original ajustado
+        ImageIcon logoIcon = new ImageIcon(PanelPerfil.class.getResource("/main/resources/img/" + fotoUsuario));
+        Image logoImg = logoIcon.getImage().getScaledInstance(90, 86, Image.SCALE_SMOOTH);
         logoIcon = new ImageIcon(logoImg);
 
         JLabel logoLabel = new JLabel(logoIcon);
-        logoLabel.setBounds(5, 0, 90, 86); // centrado verticalmente dentro del logoPanel (150 alto)
+        logoLabel.setBounds(5, 0, 90, 86);
         logoLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         logoPanel.add(logoLabel);
 
-        // Evento clic sobre logo → abrir perfil
-        logoLabel.addMouseListener(new MouseAdapter() 
-        {
+        // Click logo -> Perfil
+        logoLabel.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) 
+            public void mouseClicked(MouseEvent e)
             {
-                PanelGenerador.getMain().add(PanelPerfil.crearPanelPerfil(), "Perfil");
+                refrescarPantalla("Perfil", PanelPerfil.crearPanelPerfil());
                 PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Perfil");
             }
         });
@@ -51,25 +48,28 @@ public class PanelBanner {
         // ----------------------
         // Panel rojo del menú
         // ----------------------
-        JPanel menuPanel = new JPanel(null); // layout absoluto
+        JPanel menuPanel = new JPanel(null);
         menuPanel.setBackground(new Color(200, 0, 0));
         menuPanel.setBounds(100, 0, 1100, 86);
         bannerPanel.add(menuPanel);
 
-        // Labels del menú con posición exacta
+        // Labels
         JLabel inicioLabel = new JLabel("Inicio");
         JLabel peliculasLabel = new JLabel("Películas");
         JLabel insigniasLabel = new JLabel("Logros");
-        JLabel retosLabel = new JLabel("Retos y Recomendaciones");
+        JLabel retosLabel = new JLabel("Retos");
+        JLabel misRetosLabel = new JLabel("Mis Retos"); // ✅ NUEVO
         JLabel comunidadLabel = new JLabel("Comunidad");
         JLabel cerrarSesionLabel = new JLabel("Cerrar Sesión");
 
-        JLabel[] labels = {inicioLabel, peliculasLabel, insigniasLabel, retosLabel, comunidadLabel, cerrarSesionLabel};
-        String[] pantallas = {"Inicio", "Peliculas", "LogrosInsignias", "Retos", "Comunidad" ,"Login"};
+        JLabel[] labels = {
+                inicioLabel, peliculasLabel, insigniasLabel,
+                retosLabel, misRetosLabel, comunidadLabel,
+                cerrarSesionLabel
+        };
 
-        // Fuente y estilo
         Font menuFont = new Font("Arial", Font.BOLD, 16);
-        for (JLabel label : labels) 
+        for (JLabel label : labels)
         {
             label.setFont(menuFont);
             label.setForeground(Color.WHITE);
@@ -77,63 +77,107 @@ public class PanelBanner {
             menuPanel.add(label);
         }
 
-        // Posiciones exactas (ajustar según diseño)
-        inicioLabel.setBounds(50, 30, 50, 30);           
-        peliculasLabel.setBounds(150, 30, 100, 30);       
-        insigniasLabel.setBounds(250, 30, 90, 30);       
-        retosLabel.setBounds(350, 30, 220, 30);          
-        comunidadLabel.setBounds(600, 30, 100, 30);      
-        cerrarSesionLabel.setBounds(950, 30, 150, 30); 
+        // Posiciones (ajústalas si quieres más aire)
+        inicioLabel.setBounds(40, 30, 70, 30);
+        peliculasLabel.setBounds(140, 30, 100, 30);
+        insigniasLabel.setBounds(260, 30, 80, 30);
+        retosLabel.setBounds(360, 30, 60, 30);
+        misRetosLabel.setBounds(440, 30, 90, 30);       // ✅ NUEVO
+        comunidadLabel.setBounds(560, 30, 110, 30);
+        cerrarSesionLabel.setBounds(900, 30, 180, 30);
 
+        // ----------------------
+        // Navegación (sin duplicar tarjetas)
+        // ----------------------
+        inicioLabel.addMouseListener(new MouseAdapter() {
+            @Override public void mouseClicked(MouseEvent e) {
+                refrescarPantalla("Inicio", PanelApp.crearPanelInicio());
+                PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Inicio");
+            }
+        });
 
-        // Eventos de click
-        for (int i = 0; i < labels.length; i++) {
-            JLabel label = labels[i];
-            String pantalla = pantallas[i];
-            label.addMouseListener(new MouseAdapter() 
-            {
-                @Override
-                public void mouseClicked(MouseEvent e) 
-                {
-                    if (pantalla.equals("Login")) 
-                    {
-                        JOptionPane.showMessageDialog(PanelGenerador.getMain(),
-                                "Cerrando Sesión " + ControladorUsuario.getUsuarioActivo().getnombreUsuario(),
-                                "Cerrar Sesión",
-                                JOptionPane.INFORMATION_MESSAGE);
-                        ControladorUsuario.setUsuarioActivo();
-                    } 
-                    else if (pantalla.equals("Inicio"))
-                    {
-                        PanelGenerador.getMain().add(PanelApp.crearPanelInicio(), "Inicio");
-                        PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Inicio");
-                    }
-                    else if (pantalla.equals("Retos")) 
-                    {
-                        PanelGenerador.getMain().add(PanelRetosRecomendaciones.crearPanel(), "Retos");
-                        PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Retos");
-                    } 
-                    else if (pantalla.equals("Peliculas")) 
-                    {
-                        PanelGenerador.getMain().add(PanelPeliculas.crearPanelPeliculas(), "Peliculas");
-                        PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Peliculas");
-                    }
-                    else if (pantalla.equals("Comunidad"))
-                    {
-                        PanelGenerador.getMain().add(PanelComunidad.crearPanelComunidad(), "Comunidad");
-                        PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Comunidad");
-                    }
-                    else if (pantalla.equals("LogrosInsignias"))
-                    {
-                        PanelGenerador.getMain().add(PanelLogros.crearPanelLogros(), "LogrosInsignias");
-                        PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "LogrosInsignias");
-                    }
+        peliculasLabel.addMouseListener(new MouseAdapter() {
+            @Override public void mouseClicked(MouseEvent e) {
+                refrescarPantalla("Peliculas", PanelPeliculas.crearPanelPeliculas());
+                PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Peliculas");
+            }
+        });
 
-                    PanelGenerador.getColocacion().show(PanelGenerador.getMain(), pantalla);
+        comunidadLabel.addMouseListener(new MouseAdapter() {
+            @Override public void mouseClicked(MouseEvent e) {
+                refrescarPantalla("Comunidad", PanelComunidad.crearPanelComunidad());
+                PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Comunidad");
+            }
+        });
+
+        retosLabel.addMouseListener(new MouseAdapter() {
+            @Override public void mouseClicked(MouseEvent e) {
+                refrescarPantalla("Retos", PanelRetosRecomendaciones.crearPanel());
+                PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Retos");
+            }
+        });
+
+        // ✅ NUEVO: Mis Retos
+        misRetosLabel.addMouseListener(new MouseAdapter() {
+            @Override public void mouseClicked(MouseEvent e) {
+
+                if (ControladorUsuario.getUsuarioActivo() == null) {
+                    JOptionPane.showMessageDialog(PanelGenerador.getMain(),
+                            "Debes iniciar sesión para ver tus retos.",
+                            "Sin sesión",
+                            JOptionPane.WARNING_MESSAGE);
+                    PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Login");
+                    return;
                 }
-            });
-        }
+
+                refrescarPantalla("MisRetos", PanelMisRetos.crearPanel());
+                PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "MisRetos");
+            }
+        });
+
+        insigniasLabel.addMouseListener(new MouseAdapter() {
+            @Override public void mouseClicked(MouseEvent e) {
+                refrescarPantalla("LogrosInsignias", PanelLogros.crearPanelLogros());
+                PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "LogrosInsignias");
+            }
+        });
+
+        cerrarSesionLabel.addMouseListener(new MouseAdapter() {
+            @Override public void mouseClicked(MouseEvent e) {
+                Usuario u = ControladorUsuario.getUsuarioActivo();
+
+                JOptionPane.showMessageDialog(PanelGenerador.getMain(),
+                        "Cerrando Sesión " + (u != null ? u.getnombreUsuario() : ""),
+                        "Cerrar Sesión",
+                        JOptionPane.INFORMATION_MESSAGE);
+
+                ControladorUsuario.setUsuarioActivo();
+                PanelGenerador.getColocacion().show(PanelGenerador.getMain(), "Login");
+            }
+        });
 
         return bannerPanel;
+    }
+
+    // =========================
+    // Refresco seguro de tarjetas
+    // =========================
+    private static void refrescarPantalla(String nombre, JPanel nuevoPanel)
+    {
+        JPanel main = PanelGenerador.getMain();
+
+        Component[] comps = main.getComponents();
+        for (Component c : comps) {
+            if (nombre.equals(c.getName())) {
+                main.remove(c);
+                break;
+            }
+        }
+
+        nuevoPanel.setName(nombre);
+        main.add(nuevoPanel, nombre);
+
+        main.revalidate();
+        main.repaint();
     }
 }

@@ -2,6 +2,7 @@ package main.app.Vista;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import main.app.Controlador.ControladorRetos;
@@ -17,7 +18,9 @@ public class PanelMisRetos {
         contenido.setLayout(new BoxLayout(contenido, BoxLayout.Y_AXIS));
         contenido.setBackground(Color.BLACK);
 
-        // Título
+        // =========================
+        // TÍTULO
+        // =========================
         JPanel tituloWrap = new JPanel(new BorderLayout());
         tituloWrap.setBackground(Color.BLACK);
         tituloWrap.setBorder(BorderFactory.createEmptyBorder(30, 40, 10, 40));
@@ -41,11 +44,92 @@ public class PanelMisRetos {
         tituloWrap.add(t, BorderLayout.WEST);
         contenido.add(tituloWrap);
 
-        // Grid
-        contenido.add(crearTituloSeccion("En progreso / Completados / Expirados"));
-        contenido.add(wrapAncho(crearGridMisRetos()));
+        // =========================
+        // DATOS
+        // =========================
+        Usuario u = ControladorUsuario.getUsuarioActivo();
+        List<Reto> lista = ControladorRetos.getMisRetos(u);
+
+        // Si no hay usuario logueado
+        if (u == null) {
+            contenido.add(crearTituloSeccion("Sesión no iniciada"));
+            contenido.add(wrapAncho(crearCardVacia(
+                    "Debe iniciar sesión",
+                    "Inicie sesión para ver sus retos aceptados."
+            )));
+            return construirConScrollYHeader(contenido);
+        }
+
+        // Si no hay retos
+        if (lista == null || lista.isEmpty()) {
+            contenido.add(crearTituloSeccion("Aún no tienes retos"));
+            contenido.add(wrapAncho(crearCardVacia(
+                    "Aún no tienes retos aceptados",
+                    "Vuelve a “Retos y Recomendaciones” y pulsa “Aceptar reto”."
+            )));
+            contenido.add(Box.createVerticalStrut(40));
+            return construirConScrollYHeader(contenido);
+        }
+
+        // Separar por estados
+        List<Reto> enProgreso = new ArrayList<>();
+        List<Reto> completados = new ArrayList<>();
+        List<Reto> expirados = new ArrayList<>();
+
+        for (Reto r : lista) {
+            if (r.getEstado() == Reto.Estado.ACEPTADO) enProgreso.add(r);
+            else if (r.getEstado() == Reto.Estado.COMPLETADO) completados.add(r);
+            else if (r.getEstado() == Reto.Estado.EXPIRADO) expirados.add(r);
+            else enProgreso.add(r); // fallback seguro
+        }
+
+        // =========================
+        // SECCIÓN: EN PROGRESO
+        // =========================
+        contenido.add(crearTituloSeccion("En progreso"));
+        if (enProgreso.isEmpty()) {
+            contenido.add(wrapAncho(crearCardVacia(
+                    "No tienes retos en progreso",
+                    "Acepta un reto desde “Retos y Recomendaciones”."
+            )));
+        } else {
+            contenido.add(wrapAncho(crearGrid(enProgreso)));
+        }
+
+        // =========================
+        // SECCIÓN: COMPLETADOS
+        // =========================
+        contenido.add(Box.createVerticalStrut(20));
+        contenido.add(crearTituloSeccion("Completados"));
+        if (completados.isEmpty()) {
+            contenido.add(wrapAncho(crearCardVacia(
+                    "Aún no has completado retos",
+                    "Cuando completes uno, aparecerá aquí."
+            )));
+        } else {
+            contenido.add(wrapAncho(crearGrid(completados)));
+        }
+
+        // =========================
+        // SECCIÓN: EXPIRADOS
+        // =========================
+        contenido.add(Box.createVerticalStrut(20));
+        contenido.add(crearTituloSeccion("Expirados"));
+        if (expirados.isEmpty()) {
+            contenido.add(wrapAncho(crearCardVacia(
+                    "No tienes retos expirados",
+                    "Perfecto: significa que vas al día."
+            )));
+        } else {
+            contenido.add(wrapAncho(crearGrid(expirados)));
+        }
+
         contenido.add(Box.createVerticalStrut(40));
 
+        return construirConScrollYHeader(contenido);
+    }
+
+    private static JPanel construirConScrollYHeader(JPanel contenido) {
         JScrollPane scroll = new JScrollPane(contenido);
         scroll.setBorder(null);
         scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -54,11 +138,22 @@ public class PanelMisRetos {
         JPanel contenedorFinal = new JPanel(new BorderLayout());
         contenedorFinal.setBackground(Color.BLACK);
 
-        // Header navegación
         contenedorFinal.add(PanelBanner.crearBanner(), BorderLayout.NORTH);
         contenedorFinal.add(scroll, BorderLayout.CENTER);
 
         return contenedorFinal;
+    }
+
+    private static JComponent crearGrid(List<Reto> lista) {
+        JPanel grid = new JPanel(new GridLayout(0, 3, 30, 30));
+        grid.setBackground(Color.BLACK);
+        grid.setBorder(BorderFactory.createEmptyBorder(10, 40, 10, 40));
+
+        for (Reto r : lista) {
+            grid.add(TarjetaMisReto.crear(r));
+        }
+
+        return grid;
     }
 
     private static JComponent crearTituloSeccion(String texto) {
@@ -81,28 +176,6 @@ public class PanelMisRetos {
         wrap.setMaximumSize(new Dimension(1200, Integer.MAX_VALUE));
         wrap.add(inner, BorderLayout.CENTER);
         return wrap;
-    }
-
-    private static JComponent crearGridMisRetos() {
-
-        JPanel grid = new JPanel(new GridLayout(0, 3, 30, 30));
-        grid.setBackground(Color.BLACK);
-        grid.setBorder(BorderFactory.createEmptyBorder(10, 40, 10, 40));
-
-        Usuario u = ControladorUsuario.getUsuarioActivo();
-        List<Reto> lista = ControladorRetos.getMisRetos(u);
-
-        if (lista == null || lista.isEmpty()) {
-            grid.add(crearCardVacia("Aún no tienes retos aceptados",
-                    "Vuelve a “Retos y Recomendaciones” y pulsa “Aceptar reto”."));
-            return grid;
-        }
-
-        for (Reto r : lista) {
-            grid.add(TarjetaMisReto.crear(r));
-        }
-
-        return grid;
     }
 
     private static JPanel crearCardVacia(String titulo, String descripcion) {
