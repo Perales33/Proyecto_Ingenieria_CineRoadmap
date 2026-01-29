@@ -1,0 +1,27 @@
+@startuml
+left to right direction
+
+actor Usuario
+actor Sistema
+
+  Usuario --> (Registro de Cuenta)
+  Usuario --> (Inicio de Sesión)
+  Usuario --> (Navegación por el Sistema)
+  Usuario --> (Logros e Insignias)
+  Usuario --> (Calificación de Películas)
+  Usuario --> (Visualizar Películas)
+  Usuario --> (Perfil del Usuario)
+  Usuario --> (Edición de Perfil)
+  Usuario --> (Retos y Desafíos)
+  Usuario --> (Comunidad)
+  Usuario --> (Recomendaciones)
+  Usuario --> (Cambio de Contraseña)
+
+  Sistema --> (Validar registro)
+  (Validar registro) --> (Registro de Cuenta)
+
+  (Calificación de Películas) --> (Visualizar Películas) : <<include>>
+  (Edición de Perfil) --> (Perfil del Usuario) : <<extend>>
+  (Recomendaciones) --> (Calificación de Películas) : <<include>>
+
+@enduml

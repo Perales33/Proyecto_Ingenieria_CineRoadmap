@@ -2,7 +2,6 @@ package main.app.Vista;
 
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.border.TitledBorder;
 
 import main.app.Controlador.*;
 
