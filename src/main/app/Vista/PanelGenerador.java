@@ -8,19 +8,12 @@ import main.app.Controlador.*;
 public class PanelGenerador extends JFrame
 {
     // Página principal
-    private static CardLayout colocacion = new CardLayout();
+    private static CardLayout colocacion = new CardLayout(); // Posición del main
     private static JPanel mainPanel = new JPanel(colocacion); // Panel principal
 
     // Getter de la página principal
-    public static CardLayout getColocacion()
-    {
-        return colocacion;
-    }
-
-    public static JPanel getMain()
-    {
-        return mainPanel;
-    }
+    public static CardLayout getColocacion() { return colocacion; }
+    public static JPanel getMain() { return mainPanel; }
 
     // Paneles de la interfaz
     JPanel loginPanel;               // Panel de Login
@@ -30,7 +23,7 @@ public class PanelGenerador extends JFrame
     JPanel peliculasPanel;           // Subpanel de películas
     JPanel perfilPanel;              // Subpanel de perfil
     JPanel comunidadPanel;           // Panel de la comunidad
-    JPanel retosPanel;               // Panel de Retos y Recomendaciones   ✅ NUEVO
+    JPanel retosPanel;               // Panel de Retos y Recomendaciones
 
     JPanel appPanel;                 // Panel del Main (Inicio)
     JPanel logrosPanel;              // Panel de logros e insignias

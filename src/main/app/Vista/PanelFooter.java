@@ -10,9 +10,10 @@ import java.awt.Font;
 
 public class PanelFooter
 {
-    public static JPanel crearFooter(String texto, int ancho, int alto) {
+    public static JPanel crearFooter(String texto, int ancho, int alto) 
+    {
         JPanel footer = new JPanel();
-        footer.setLayout(new FlowLayout(FlowLayout.CENTER)); // Centrar el contenido
+        footer.setLayout(new FlowLayout(FlowLayout.CENTER));
         footer.setPreferredSize(new Dimension(ancho, alto));
         footer.setMaximumSize(new Dimension(ancho, alto));
         footer.setMinimumSize(new Dimension(ancho, alto));

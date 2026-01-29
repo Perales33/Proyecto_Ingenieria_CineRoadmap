@@ -10,24 +10,38 @@ import main.app.util.WrapLayout;
 
 public class PanelPerfilComunidad
 {
+    // -------------------------
+    // CREAR PERFIL DE COMUNIDAD
+    // -------------------------
     public static JPanel crearPerfilComunidad(Usuario usuario)
     {
+        // -------------------------
+        // PANEL PRINCIPAL
+        // -------------------------
         JPanel panelCentral = new JPanel(new BorderLayout());
 
-        // ------------------ BANNER ------------------
+        // -------------------------
+        // BANNER SUPERIOR
+        // -------------------------
         JPanel banner = PanelBanner.crearBanner();
         panelCentral.add(banner, BorderLayout.NORTH);
 
-        // ------------------ PANEL DIVIDIDO HORIZONTAL ------------------
+        // -------------------------
+        // PANEL DIVIDIDO HORIZONTAL
+        // -------------------------
         JSplitPane panelDividido = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         panelDividido.setResizeWeight(0.5);
 
-        // ------------------ PANEL DATOS ------------------
+        // -------------------------
+        // PANEL DATOS DEL USUARIO
+        // -------------------------
         JPanel panelDatos = new JPanel(new GridBagLayout());
         panelDatos.setBackground(Color.BLACK);
+
         TitledBorder border = BorderFactory.createTitledBorder("Datos de Usuario");
         border.setTitleColor(Color.WHITE);
         panelDatos.setBorder(border);
+
         panelDatos.setMinimumSize(new Dimension(600, 600));
         panelDatos.setMaximumSize(new Dimension(600, 600));
 
@@ -36,10 +50,14 @@ public class PanelPerfilComunidad
         datosBag.fill = GridBagConstraints.HORIZONTAL;
         datosBag.gridy = 0;
 
-        // Imagen de perfil
+        // -------------------------
+        // IMAGEN DE PERFIL
+        // -------------------------
         ControladorPerfilComunidad.crearImagenPerfil(panelDatos, datosBag, usuario);
 
-        // Datos del usuario
+        // -------------------------
+        // DATOS TEXTUALES
+        // -------------------------
         datosBag.gridy = 1;
         JPanel datosUsuario = new JPanel(new GridBagLayout());
         datosUsuario.setBackground(Color.WHITE);
@@ -50,17 +68,23 @@ public class PanelPerfilComunidad
         datosUsuarioBag.insets = new Insets(5, 5, 5, 5);
         datosUsuarioBag.fill = GridBagConstraints.HORIZONTAL;
 
-        // Nombre
+        // -------------------------
+        // NOMBRE DE USUARIO
+        // -------------------------
         datosUsuarioBag.gridx = 0;
         datosUsuarioBag.gridy = 0;
         JLabel labelNombreUsuario = new JLabel("Nombre: " + usuario.getnombreUsuario());
         datosUsuario.add(labelNombreUsuario, datosUsuarioBag);
 
-        // ------------------ PANEL PELÍCULAS Y LOGROS (DIVIDIDO VERTICAL) ------------------
+        // -------------------------
+        // PANEL DERECHO (PELÍCULAS + LOGROS)
+        // -------------------------
         JSplitPane panelPIL = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         panelPIL.setResizeWeight(0.5);
 
-        // ------------------ PANEL PELÍCULAS ------------------
+        // -------------------------
+        // PANEL PELÍCULAS VISTAS
+        // -------------------------
         JPanel panelPeliculasVistas = new JPanel();
         panelPeliculasVistas.setLayout(new WrapLayout(FlowLayout.LEFT, 10, 10));
         panelPeliculasVistas.setBorder(BorderFactory.createTitledBorder("Películas Vistas"));
@@ -74,7 +98,9 @@ public class PanelPerfilComunidad
         scrollPeliculas.getViewport().setOpaque(false);
         scrollPeliculas.setOpaque(false);
 
-        // ------------------ PANEL LOGROS ------------------
+        // -------------------------
+        // PANEL LOGROS
+        // -------------------------
         JPanel panelLogros = new JPanel();
         panelLogros.setBorder(BorderFactory.createTitledBorder("Insignias y Logros"));
 
@@ -87,7 +113,9 @@ public class PanelPerfilComunidad
         scrollLogros.getViewport().setOpaque(false);
         scrollLogros.setOpaque(false);
 
-        // Dividir verticalmente entre películas y logros
+        // -------------------------
+        // DIVISIÓN VERTICAL DERECHA
+        // -------------------------
         panelPIL.setLeftComponent(scrollPeliculas);
         panelPIL.setRightComponent(scrollLogros);
         panelPIL.setEnabled(false);
@@ -95,13 +123,16 @@ public class PanelPerfilComunidad
         panelPIL.setMinimumSize(new Dimension(600, 600));
         panelPIL.setMaximumSize(new Dimension(600, 600));
 
-        // ------------------ PANEL DIVIDIDO HORIZONTAL ------------------
+        // -------------------------
+        // UNIR PANEL IZQUIERDO Y DERECHO
+        // -------------------------
         panelDividido.setLeftComponent(panelDatos);
         panelDividido.setRightComponent(panelPIL);
         panelDividido.setEnabled(false);
         panelDividido.setDividerSize(10);
 
-        panelCentral.add(panelDividido);
+        panelCentral.add(panelDividido, BorderLayout.CENTER);
+
         return panelCentral;
     }
 }
