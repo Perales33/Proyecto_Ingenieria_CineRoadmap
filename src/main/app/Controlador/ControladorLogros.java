@@ -12,12 +12,12 @@ public class ControladorLogros {
 
         for(Logro l : u.getLogros()) {
 
-            // --- Logros generales ---
+            // Evaluar el proceso de los logros genéricos 
             if(l.getNombreReto().contains("películas")) {
                 l.setActual(totalPeliculas);
             }
 
-            // --- Logros por género ---
+            // Evaluar el proceso de logros por género
             if(l.getNombreReto().contains("Ciencia Ficción")) {
                 l.setActual(countPorGenero(u, "Ciencia Ficción"));
             }
@@ -31,7 +31,7 @@ public class ControladorLogros {
                 l.setActual(countPorGenero(u, "Aventura"));
             }
 
-            // --- Logros por director ---
+            // Evaluar el proceso de logros por directores
             if(l.getNombreReto().contains("Denis Villeneuve")) {
                 l.setActual(countPorDirector(u, "Denis Villeneuve"));
             }
@@ -42,7 +42,7 @@ public class ControladorLogros {
                 l.setActual(countPorDirector(u, "Greta Gerwig"));
             }
 
-            // --- Logros por actor ---
+            // Evaluar el proceso de logros por actores
             if(l.getNombreReto().contains("Timothée Chalamet")) {
                 l.setActual(countPorActor(u, "Timothée Chalamet"));
             }
@@ -53,7 +53,7 @@ public class ControladorLogros {
                 l.setActual(countPorActor(u, "Margot Robbie"));
             }
 
-            // --- Logros por año ---
+            // Evaluar el proceso de logros por año
             if(l.getNombreReto().contains("2023")) {
                 l.setActual(countPorAnio(u, 2023));
             }
@@ -64,10 +64,11 @@ public class ControladorLogros {
                 l.setActual(countPorAnio(u, 2021));
             }
 
+            // Evaluar el proceso cuando está completo
             if(l.isCompleto()) totalLogrosCompletados++;
         }
 
-        // Logro "Completa 3 retos"
+        // Logro "Completa 3 retos", es decir, tener tres logros completos
         for(Logro l : u.getLogros()) {
             if(l.getNombreReto().contains("3 retos")) {
                 l.setActual(totalLogrosCompletados);
@@ -75,7 +76,9 @@ public class ControladorLogros {
         }
     }
 
-    // Funciones auxiliares para contar
+    // Funciones auxiliares para contar las películas que contengan ese campo...
+
+    // ... contiene el genéro específico
     private static int countPorGenero(Usuario u, String genero) {
         int count = 0;
         for(Pelicula p : u.getPeliculas()) {
@@ -84,6 +87,7 @@ public class ControladorLogros {
         return count;
     }
 
+    // ... contiene el director específico
     private static int countPorDirector(Usuario u, String director) {
         int count = 0;
         for(Pelicula p : u.getPeliculas()) {
@@ -92,6 +96,7 @@ public class ControladorLogros {
         return count;
     }
 
+    // ... contiene el actor específico
     private static int countPorActor(Usuario u, String actor) {
         int count = 0;
         for(Pelicula p : u.getPeliculas()) {
@@ -100,6 +105,7 @@ public class ControladorLogros {
         return count;
     }
 
+    // ... contiene el año específico
     private static int countPorAnio(Usuario u, int anio) {
         int count = 0;
         for(Pelicula p : u.getPeliculas()) {

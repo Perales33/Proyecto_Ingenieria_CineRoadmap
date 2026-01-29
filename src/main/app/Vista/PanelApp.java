@@ -27,36 +27,36 @@ public class PanelApp
         panelContenido.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 
         // =========================
-        // HERO / BANNER
+        // Cabecera
         // =========================
-        JLayeredPane hero = new JLayeredPane();
-        hero.setBounds(0, 0, 1200, 250);
+        JLayeredPane cabecera = new JLayeredPane();
+        cabecera.setBounds(0, 0, 1200, 250);
 
-        JLabel heroImg = new JLabel();
-        heroImg.setBounds(0, 0, 1200, 250);
+        JLabel cabeceraImg = new JLabel();
+        cabeceraImg.setBounds(0, 0, 1200, 250);
         ImageIcon icon = new ImageIcon(PanelApp.class.getResource("/main/resources/img/fondo.jpg"));
         Image img = icon.getImage().getScaledInstance(1200, 250, Image.SCALE_SMOOTH);
-        heroImg.setIcon(new ImageIcon(img));
-        hero.add(heroImg, JLayeredPane.DEFAULT_LAYER);
+        cabeceraImg.setIcon(new ImageIcon(img));
+        cabecera.add(cabeceraImg, JLayeredPane.DEFAULT_LAYER);
 
         JPanel overlay = new JPanel(null);
         overlay.setBounds(0, 0, 1200, 250);
         overlay.setOpaque(false);
-        hero.add(overlay, JLayeredPane.PALETTE_LAYER);
+        cabecera.add(overlay, JLayeredPane.PALETTE_LAYER);
 
-        JLabel heroTitle = new JLabel("Bienvenido a CineRoadmap");
-        heroTitle.setFont(new Font("Arial", Font.BOLD, 36));
-        heroTitle.setForeground(Color.WHITE);
-        heroTitle.setBounds(20, 30, 1160, 50);
-        overlay.add(heroTitle);
+        JLabel cabeceraTitle = new JLabel("Bienvenido a CineRoadmap");
+        cabeceraTitle.setFont(new Font("Arial", Font.BOLD, 36));
+        cabeceraTitle.setForeground(Color.WHITE);
+        cabeceraTitle.setBounds(20, 30, 1160, 50);
+        overlay.add(cabeceraTitle);
 
-        JLabel heroText = new JLabel("<html>El cine no solo se mira, se recorre.<br>" +
+        JLabel cabeceraText = new JLabel("<html>El cine no solo se mira, se recorre.<br>" +
                 "Explora clásicos eternos y nuevas propuestas, descubre recomendaciones y deja tu huella <br>" +
                 "en una comunidad que entiende el cine como arte, memoria y emoción.</html>");
-        heroText.setFont(new Font("Arial", Font.PLAIN, 16));
-        heroText.setForeground(Color.WHITE);
-        heroText.setBounds(20, 90, 1160, 80);
-        overlay.add(heroText);
+        cabeceraText.setFont(new Font("Arial", Font.PLAIN, 16));
+        cabeceraText.setForeground(Color.WHITE);
+        cabeceraText.setBounds(20, 90, 1160, 80);
+        overlay.add(cabeceraText);
 
         JButton joinButton = new JButton("Únete");
         joinButton.setBounds(20, 180, 120, 40);
@@ -66,16 +66,18 @@ public class PanelApp
         joinButton.addActionListener(e -> ControladorApp.botonComunidadPresionado());
         overlay.add(joinButton);
 
-        panelContenido.add(hero);
+        panelContenido.add(cabecera);
 
         // =========================
-        // SECCIÓN PELÍCULAS ALEATORIAS
+        // SECCIÓN PELÍCULAS
         // =========================
+
+        // Catálogo original
         ArrayList<Pelicula> catalogoOriginal = Pelicula.getCatalogo();
 
-        // COPIA
+        // Copia del catálogo
         ArrayList<Pelicula> catalogo = new ArrayList<>(catalogoOriginal);
-        Collections.shuffle(catalogo);
+        Collections.shuffle(catalogo); // Mezclar las películas
 
         JLabel tituloPeliculas = new JLabel("Califica películas");
         tituloPeliculas.setFont(new Font("Arial", Font.BOLD, 24));
@@ -96,8 +98,10 @@ public class PanelApp
         panelContenido.add(peliculasPanel);
 
         // =========================
-        // SECCIÓN INSIGNIAS / LOGROS
+        // SECCIÓN INSIGNIAS Y LOGROS
         // =========================
+
+        // Título de la sección
         JLabel tituloInsignias = new JLabel("Obtén insignias");
         tituloInsignias.setFont(new Font("Arial", Font.BOLD, 24));
         tituloInsignias.setBounds(20, 570, 400, 30);
@@ -109,22 +113,20 @@ public class PanelApp
         insigniasPanel.setBounds(20, 600, 1100, 250);
         insigniasPanel.setBackground(null);
 
-        // -------------------------
-        // Imagen a la derecha (ocupa todo el split)
+        // Imagen a la derecha
         JLabel imgLabel = new JLabel();
         ImageIcon imgIcon = new ImageIcon(PanelApp.class.getResource("/main/resources/img/insigniaCamino.png"));
         Image imgInsignias = imgIcon.getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH);
         imgLabel.setIcon(new ImageIcon(imgInsignias));
         insigniasPanel.add(imgLabel, BorderLayout.EAST);
 
-        // -------------------------
+        // Panel de logros de ejemplo
         JPanel logrosPanel = new JPanel();
         logrosPanel.setLayout(new BoxLayout(logrosPanel, BoxLayout.Y_AXIS));
         logrosPanel.setOpaque(false);
-        // Reducido el margen derecho de 20 a 10 para acercarlo un poco a la imagen
         logrosPanel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 5)); 
 
-
+        // Matriz de logros para completar la pantalla principal
         String[][] logros = {
             {"Top 100 películas", "Ver las 100 mejores películas según IMDb"},
             {"Fan de Scorsese", "Ver al menos 10 películas de Martin Scorsese"},
@@ -132,22 +134,27 @@ public class PanelApp
             {"1 Day 1 Saga", "Ver toda una saga en un solo día (ejemplo: Star Wars, Harry Potter, El Señor de los Anillos)"}
         };
 
+        // Estilo genéricos para títulos de logros y descripción
         Font fontTitulo = new Font("Arial", Font.BOLD, 12);
         Font fontDesc = new Font("Arial", Font.PLAIN, 12);
         Color colorTexto = Color.WHITE;
 
-        for (String[] logro : logros) {
+        for (String[] logro : logros) 
+        {
+            // Panel por cada logro
             JPanel logroPanel = new JPanel();
             logroPanel.setLayout(new BoxLayout(logroPanel, BoxLayout.Y_AXIS));
             logroPanel.setOpaque(false);
             logroPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
+            // Título de cada logro
             JLabel tituloLogro = new JLabel(logro[0] + ":");
             tituloLogro.setFont(fontTitulo);
             tituloLogro.setForeground(colorTexto);
             tituloLogro.setBackground(null);
             tituloLogro.setAlignmentX(Component.LEFT_ALIGNMENT);
 
+            // Descripción del logro
             JLabel descLogro = new JLabel("<html><div style='width:400px;'>" + logro[1] + "</div></html>");
             descLogro.setFont(fontDesc);
             descLogro.setForeground(colorTexto);
@@ -165,9 +172,7 @@ public class PanelApp
         JButton verInsigniasButton = new JButton("Ir a logros e insignias");
         verInsigniasButton.setAlignmentX(Component.LEFT_ALIGNMENT);
         Estilos.estiloBotones(verInsigniasButton);
-
         verInsigniasButton.addActionListener(e -> ControladorApp.botonLogroPresionado());
-
         logrosPanel.add(verInsigniasButton);
 
         insigniasPanel.add(logrosPanel, BorderLayout.CENTER);
@@ -183,7 +188,7 @@ public class PanelApp
 
         panelContenido.setPreferredSize(new Dimension(1200, 900));
 
-        // Panel con scroll
+        // Panel con scroll general de la pantalla
         JScrollPane scrollPane = new JScrollPane(panelContenido);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -197,14 +202,15 @@ public class PanelApp
     // =========================
     // MÉTODO PARA CREAR CARDS CENTRADAS
     // =========================
-    private static JPanel crearCard(String titulo, String imgFileName) 
+    private static JPanel crearCard(String titulo, String imgPelicula) 
     {
+        // Panel general por cada película aleatoria
         JPanel card = new JPanel(new BorderLayout());
         card.setPreferredSize(new Dimension(200, 250));
         card.setOpaque(false);
 
-        // Imagen
-        ImageIcon icon = new ImageIcon(PanelApp.class.getResource("/main/resources/img/" + imgFileName));
+        // Imagen de la película
+        ImageIcon icon = new ImageIcon(PanelApp.class.getResource("/main/resources/img/" + imgPelicula));
         Image img = icon.getImage().getScaledInstance(200, 180, Image.SCALE_SMOOTH);
         JLabel imgLabel = new JLabel(new ImageIcon(img));
         imgLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -216,9 +222,11 @@ public class PanelApp
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
         infoPanel.setOpaque(false);
 
+        // Estilos para el título de la película
         Font fontTitulo = new Font("Arial", Font.BOLD, 12);
         Color colorTexto = Color.WHITE;
 
+        // Título de la película
         JLabel titleLabel = new JLabel(titulo, SwingConstants.CENTER);
         titleLabel.setFont(fontTitulo);
         titleLabel.setForeground(colorTexto);

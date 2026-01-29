@@ -58,7 +58,7 @@ public class PanelBanner {
         JLabel peliculasLabel = new JLabel("Películas");
         JLabel insigniasLabel = new JLabel("Logros");
         JLabel retosLabel = new JLabel("Retos");
-        JLabel misRetosLabel = new JLabel("Mis Retos"); // ✅ NUEVO
+        JLabel misRetosLabel = new JLabel("Mis Retos");
         JLabel comunidadLabel = new JLabel("Comunidad");
         JLabel cerrarSesionLabel = new JLabel("Cerrar Sesión");
 
@@ -82,7 +82,7 @@ public class PanelBanner {
         peliculasLabel.setBounds(140, 30, 100, 30);
         insigniasLabel.setBounds(260, 30, 80, 30);
         retosLabel.setBounds(360, 30, 60, 30);
-        misRetosLabel.setBounds(440, 30, 90, 30);       // ✅ NUEVO
+        misRetosLabel.setBounds(440, 30, 90, 30);
         comunidadLabel.setBounds(560, 30, 110, 30);
         cerrarSesionLabel.setBounds(900, 30, 180, 30);
 
@@ -117,7 +117,7 @@ public class PanelBanner {
             }
         });
 
-        // ✅ NUEVO: Mis Retos
+        // Mis Retos
         misRetosLabel.addMouseListener(new MouseAdapter() {
             @Override public void mouseClicked(MouseEvent e) {
 

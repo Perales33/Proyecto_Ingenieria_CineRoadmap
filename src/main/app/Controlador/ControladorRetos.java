@@ -10,12 +10,13 @@ import main.app.Modelo.Usuario;
 public class ControladorRetos {
 
     // =========================
-    // Catálogo fijo de retos (DEMO)
+    // Catálogo fijo de retos
     // =========================
     private static final List<Reto> catalogo = new ArrayList<>();
     private static boolean catalogoInicializado = false;
 
-    private static void initCatalogoSiHaceFalta() {
+    private static void initCatalogoSiHaceFalta() 
+    {
         if (catalogoInicializado) return;
 
         LocalDate hoy = LocalDate.now();
