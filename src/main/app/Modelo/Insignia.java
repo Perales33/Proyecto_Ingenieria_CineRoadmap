@@ -4,21 +4,27 @@ import javax.swing.*;
 
 import main.app.Vista.PanelLogros;
 
-public class Insignia {
+public class Insignia 
+{
+    // Atributos
     private String nombre;
     private ImageIcon imagen;
 
+    // Constructores
     public Insignia(String nombre, ImageIcon imagen){
         this.nombre = nombre;
         this.imagen = imagen;
     }
 
+    // Getters
     public String getNombre() { return nombre; }
     public ImageIcon getImagen() { return imagen; }
 
     // Catálogo de insignias
-    public static Insignia[] getCatalogo() {
-        return new Insignia[]{
+    public static Insignia[] getCatalogo() 
+    {
+        return new Insignia[]
+        {
             // Logros generales
             new Insignia("Cinéfilo Inicial", new ImageIcon(PanelLogros.class.getResource("/main/resources/img/insignia1.png"))),
             new Insignia("Cinéfilo Intermedio", new ImageIcon(PanelLogros.class.getResource("/main/resources/img/insignia2.png"))),
