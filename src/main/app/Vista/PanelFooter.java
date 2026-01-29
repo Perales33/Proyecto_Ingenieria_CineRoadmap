@@ -10,8 +10,14 @@ import java.awt.Font;
 
 public class PanelFooter
 {
+    // -------------------------
+    // CREAR FOOTER
+    // -------------------------
     public static JPanel crearFooter(String texto, int ancho, int alto) 
     {
+        // -------------------------
+        // PANEL FOOTER
+        // -------------------------
         JPanel footer = new JPanel();
         footer.setLayout(new FlowLayout(FlowLayout.CENTER));
         footer.setPreferredSize(new Dimension(ancho, alto));
@@ -19,6 +25,9 @@ public class PanelFooter
         footer.setMinimumSize(new Dimension(ancho, alto));
         footer.setBackground(Color.DARK_GRAY);
 
+        // -------------------------
+        // TEXTO DEL FOOTER
+        // -------------------------
         JLabel label = new JLabel(texto);
         label.setForeground(Color.WHITE);
         label.setFont(new Font("Arial", Font.PLAIN, 14));

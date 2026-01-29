@@ -26,12 +26,15 @@ public class PanelApp
         panelContenido.setBackground(Color.BLACK);
         panelContenido.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 
-        // =========================
+        // -------------------------
         // Cabecera
-        // =========================
+        // -------------------------
+
+        // Panel principal de la cabecera
         JLayeredPane cabecera = new JLayeredPane();
         cabecera.setBounds(0, 0, 1200, 250);
 
+        // Imagen de la cabecera
         JLabel cabeceraImg = new JLabel();
         cabeceraImg.setBounds(0, 0, 1200, 250);
         ImageIcon icon = new ImageIcon(PanelApp.class.getResource("/main/resources/img/fondo.jpg"));
@@ -39,17 +42,20 @@ public class PanelApp
         cabeceraImg.setIcon(new ImageIcon(img));
         cabecera.add(cabeceraImg, JLayeredPane.DEFAULT_LAYER);
 
+        // Panel por encima de la imagen
         JPanel overlay = new JPanel(null);
         overlay.setBounds(0, 0, 1200, 250);
         overlay.setOpaque(false);
         cabecera.add(overlay, JLayeredPane.PALETTE_LAYER);
 
+        // Título de la sección
         JLabel cabeceraTitle = new JLabel("Bienvenido a CineRoadmap");
         cabeceraTitle.setFont(new Font("Arial", Font.BOLD, 36));
         cabeceraTitle.setForeground(Color.WHITE);
         cabeceraTitle.setBounds(20, 30, 1160, 50);
         overlay.add(cabeceraTitle);
 
+        // Descripción de la sección
         JLabel cabeceraText = new JLabel("<html>El cine no solo se mira, se recorre.<br>" +
                 "Explora clásicos eternos y nuevas propuestas, descubre recomendaciones y deja tu huella <br>" +
                 "en una comunidad que entiende el cine como arte, memoria y emoción.</html>");
@@ -58,7 +64,8 @@ public class PanelApp
         cabeceraText.setBounds(20, 90, 1160, 80);
         overlay.add(cabeceraText);
 
-        JButton joinButton = new JButton("Únete");
+        // Botón para ir a la sección de comunidad
+        JButton joinButton = new JButton("Únete a la comunidad");
         joinButton.setBounds(20, 180, 120, 40);
         joinButton.setBackground(new Color(255, 87, 34));
         joinButton.setForeground(Color.WHITE);
@@ -68,9 +75,9 @@ public class PanelApp
 
         panelContenido.add(cabecera);
 
-        // =========================
+        // -------------------------
         // SECCIÓN PELÍCULAS
-        // =========================
+        // -------------------------
 
         // Catálogo original
         ArrayList<Pelicula> catalogoOriginal = Pelicula.getCatalogo();
@@ -97,9 +104,9 @@ public class PanelApp
 
         panelContenido.add(peliculasPanel);
 
-        // =========================
+        // -------------------------
         // SECCIÓN INSIGNIAS Y LOGROS
-        // =========================
+        // -------------------------
 
         // Título de la sección
         JLabel tituloInsignias = new JLabel("Obtén insignias");
@@ -179,9 +186,9 @@ public class PanelApp
 
         panelContenido.add(insigniasPanel);
 
-        // =========================
+        // -------------------------
         // FOOTER
-        // =========================
+        // -------------------------
         JPanel footer = PanelFooter.crearFooter("© CineRoadmap", 1200, 30);
         footer.setBounds(0, 870, 1200, 30); // sigue siendo null layout, posición manual
         panelContenido.add(footer);
@@ -200,7 +207,7 @@ public class PanelApp
     }
 
     // =========================
-    // MÉTODO PARA CREAR CARDS CENTRADAS
+    // MÉTODO PARA CREAR PELÍCULAS CENTRADAS
     // =========================
     private static JPanel crearCard(String titulo, String imgPelicula) 
     {

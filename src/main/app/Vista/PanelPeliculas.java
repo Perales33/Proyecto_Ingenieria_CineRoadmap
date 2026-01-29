@@ -15,11 +15,20 @@ public class PanelPeliculas
     {
         ArrayList<Pelicula> catalogo = Pelicula.getCatalogo();
 
+        // -------------------------
+        // PANEL PRINCIPAL
+        // -------------------------
         JPanel panelCental = new JPanel(new BorderLayout());
 
+        // -------------------------
+        // BANNER SUPERIOR
+        // -------------------------
         JPanel banner = PanelBanner.crearBanner();
         panelCental.add(banner, BorderLayout.NORTH);
 
+        // -------------------------
+        // PANEL CONTENIDO
+        // -------------------------
         JPanel panelContenido = new JPanel(new GridBagLayout());
         panelContenido.setBackground(Color.BLACK);
         panelContenido.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
@@ -28,16 +37,25 @@ public class PanelPeliculas
         bag.insets = new Insets(10,10, 10, 10);
         bag.fill = GridBagConstraints.HORIZONTAL; 
 
+        // -------------------------
+        // TÍTULO
+        // -------------------------
         bag.gridwidth = 2; bag.gridy = 1;
         JLabel peliculasLabel = new JLabel("Seccion de Películas");
         Estilos.estilosTitulosLRC(peliculasLabel);
         peliculasLabel.setHorizontalAlignment(SwingConstants.CENTER);
         panelContenido.add(peliculasLabel, bag);
         
+        // -------------------------
+        // PANEL DIVIDIDO
+        // -------------------------
         bag.gridwidth = 2; bag.gridy = 2; bag.gridx = 0;
         JSplitPane panelDividido = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         panelDividido.setResizeWeight(0.7);
 
+        // -------------------------
+        // PANEL CATÁLOGO
+        // -------------------------
         JPanel panelCatalogo = new JPanel();
         panelCatalogo.setLayout(new BoxLayout(panelCatalogo, BoxLayout.Y_AXIS));
         panelCatalogo.setBorder(BorderFactory.createTitledBorder("Catálogo de Películas"));
@@ -56,7 +74,9 @@ public class PanelPeliculas
             scrollCatalogo.getHorizontalScrollBar().setValue(0);
         });
 
-
+        // -------------------------
+        // PANEL CALIFICACIONES
+        // -------------------------
         JPanel panelCalificaciones = new JPanel(new GridBagLayout());
         panelCalificaciones.setBorder(
             BorderFactory.createCompoundBorder(
@@ -71,6 +91,9 @@ public class PanelPeliculas
         colocacionCalificacion.weightx = 1.0;
         colocacionCalificacion.gridwidth = 2;
 
+        // -------------------------
+        // ÁREA DE VALORACIONES
+        // -------------------------
         colocacionCalificacion.gridy = 0;
         colocacionCalificacion.gridx = 0;
         colocacionCalificacion.fill = GridBagConstraints.BOTH;
@@ -80,10 +103,9 @@ public class PanelPeliculas
         areaValoraciones.setEditable(false);
         Estilos.estilosTextArea(areaValoraciones);
         areaValoraciones.setBorder(BorderFactory.createTitledBorder("Tus valoraciones"));
-
         areaValoraciones.setText(ControladorCalificacion.crearValoraciones(ControladorUsuario.getUsuarioActivo()));
 
-
+        // Panel scroll en la sección de valoraciones
         JScrollPane scrollValoraciones = new JScrollPane(areaValoraciones);
         scrollValoraciones.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollValoraciones.getVerticalScrollBar().setValue(0);
@@ -93,6 +115,9 @@ public class PanelPeliculas
 
         panelCalificaciones.add(scrollValoraciones, colocacionCalificacion);
 
+        // -------------------------
+        // SELECCIÓN DE PELÍCULA
+        // -------------------------
         colocacionCalificacion.gridy = 1;
         colocacionCalificacion.gridx = 0;
         colocacionCalificacion.gridwidth = 1;
@@ -111,6 +136,9 @@ public class PanelPeliculas
         Estilos.estilosCombox(seleccionPeliculas);
         panelCalificaciones.add(seleccionPeliculas, colocacionCalificacion);
 
+        // -------------------------
+        // CAMPO VALORACIÓN
+        // -------------------------
         colocacionCalificacion.gridy = 2;
         colocacionCalificacion.gridx = 0;
         colocacionCalificacion.fill = GridBagConstraints.NONE;
@@ -127,6 +155,9 @@ public class PanelPeliculas
         Estilos.estilosInputsDatos(lValoracion);
         panelCalificaciones.add(lValoracion, colocacionCalificacion);
 
+        // -------------------------
+        // BOTÓN GUARDAR
+        // -------------------------
         colocacionCalificacion.gridy = 3;
         colocacionCalificacion.gridx = 0;
         colocacionCalificacion.gridwidth = 2;
@@ -141,7 +172,7 @@ public class PanelPeliculas
 
             if(!(peliculaSeleccionada instanceof Pelicula))
             {
-                JOptionPane.showMessageDialog(PanelGenerador.getMain(), "Debes seleccionar una película", "Pelicula no seleccionada", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(PanelGenerador.getMain(),"Debes seleccionar una película","Pelicula no seleccionada", JOptionPane.ERROR_MESSAGE);
             }
             else
             {
@@ -150,8 +181,9 @@ public class PanelPeliculas
 
                 if(notaString.isEmpty())
                 {
-                    JOptionPane.showMessageDialog(PanelGenerador.getMain(), "Debes valorar la película de 1 a 5", "Valoración vacía", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(PanelGenerador.getMain(),"Debes valorar la película de 1 a 5","Valoración vacía", JOptionPane.ERROR_MESSAGE);
                 }
+
                 int nota = 0;
 
                 try 
@@ -160,7 +192,7 @@ public class PanelPeliculas
                 } 
                 catch (Exception a) 
                 {
-                    JOptionPane.showMessageDialog(PanelGenerador.getMain(), "Debes valorar la película con un número válido de 1 a 5", "Valoración mal hecha", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(PanelGenerador.getMain(),"Debes valorar la película con un número válido de 1 a 5","Valoración mal hecha", JOptionPane.ERROR_MESSAGE);
                 }
 
                 String mensaje = ControladorCalificacion.guardarCalificacion(pelicula, nota);
@@ -169,11 +201,11 @@ public class PanelPeliculas
                 {
                     seleccionPeliculas.setSelectedIndex(0);
                     lValoracion.setText("");
-                    JOptionPane.showMessageDialog(PanelGenerador.getMain(), "Calificiación registrada correctamente / Película marcada como vista", "Calificación guardada", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(PanelGenerador.getMain(),"Calificiación registrada correctamente / Película marcada como vista","Calificación guardada", JOptionPane.INFORMATION_MESSAGE);
                 }
                 else
                 {
-                    JOptionPane.showMessageDialog(PanelGenerador.getMain(), mensaje, "Calificación no registrada", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(PanelGenerador.getMain(), mensaje,"Calificación no registrada", JOptionPane.ERROR_MESSAGE);
                 }
 
                 areaValoraciones.setText(ControladorCalificacion.crearValoraciones(ControladorUsuario.getUsuarioActivo()));
@@ -182,6 +214,9 @@ public class PanelPeliculas
 
         panelCalificaciones.add(botonCalificacion, colocacionCalificacion);
 
+        // -------------------------
+        // CONFIGURACIÓN DEl PANEL DIVIDIDO
+        // -------------------------
         panelDividido.setEnabled(false);
         panelDividido.setDividerSize(0);
         panelDividido.setLeftComponent(scrollCatalogo);
@@ -194,13 +229,13 @@ public class PanelPeliculas
 
         panelCental.add(panelContenido, BorderLayout.CENTER);
 
-        // =========================
+        // -------------------------
         // FOOTER
-        // =========================
+        // -------------------------
         JPanel footer = PanelFooter.crearFooter("© CineRoadmap", 1200, 30);
-        footer.setBounds(0, 770, 1200, 30); // sigue siendo null layout, posición manual
         panelCental.add(footer, BorderLayout.SOUTH);
 
         return panelCental;
     }
 }
+

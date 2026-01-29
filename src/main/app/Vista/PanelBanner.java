@@ -172,9 +172,9 @@ public class PanelBanner {
         return bannerPanel;
     }
 
-    // =========================
+    // -------------------------
     // Refresco seguro de tarjetas
-    // =========================
+    // -------------------------
     private static void refrescarPantalla(String nombre, JPanel nuevoPanel)
     {
         JPanel main = PanelGenerador.getMain();
