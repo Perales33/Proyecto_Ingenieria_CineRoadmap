@@ -54,7 +54,7 @@ public class PanelComunidad
         cabeceraTitle.setFont(new Font("Arial", Font.BOLD, 36));
         cabeceraTitle.setForeground(Color.WHITE);
         cabeceraTitle.setBounds(20, 30, 1160, 50);
-        overlay.add(cabecera);
+        overlay.add(cabeceraTitle);
 
         JLabel cabeceraText = new JLabel("<html>Nuestro objetivo es inspirar a los usuarios a explorar nuevos géneros,<br>" +
                 "épocas y directores mientras se divierten completando retos y logros.<br>" +
