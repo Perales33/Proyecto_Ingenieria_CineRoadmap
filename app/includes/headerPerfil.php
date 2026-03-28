@@ -11,7 +11,7 @@
 <body>
     <main class="estructuraPerfil">
         <header class="header">
-            <a href="../index.php" style="text-decoration: none;">
+            <a href="/" style="text-decoration: none;">
                 <section class="fnc">
                     <h1 class="f">Cine</h1>
                     <span class="n">R</span>

@@ -15,7 +15,7 @@
             <p>Lo sentimos, pero la página que buscas parece haberse perdido en la sala de edición o nunca fue filmada.</p>
             
             <div class="acciones">
-                <a href="../index.php" class="btn-inicio">Volver al Inicio</a>
+                <a href="/" class="btn-inicio">Volver al Inicio</a>
             </div>
         </div>
         

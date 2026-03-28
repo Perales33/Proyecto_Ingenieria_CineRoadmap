@@ -10,15 +10,7 @@ if (session_id() != "" || isset($_COOKIE[session_name()])) {
 }
 session_destroy();
 
-// 3. Decidimos a dónde redirigir
-$redireccion = './index.php'; // Por defecto al index
-
-if (isset($_SERVER['HTTP_REFERER'])) {
-    // Si venía de una página, intentamos volver ahí (ahora saldrá "Inicie sesión")
-    $redireccion = $_SERVER['HTTP_REFERER'];
-}
-
 // 4. Redirigir (Usamos comillas DOBLES para que la variable funcione)
-header("Location: $redireccion");
+header("Location: /");
 exit();
 ?>

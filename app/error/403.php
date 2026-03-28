@@ -15,7 +15,7 @@
             <p>Lo sentimos, pero no tienes permiso para acceder a esta página.</p>
             
             <div class="acciones">
-                <a href="/index.php" class="btn-inicio">Volver al Inicio</a>
+                <a href="/" class="btn-inicio">Volver al Inicio</a>
             </div>
         </div>
         

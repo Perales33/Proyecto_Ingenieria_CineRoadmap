@@ -11,7 +11,7 @@
     <main class="estructuraPDPA">
         <!-- HEADER DE LA PAGINA, aqui mostraremos el nombre de la empresa y el logo -->
         <header class="headerPDPA">
-            <a href="../index.php">
+            <a href="/">
                 <section class="fncPDPA">
                     <h1 class="fPDPA">C</h1><br>
                     <h1 class="nPDPA">R</h1>

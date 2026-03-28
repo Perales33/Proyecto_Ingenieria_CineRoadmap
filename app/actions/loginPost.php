@@ -21,13 +21,15 @@ if($fila = mysqli_fetch_assoc($resultado)) {
         session_start();
         $_SESSION["logged_user"] = $nombreUsuario;
         $_SESSION["idUsuario"] = $fila["idUsuario"];
-        header('Location: ../index.php');
+        header('Location: /');
         exit();
     } else {
-        echo "Contraseña incorrecta";
+        header('Location: /');
+        exit();
     }
 } else {
-    echo "Usuario no encontrado";
+    header('Location: /login.php');
+    exit();
 }
 
 mysqli_stmt_close($consulta);

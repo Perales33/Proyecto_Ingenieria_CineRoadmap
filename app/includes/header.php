@@ -12,7 +12,7 @@
     <main class="estructuraPrincipal">
         <!-- HEADER DE LA PAGINA, aqui mostraremos el nombre de la empresa y el logo -->
         <header class="header">
-            <a href="../index.php">
+            <a href="/">
                 <section class="fnc">
                     <h1 class="f">Cine</h1>
                     <span class="n">R</span>
