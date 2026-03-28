@@ -2,9 +2,6 @@
 
 **CineRoadmap** es una plataforma web gamificada que permite a los amantes del cine registrar las películas que han visto, desbloquear insignias y completar desafíos cinematográficos. Inspirada en los logros de videojuegos, promueve el descubrimiento fílmico y el espíritu comunitario entre cinéfilos.
 
-![Diagrama de Clases](src/main/resources/diagramas/imagenes/Pantalla_inicio.png)
-
-
 ## 📌 Tabla de Contenidos
 
 - [Características principales](#caracteristicas_principales)
@@ -12,7 +9,6 @@
 - [Tecnologías utilizadas](#tecnologias_utilizadas)
 - [Instalación y ejecución](#instalacion_y_ejecucion)
 - [Estructura del proyecto](#estructura_del_proyecto)
-- [Diagramas](#diagramas)
 - [Próximos pasos](#proximos_pasos)
 - [Licencia](#licencia)
 
@@ -100,28 +96,6 @@ Proyecto_Ingenieria_CineRoadmap/
 - Versión móvil (Android/iOS)
 - Sincronización entre dispositivos
 - Sistema de notificaciones
-
-## 📐 Diagramas del proyecto <a name="diagramas"></a>
-
-A continuación se incluyen los principales diagramas utilizados en el desarrollo de CineRoadmap. Estos ayudan a visualizar la arquitectura, el flujo de la aplicación y la estructura de clases.
-
-### 📊 Diagrama de Arquitectura General
-![Diagrama de Clases](src/main/resources/diagramas/imagenes/DiagramaBloques-Diagrama_de_Bloques___CineRoadmap.png)
-
-### 🧩 Diagrama de Clases (Modelo)
-![Diagrama de Clases](src/main/resources/diagramas/imagenes/DiagramaClases-Diagrama_Clases___CineRoadmap.png)
-
-### 🔄 Diagrama de Casos de Uso
-![Diagrama de Casos](src/main/resources/diagramas/imagenes/DiagramaUsos_CineRoadmap.png)
-
-### 🗂️ Diagrama de Secuencia
-![Diagrama de Clases](src/main/resources/diagramas/imagenes/DiagramaSecuencias-Diagrama_de_Secuencias___CineRoadmap.png)
-
-### 🔧 Diagrama de Actividad
-![Diagrama de Clases](src/main/resources/diagramas/imagenes/DiagramaActividad-Diagrama_de_Actividad___CineRoadmap.png)
-
-### 🔄 Diagrama de Máquina de Estados
-![Diagrama de Máquina de Estados](src/main/resources/diagramas/imagenes/DiagramaEstadoMaquina-Diagrama_de_Estados_Máquina___CineRoadmap.png)
 
 ## 📄 Licencia <a name="licencia"></a> 
 Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
