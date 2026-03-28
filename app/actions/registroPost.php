@@ -3,7 +3,7 @@ require("../initdb.php");
 
 // 1. Validación inicial
 if (!isset($_POST['usuario']) || !isset($_POST['nick']) || !isset($_POST['email']) || !isset($_POST['contraseña'])){
-    header("location: ../_registro.php");
+    header("location: ../registro.php");
     exit();
 }
 
@@ -52,13 +52,13 @@ if (mysqli_stmt_execute($consulta)) {
     }
 
     // Éxito: redirigir al login
-    header("location: ../login.php");
+    header("location: /login.php");
     exit();
 
 } else {
     // Error en la inserción
     echo "Error en el registro: " . mysqli_stmt_error($consulta);
-    header("location: ../registro.php");
+    header("location: /registro.php");
 }
 
 mysqli_stmt_close($consulta);
