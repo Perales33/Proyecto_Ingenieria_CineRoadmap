@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# 1. Si el archivo o carpeta NO existe físicamente...
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# 2. Redirigir todo lo que no existe a tu página de error
+# Ajustamos la ruta a tu carpeta 'error'
+ErrorDocument 404 /error/404.php
