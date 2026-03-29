@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 require("./initdb.php");
 require("./actions/auth_check.php");
 
-$TitlePDPA = "Películas - FNC";
+$titulo = "Películas - CineRoadmap";
 $sloganPDPA="El catálogo de tus sueños, a un clic de distancia. Tu butaca está lista, elige la función.";
 $tmdb_path = "https://image.tmdb.org/t/p/w500";
 $idUser = isset($_SESSION['idUsuario']) ? intval($_SESSION['idUsuario']) : 0;

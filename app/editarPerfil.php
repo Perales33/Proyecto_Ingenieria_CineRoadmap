@@ -8,7 +8,7 @@ require("./actions/auth_check.php");
 if (!isset($_SESSION['logged_user'])) {
     die("Error: No has iniciado sesión.");
 }
-
+$titulo = "Editar Perfil - CineRoadmap";
 // 2. Lógica de actualización
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nick = $_POST['nick'] ?? '';
@@ -62,7 +62,7 @@ if ($row = $result->fetch_assoc()) {
         <input name='correo' type='email' value="<?php echo htmlspecialchars($row['email']); ?>" required>
         
         <input type='submit' value='Guardar Cambios'>
-        <a href='./perfil.php' style="text-decoration:none;"><input type='button' value='Cancelar'></a>
+        <a href='./perfil.php' style="text-decoration:none;"><input class ="cancelar" type='button' value='Cancelar'></a>
     </form>
 </div>
     <?php

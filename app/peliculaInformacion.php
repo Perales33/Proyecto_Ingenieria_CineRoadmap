@@ -9,6 +9,7 @@ require("./actions/auth_check.php");
 // 1. OBTENCIÓN DE VARIABLES BÁSICAS
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $idUser = isset($_SESSION['idUsuario']) ? intval($_SESSION['idUsuario']) : 0;
+$titulo = "Información de Película - CineRoadmap";
 $tmdb_path = "https://image.tmdb.org/t/p/w500"; 
 
 // 2. LÓGICA DE PROCESAMIENTO (POST)

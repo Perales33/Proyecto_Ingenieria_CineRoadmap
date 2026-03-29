@@ -24,5 +24,6 @@
         <!-- FIN HEADER DE LA PAGINA -->
 
         <!--BARRA DE NAVEGACIÓN~, aqui mostraremos la barra de navegación, esta tendra luego funcionalidad de menu Hamburguesa -->
-        <?php require("./includes/nav.php") ?> 
+        <?php require("./includes/nav.php") ?>
+        <?php require("./actions/actualizarLogros.php") ?> <!-- Este include se encarga de actualizar los logros del usuario cada vez que se carga una página -->
         <!--FIN DE LA BARRA DE NAVEGACIÓN -->

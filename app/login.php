@@ -3,7 +3,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-    $titulo ="Login";
+    $titulo ="Login - CineRoadmap";
     $fuenteCss ="../css/loginD.css"
 ?>
 <? require_once("./includes/headerActions.php"); ?>

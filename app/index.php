@@ -2,7 +2,7 @@
 session_start();
 require("./initdb.php");
 
-$titulo = "Inicio";
+$titulo = "Inicio - CineRoadmap";
 $slogan = "Tu guía cinéfila: Opiniones auténticas, decisiones acertadas.";
 $usuario_nombre = isset($_SESSION["logged_user"]) ? $_SESSION["logged_user"] : "Invitado";
 $idUsuario = isset($_SESSION['idUsuario']) ? intval($_SESSION['idUsuario']) : 0;

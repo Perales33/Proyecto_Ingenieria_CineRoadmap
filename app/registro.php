@@ -1,5 +1,5 @@
 <?php
-    $titulo ="Registro";
+    $titulo ="Registro - CineRoadmap";
     $fuenteCss ="../css/Registro.css";
 ?>
 <? require_once("./includes/headerActions.php"); ?>

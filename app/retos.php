@@ -1,5 +1,5 @@
 <?php
-    $titulo ="Productores";
+    $titulo ="Competencias y Retos - CineRoadmap";
     $sloganPDPA="Toda gran historia comienza con un desafío. ¿Tienes el coraje para dirigir la tuya?";
 ?>
 <?php require_once ("./includes/headerPDPA.php");?>
