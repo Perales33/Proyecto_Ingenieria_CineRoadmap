@@ -70,22 +70,22 @@ java -version
 ## 📁 Estructura del proyecto <a name="estructura_del_proyecto"></a> 
 ```bash
 Proyecto_Ingenieria_CineRoadmap/
-├── LICENSE
-├── README.md
-├── src/
-│   └── main/
-│       ├── app/
-│       │   ├── Controlador/
-│       │   ├── Modelo/
-│       │   ├── Vista/
-│       │   ├── util/
-│       │   └── Main.java 
-│       ├── resources/
-│       │   ├── diagramas/
-│       │   ├── img/
-│       │   ├── db/
-│       │   └── css/
-└       └
+├── app/                    # --- Núcleo de la Aplicación Web ---
+│   ├── actions/            # Lógica de acciones y peticiones
+│   ├── components/         # Componentes reutilizables de UI
+│   ├── css/ & js/          # Estilos y scripts de frontend
+│   ├── includes/           # Configuraciones y funciones comunes (PHP)
+│   ├── sql/                # Scripts y backups de la base de datos
+│   ├── index.php           # Punto de entrada principal
+│   └── [vistas].php        # comunidad, logros, peliculas, perfil, retos, etc.
+├── gui/                    # Salida de compilación y archivos de IDE (.idea)
+├── src/main/app/           # --- Núcleo de la Aplicación Java ---
+│   ├── Controlador/        # Lógica de control
+│   ├── Modelo/             # Entidades y objetos de datos
+│   ├── Vista/              # Interfaces gráficas originales
+│   └── Main.java           # Clase principal Java
+├── LICENSE                 # Licencia MIT
+└── Readme.md               # Documentación
 ```
 
 ## 🔮 Próximos pasos <a name="proximos_pasos"></a> 
