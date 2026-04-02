@@ -1,57 +1,93 @@
+Perfecto, ese detalle es clave 🔥 (además suma puntos porque demuestra integración con API real). Te dejo el **README final ya integrado con esa explicación**, bien colocado en instalación para que tenga sentido:
+
+---
+
 # 🎬 CineRoadmap – El reto final para los cinéfilos
 
 **CineRoadmap** es una plataforma web gamificada que permite a los amantes del cine registrar las películas que han visto, desbloquear insignias y completar desafíos cinematográficos. Inspirada en los logros de videojuegos, promueve el descubrimiento fílmico y el espíritu comunitario entre cinéfilos.
 
+---
+
 ## 📌 Tabla de Contenidos
 
-- [Características principales](#caracteristicas_principales)
-- [Perfil y comunidad](#perfil_y_comunidad)
-- [Tecnologías utilizadas](#tecnologias_utilizadas)
-- [Instalación y ejecución](#instalacion_y_ejecucion)
-- [Estructura del proyecto](#estructura_del_proyecto)
-- [Próximos pasos](#proximos_pasos)
-- [Licencia](#licencia)
+* [Características principales](#caracteristicas_principales)
+* [Perfil y comunidad](#perfil_y_comunidad)
+* [Tecnologías utilizadas](#tecnologias_utilizadas)
+* [Instalación y ejecución](#instalacion_y_ejecucion)
+* [Estructura del proyecto](#estructura_del_proyecto)
+* [Próximos pasos](#proximos_pasos)
+* [Licencia](#licencia)
 
+---
 
-## 🚀 Características principales <a name="caracteristicas_principales"></a> 
+## 🚀 Características principales
 
-- Registro y consulta de películas vistas.
-- Sistema de insignias por logros cinematográficos.
-- Desafíos diarios/semanales que incentivan el hábito.
-- Perfil con estadísticas, rachas y horas de visualización.
-- Comparación con amigos y comunidad.
+* Registro y consulta de películas vistas
+* Sistema de insignias por logros cinematográficos
+* Desafíos diarios/semanales
+* Perfil con estadísticas, rachas y horas de visualización
+* Comparación con amigos y comunidad
 
-## 👤 Perfil y comunidad <a name="#perfil_y_comunidad"></a> 
+---
 
-- Lista de películas vistas.
-- Insignias desbloqueadas.
-- Estadísticas cinéfilas:
-  - Películas totales
-  - Racha más larga
-  - Mes más productivo
-  - Total de horas
-- Comparte logros y progreso con amigos.
+## 👤 Perfil y comunidad
 
+* Lista de películas vistas
+* Insignias desbloqueadas
+* Estadísticas cinéfilas:
 
-## 🛠️ Tecnologías utilizadas <a name="tecnologias_utilizadas"></a> 
+  * Películas totales
+  * Racha más larga
+  * Mes más productivo
+  * Total de horas
+* Compartir progreso con otros usuarios
 
-- **Backend**: Java (desde `/src/main/app/Modelo` y `/src/main/app/Controlador`)
-- **Frontend**: Java (desde `/src/main/app/Vista`)
-- **Base de datos**: SQL o MySQL (con backup incluido)
-- **Diagramas**: PlantUML (con IntelliJ IDEA)
+---
 
+## 🛠️ Tecnologías utilizadas
 
-## ⚙️ Instalación y ejecución <a name="instalacion_y_ejecucion"></a> 
+### 🌐 Desarrollo Web (principal)
+
+* **Backend**: PHP
+* **Frontend**:
+
+  * HTML5
+  * CSS3
+  * JavaScript
+* **Servidor local**: MAMP
+* **Base de datos**: MySQL
+* **Configuración del servidor**:
+
+  * `.htaccess`
+
+### ☕ Aplicación complementaria en Java
+
+* Ubicación: `/gui/src/main/app/`
+* Arquitectura MVC:
+
+  * `Modelo`
+  * `Vista`
+  * `Controlador`
+* IDE recomendado:
+
+  * IntelliJ IDEA / Eclipse
+* Diagramas:
+
+  * PlantUML
+
+---
+
+## ⚙️ Instalación y ejecución
 
 ### 🔧 Requisitos
-- Java:
-  - Extensions (VS Code)
-  - Version 11+
-- Eclipse: 
-  - Java Version
-- IntelliJ IDEA:
-  - Versión Community Edition
-  - PlantUML (Diseño de diagramas)
+
+* MAMP
+* PHP 7.4+
+* MySQL
+* Navegador web
+* Java 11+ (opcional)
+
+---
 
 ### 📦 Instalación
 
@@ -61,41 +97,112 @@
 git clone git@github.com:Perales33/Proyecto_Ingenieria_CineRoadmap.git
 cd Proyecto_Ingenieria_CineRoadmap
 ```
-2. Verificar la versión de Java:
+
+---
+
+2. Copia el proyecto al servidor local:
+
+```bash
+/Applications/MAMP/htdocs/
+```
+
+---
+
+3. Configura la base de datos:
+
+* Accede a **phpMyAdmin**
+* Crea una base de datos (ej: `cineroadmap`)
+* Importa los scripts desde:
 
 ```
-java -version
+/app/sql/
 ```
 
-## 📁 Estructura del proyecto <a name="estructura_del_proyecto"></a> 
+---
+
+4. Configura la conexión a la base de datos:
+
+Archivo:
+
+```
+/app/initdb.php
+```
+
+Ejemplo:
+
+```php
+$host = "localhost";
+$user = "root";
+$password = "root";
+$database = "cineroadmap";
+```
+
+---
+
+5. Poblar la base de datos con películas (API TMDB)
+
+Para cargar datos iniciales de películas, ejecuta el script:
+
+```
+/app/prueba.php
+```
+
+Este archivo realiza una conexión con la API de TMDb y almacena las películas en la base de datos automáticamente.
+
+---
+
+6. Ejecuta la aplicación web:
+
+```
+http://localhost/Proyecto_Ingenieria_CineRoadmap/app/
+```
+
+---
+
+## 📁 Estructura del proyecto
+
 ```bash
 Proyecto_Ingenieria_CineRoadmap/
-├── app/                    # --- Núcleo de la Aplicación Web ---
-│   ├── actions/            # Lógica de acciones y peticiones
-│   ├── components/         # Componentes reutilizables de UI
-│   ├── css/ & js/          # Estilos y scripts de frontend
-│   ├── includes/           # Configuraciones y funciones comunes (PHP)
-│   ├── sql/                # Scripts y backups de la base de datos
-│   ├── index.php           # Punto de entrada principal
-│   └── [vistas].php        # comunidad, logros, peliculas, perfil, retos, etc.
-├── gui/                    # Salida de compilación y archivos de IDE (.idea)
-├── src/main/app/           # --- Núcleo de la Aplicación Java ---
-│   ├── Controlador/        # Lógica de control
-│   ├── Modelo/             # Entidades y objetos de datos
-│   ├── Vista/              # Interfaces gráficas originales
-│   └── Main.java           # Clase principal Java
-├── LICENSE                 # Licencia MIT
-└── Readme.md               # Documentación
+├── app/                            # --- Aplicación Web (PHP) ---
+│   ├── actions/                    # Acciones (loginPost, logoutPost, etc.)
+│   ├── components/                 # Componentes reutilizables de UI
+│   ├── css/                        # Estilos (CSS)
+│   ├── js/                         # Scripts (JavaScript)
+│   ├── img/                        # Recursos gráficos
+│   ├── fonts/                      # Fuentes tipográficas (ej: Montserrat)
+│   ├── includes/                   # Componentes reutilizables (header, footer, menús)
+│   ├── error/                      # Páginas de error (404, acceso denegado, etc.)
+│   ├── fncdocs/                    # Documentos de prueba de conexión a la BBDD
+│   ├── sql/                        # Scripts y backups de la base de datos
+│   ├── initdb.php                  # Conexión a la base de datos
+│   ├── prueba.php                  # Script de carga de películas desde TMDB
+│   ├── *.php                       # Vistas (login, perfil, películas, etc.)
+│   └── .htaccess                   # Configuración del servidor
+│
+├── gui/                            # --- Aplicación Java ---
+│   └── src/main/app/
+│       ├── Controlador/            # Lógica de control
+│       ├── Modelo/                 # Entidades y datos
+│       ├── Vista/                  # Interfaces gráficas
+│       └── Main.java               # Clase principal
+│
+├── LICENSE
+└── Readme.md
 ```
 
-## 🔮 Próximos pasos <a name="proximos_pasos"></a> 
+---
 
-- Migrar la aplicación a Java
-- Desarrollar la aplicación para móvil
-- Integración con APIs externas (IMDb o TMDB)
-- Versión móvil (Android/iOS)
-- Sincronización entre dispositivos
-- Sistema de notificaciones
+## 🔮 Próximos pasos
 
-## 📄 Licencia <a name="licencia"></a> 
-Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+* Migración completa del backend a Java
+* Desarrollo de aplicación móvil (Android / iOS)
+* Integración avanzada con APIs externas
+* Sistema de recomendaciones inteligentes
+* Notificaciones en tiempo real
+* Sincronización entre dispositivos
+
+---
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles.
