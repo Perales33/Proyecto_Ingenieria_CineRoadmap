@@ -1,7 +1,3 @@
-Perfecto, ese detalle es clave 🔥 (además suma puntos porque demuestra integración con API real). Te dejo el **README final ya integrado con esa explicación**, bien colocado en instalación para que tenga sentido:
-
----
-
 # 🎬 CineRoadmap – El reto final para los cinéfilos
 
 **CineRoadmap** es una plataforma web gamificada que permite a los amantes del cine registrar las películas que han visto, desbloquear insignias y completar desafíos cinematográficos. Inspirada en los logros de videojuegos, promueve el descubrimiento fílmico y el espíritu comunitario entre cinéfilos.
