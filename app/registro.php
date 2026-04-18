@@ -1,8 +1,8 @@
 <?php
     $titulo ="Registro - CineRoadmap";
     $fuenteCss ="../css/Registro.css";
+    require_once("./includes/headerActions.php");
 ?>
-<? require_once("./includes/headerActions.php"); ?>
     <div class="cuadro">
 
         <form action="./actions/registroPost.php" method="POST">

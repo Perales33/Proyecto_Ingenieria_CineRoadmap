@@ -4,9 +4,10 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
     $titulo ="Login - CineRoadmap";
-    $fuenteCss ="../css/loginD.css"
+    $fuenteCss ="../css/loginD.css";
+    require_once("./includes/headerActions.php");
 ?>
-<? require_once("./includes/headerActions.php"); ?>
+<?  ?>
   <div class="cuadro">
     <form action="./actions/loginPost.php" method="POST">
       <h1>Login</h1>
