@@ -5,8 +5,8 @@
 <? require_once("./includes/headerActions.php"); ?>
     <div class="cuadro">
 
-        <form action="./_registroPost.php" method="POST">
-            <h1>Regístrate en <br> <font color="red">Films</font>N<font color="red">Critics</font></h1>
+        <form action="./actions/registroPost.php" method="POST">
+            <h1>Regístrate</h1>
             <div class="caja">
                 <input name="usuario" type="text" placeholder="Usuario" required>
                 <i class='bx bxs-user'></i>
