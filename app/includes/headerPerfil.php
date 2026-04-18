@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> <?= htmlspecialchars($titulo) ?> </title>
     <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/perfil.css">
+    <link rel="stylesheet" href="./css/perfil.css">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 
@@ -21,5 +21,5 @@
             </a>
         </header>
         
-        <?php require("./includes/nav.php"); ?>
-        <?php require("./actions/actualizarLogros.php"); ?> <!-- Este include se encarga de actualizar los logros del usuario cada vez que se carga una página -->
+        <?php require("/includes/nav.php"); ?>
+        <?php require("/actions/actualizarLogros.php"); ?> <!-- Este include se encarga de actualizar los logros del usuario cada vez que se carga una página -->

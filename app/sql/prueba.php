@@ -2,7 +2,7 @@
 // 1. Configuración de entorno
 set_time_limit(0); 
 ini_set('memory_limit', '512M');
-require("./initdb.php"); 
+require("../initdb.php"); 
 
 $apiKey = "8301a21598f8b45668d5711a814f01f6";
 $paginasTotales = 500; 
