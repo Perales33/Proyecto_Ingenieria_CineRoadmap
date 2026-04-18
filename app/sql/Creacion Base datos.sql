@@ -68,7 +68,7 @@ INSERT INTO logros (nombreReto, descripcion, objetivo, idInsignia) VALUES
 ('Seguidor de Greta Gerwig', 'Ve 2 películas dirigidas por Greta Gerwig', 2, 10),
 ('Fan de Timothée Chalamet', 'Ve 2 películas con Timothée Chalamet', 2, 11),
 ('Fan de Zendaya', 'Ve 2 películas con Zendaya', 2, 12),
-('Fan de Margot Robbie', 'Ve 2 películas con Margot Robbie', 2, usuarios13),
+('Fan de Margot Robbie', 'Ve 2 películas con Margot Robbie', 2, 13),
 ('Cinéfilo del 2023', 'Ve 3 películas estrenadas en 2023', 3, 14),
 ('Cinéfilo del 2022', 'Ve 3 películas estrenadas en 2022', 3, 15),
 ('Cinéfilo del 2021', 'Ve 3 películas estrenadas en 2021', 3, 16);
