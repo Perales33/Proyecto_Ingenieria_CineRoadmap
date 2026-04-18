@@ -24,6 +24,5 @@
         </footer>
     </main>
     <script src="../js/js.js"></script>
-    <script src="../js/perfil.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </body>
