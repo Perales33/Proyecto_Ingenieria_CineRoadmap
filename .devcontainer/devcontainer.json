@@ -1,7 +1,0 @@
-{
-	"image": "mcr.microsoft.com/devcontainers/php:8.3-bookworm",
-	"features": {
-		"ghcr.io/devcontainers/features/mysql-mariadb:1": {}
-	},
-	"postCreateCommand": "sudo service mariadb start"
-}

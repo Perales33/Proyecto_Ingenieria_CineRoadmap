@@ -1,0 +1,45 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: cineroadmap-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: cineroadmap
+      MYSQL_USER: cineroadmap
+      MYSQL_PASSWORD: 1234
+      MYSQL_ROOT_PASSWORD: root1234
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - cineroadmap-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot1234"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: cineroadmap-phpmyadmin
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      PMA_HOST: cineroadmap-mysql
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root1234
+    ports:
+      - "8081:80"
+    networks:
+      - cineroadmap-network
+
+volumes:
+  mysql-data:
+
+networks:
+  cineroadmap-network:
+    external: true
+    name: cineroadmap-network
